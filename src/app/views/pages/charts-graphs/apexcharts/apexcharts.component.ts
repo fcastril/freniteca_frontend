@@ -19,12 +19,12 @@ export class ApexchartsComponent implements OnInit {
   public radialBarChartOptions: any = {};
 
   obj = {
-    primary        : "#6571ff",
+    primary        : "#35398e",
     secondary      : "#7987a1",
     success        : "#05a34a",
     info           : "#66d1d1",
     warning        : "#fbbc06",
-    danger         : "#ff3366",
+    danger         : "#e7353a",
     light          : "#e9ecef",
     dark           : "#060c17",
     muted          : "#7987a1",

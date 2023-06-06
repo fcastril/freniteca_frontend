@@ -52,7 +52,7 @@ const customTemplate = {
       color: rgba(255, 51, 102, 0.3);
     }
     .filled.bad svg, .filled.bad i {
-      color: #ff3366;
+      color: #e7353a;
     }
   \`]
 })
@@ -82,7 +82,7 @@ export class RatingComponent {
       color: rgba(255, 51, 102, 0.3);
     }
     .filled.bad svg, .filled.bad i {
-      color: #ff3366;
+      color: #e7353a;
     }
   `]
 })
