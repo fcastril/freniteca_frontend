@@ -6,7 +6,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "nobleui-angular": {
+    "freniteca": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -98,10 +98,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "nobleui-angular:build:production"
+              "browserTarget": "freniteca:build:production"
             },
             "development": {
-              "browserTarget": "nobleui-angular:build:development"
+              "browserTarget": "freniteca:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -109,7 +109,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "nobleui-angular:build"
+            "browserTarget": "freniteca:build"
           }
         },
         "test": {

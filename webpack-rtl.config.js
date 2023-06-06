@@ -9,7 +9,7 @@ const WebpackMessages = require("webpack-messages");
 const del = require("del");
 
 // theme name
-const themeName = "nobleui";
+const themeName = "freniteca";
 // global variables
 const rootPath = path.resolve(__dirname);
 const distPath = rootPath + "/src/assets";

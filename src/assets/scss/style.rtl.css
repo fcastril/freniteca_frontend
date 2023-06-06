@@ -3,9 +3,8 @@
   \*************************************************************************************************************************************************/
 @charset "UTF-8";
 /*
-* NobleUI - Angular Admin Dashboard Template v2.1.0
-* Copyright © 2022 NobleUI
-* Licensed under ThemeForest License
+* Freniteca
+* Copyright © 2022 Freniteca
 */
 :root {
   --bs-blue: #0d6efd;
@@ -19271,19 +19270,19 @@ body {
   background: #f9fafb;
 }
 
-.nobleui-logo {
+.freniteca-logo {
   font-weight: 700;
   font-size: 25px;
   color: #000865;
 }
-.nobleui-logo span {
+.freniteca-logo span {
   color: #6571ff;
   font-weight: 300;
 }
-.nobleui-logo:hover {
+.freniteca-logo:hover {
   color: #000865;
 }
-.nobleui-logo.logo-light {
+.freniteca-logo.logo-light {
   color: #000;
 }
 
