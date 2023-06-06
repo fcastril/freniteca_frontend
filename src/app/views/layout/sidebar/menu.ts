@@ -2,7 +2,7 @@ import { MenuItem } from './menu.model';
 
 export const MENU: MenuItem[] = [
   {
-    label: 'Main',
+    label: 'Principal',
     isTitle: true
   },
   {
