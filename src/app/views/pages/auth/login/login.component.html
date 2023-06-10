@@ -6,23 +6,19 @@
           <div class="auth-form-wrapper px-4 py-5">
             <a routerLink="." class="freniteca-logo d-block mb-2"><img src="../../../../../assets/images/freniteca.png" width="30%"></a>
             <h5 class="text-muted fw-normal mb-4">Bienvenido! Accede a tu cuenta.</h5>
-            <form class="forms-sample">
+            <form class="forms-sample" (ngSubmit)="login(f)" #f="ngForm">
               <div class="mb-3">
-                <label for="email" class="form-label">Correo electrónico</label>
-                <input type="email" class="form-control" id="email" placeholder="Email">
+                <label for="username" class="form-label">Username</label>
+                <input required type="text" class="form-control" id="userName" placeholder="Nombre de Usuario" name="userName" [(ngModel)]="user.userName" >
+                <span *ngIf="f.submitted && f.controls['userName'].errors" class="text-danger">* Obligatorio</span>
               </div>
               <div class="mb-3">
                 <label for="password" class="form-label">Contraseña</label>
-                <input type="password" class="form-control" id="password" autocomplete="current-password" placeholder="Password">
-              </div>
-              <div class="form-check mb-3">
-                <input type="checkbox" class="form-check-input" id="authCheck">
-                <label class="form-check-label" for="authCheck">
-                  Recuerdame
-                </label>
+                <input required type="password" class="form-control" id="password" autocomplete="current-password" name="password" placeholder="Contraseña" [(ngModel)]="user.password">
+                <span *ngIf="f.submitted && f.controls['password'].errors" class="text-danger">* Obligatorio</span>
               </div>
               <div>
-                <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0" (click)="onLoggedin($event)">Login</button>
+                <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0">Login</button>
               </div>
               <a routerLink="/auth/register" class="d-block mt-3 text-muted">¿No es usuario? Regístrame</a>
             </form>
