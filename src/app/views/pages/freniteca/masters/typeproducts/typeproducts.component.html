@@ -1,1 +1,49 @@
-<p>masters typeproducts works!</p>
+<form (ngSubmit)="Submit(f)" #f="ngForm">
+    <div class="row">
+        <div class="col-10">
+            <h3><i class="fas fa-users"></i> {{ title | uppercase }} </h3>
+        </div>
+        <div class="col-2"><button type="button" class="btn btn-primary float-right rounded" (click)="register(0)" title="Agregar registros"><i class="fa fa-plus-circle" area-hidden="true"></i></button></div>
+        <hr>
+    </div>
+    <div class="search-form mt-1">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="btn-icon-prepend">
+                    <button class="btn">
+                        <i class="feather icon-search" (click)="searchTitle()"></i>
+                    </button>
+                </div>
+            </div>
+            <input type="text" class="form-control" id="search" placeholder="Buscar aqui..." (keyup)='keyupSearch($event)' [(ngModel)]="search" autocomplete="off" name="search">
+        </div>
+    </div>
+    <br>
+    <table class="table" *ngIf="regs.length > 0">
+        <thead>
+            <tr>
+                <th>Acciones</th>
+                <th>Expediente</th>
+                <th>Titular</th>
+                <th>Proyecto</th>
+                <th>Est. Oficial</th>
+                <th>Fecha registro RMN</th>
+                <th>Codigo RMN</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let reg of regs; let idx = index">
+                <td>
+                    <button class="btn btn-success fa fa-pencil rounded" [routerLink]="['/titulos', reg.idTitle]" title="Actualizar Registro"></button>
+                    <button class="btn btn-danger fa fa-trash ml-1 rounded" (click)=delete(reg.idTitle,idx) title="Eliminar Registro"></button>
+                </td>
+                <td>{{reg.file}}</td>
+                <td>{{reg.ownerName}}</td>
+                <td>{{reg.projectDescription}}</td>
+                <td>{{reg.descriptionOfficialStatus}}</td>
+                <td>{{reg.dateRegistrationRmn | date:'dd/MM/yyyy'}}</td>
+                <td>{{reg.rmncode}}</td>
+            </tr>
+        </tbody>
+    </table>
+</form>
