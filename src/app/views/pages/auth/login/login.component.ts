@@ -25,7 +25,6 @@ export class LoginComponent implements OnInit {
   }
 
   login(form: NgForm){
-    debugger;
     if (form.invalid) {
       Object.values(form.controls).forEach( ctrl => {
         ctrl.markAsTouched();

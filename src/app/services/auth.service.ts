@@ -15,7 +15,6 @@ export class AuthService {
   }
 
   login(user: LoginModel) {
-    debugger;
     var url = `${ this.url }user/login`;
 
 
@@ -27,7 +26,6 @@ export class AuthService {
     return this.http.post(url, user)
       .pipe(
         map((resp: any) => {
-          debugger;
           if (resp.status) {
             localStorage.setItem(environment.isLoggin, btoa('true'));
             localStorage.setItem(environment.token, resp.data.token);
