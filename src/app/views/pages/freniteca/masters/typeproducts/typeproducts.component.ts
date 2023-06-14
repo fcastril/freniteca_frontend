@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TypeproductsComponent implements OnInit {
 
+title = "Tipos de Productos"
+
   constructor() { }
 
   ngOnInit(): void {
