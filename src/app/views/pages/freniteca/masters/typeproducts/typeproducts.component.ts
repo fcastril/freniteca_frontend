@@ -19,8 +19,9 @@ export class TypeproductsComponent implements OnInit {
   regs: TypeProductModel[] = [];
   searchText: '';
   title = "Tipos de Productos";
-  currentePage: number = 1;
+  currentPage: number = 1;
   pageCount: number = 10;
+  totalPage: number = 0;
 
   constructor(private route: Router, private api: ApiService) { }
 
@@ -42,7 +43,7 @@ export class TypeproductsComponent implements OnInit {
 
     var paginate: PaginateModel = {
       count: this.pageCount,
-      page: this.currentePage,
+      page: this.currentPage,
       filters: [
         { property: 'code', value: this.searchText, operator: Operations.Contains, conditional: LogicalOperators.Or },
         { property: 'description', value: this.searchText, operator: Operations.Contains, conditional: LogicalOperators.Or },
@@ -57,6 +58,7 @@ export class TypeproductsComponent implements OnInit {
     this.api.paginate('typeproduct', paginate).subscribe(
       (resp: any)=>{
         this.regs = resp.data.data;
+        this.totalPage = resp.data.pagesTotal;
       }
     );
   }
@@ -94,5 +96,14 @@ export class TypeproductsComponent implements OnInit {
       }
     });
   }
-
+  back(){
+    if (this.currentPage>0){
+      this.currentPage --;
+      this.search();
+    }
+  }
+  next(){
+    this.currentPage++;
+    this.search();
+  }
 }
