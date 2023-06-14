@@ -22,16 +22,16 @@
     <table class="table" *ngIf="regs.length > 0">
         <thead>
             <tr>
-                <th>Acciones</th>
-                <th>Código</th>
-                <th>Descripción</th>
+                <th width="5%">Acciones</th>
+                <th width="10%">Código</th>
+                <th width="85%">Descripción</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let reg of regs; let idx = index">
                 <td>
-                    <button class="btn btn-success fas fa-pencil-alt rounded" [routerLink]="['/masters/typeproducts', reg.id]" title="Actualizar Registro"></button>
-                    <button class="btn btn-danger fas fa-trash ml-1 rounded" (click)=delete(reg.id,idx) title="Eliminar Registro"></button>
+                    <button class="btn btn-success rounded"  style="margin-right:5px" [routerLink]="['/masters/typeproducts', reg.id]" title="Actualizar Registro"><i class="fas fa-pencil-alt"></i></button>
+                    <button class="btn btn-danger  rounded" (click)=delete(reg.id,idx) title="Eliminar Registro"><i class="fas fa-trash"></i></button>
                 </td>
                 <td>{{reg.code}}</td>
                 <td>{{reg.description}}</td>
