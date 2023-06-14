@@ -3,6 +3,7 @@ import { AuthService } from './auth.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { PaginateModel } from '../models/paginate.model';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class ApiService {
     }
 
     getId(controller: string, id: string){
-      return this.http.get(`${ environment.urlApi }${ controller }/getById/${ id }`, {headers: this.auth.getHeaders()});
+      return this.http.get(`${ environment.urlApi }${ controller }/getById?id=${ id }`, {headers: this.auth.getHeaders()});
     }
 
     create(controller: string, data: any){

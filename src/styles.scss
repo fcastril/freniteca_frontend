@@ -29,3 +29,15 @@
 
 // Freniteca styles For RTL
 // @import "./assets/scss/style.rtl.css";
+
+.botones {
+    margin-top: 10px;
+    float: right;
+    .submit {
+        margin-right: 5px;
+        width: 50%;
+    }
+    .cancel {
+        width: 50%;
+    }
+}

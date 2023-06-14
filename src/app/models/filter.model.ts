@@ -1,6 +1,6 @@
 export class filterModel {
     property: string;
     value: string;
-    operator: Operations;
-    conditional: LogicalOperators 
+    operator: number;
+    conditional: number 
 }

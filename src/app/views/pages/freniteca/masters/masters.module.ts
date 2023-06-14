@@ -33,7 +33,7 @@ const routes: Routes = [
         component: TypeproductsComponent
       },
       {
-        path: 'typeproducts:/id',
+        path: 'typeproducts/:id',
         component: TypeproductsCreateupdateComponent
       }
     ]

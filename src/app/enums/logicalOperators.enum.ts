@@ -1,4 +1,4 @@
-enum LogicalOperators {
+export enum LogicalOperators {
     And,
     Or
 }
