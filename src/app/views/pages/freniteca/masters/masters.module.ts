@@ -9,6 +9,8 @@ import { QuillModule } from 'ngx-quill';
 import { ArchwizardModule } from 'angular-archwizard';
 import { ProductsCreateupdateComponent } from './products-createupdate/products-createupdate.component';
 import { TypeproductsCreateupdateComponent } from './typeproducts-createupdate/typeproducts-createupdate.component';
+import { BrandsComponent } from './brands/brands.component';
+import { BrandsCreateupdateComponent } from './brands-createupdate/brands-createupdate.component';
 
 
 const routes: Routes = [
@@ -35,6 +37,14 @@ const routes: Routes = [
       {
         path: 'typeproducts/:id',
         component: TypeproductsCreateupdateComponent
+      },
+      {
+        path: 'brands',
+        component: BrandsComponent
+      },
+      {
+        path: 'brands/:id',
+        component: BrandsCreateupdateComponent
       }
     ]
   }
@@ -45,7 +55,9 @@ const routes: Routes = [
     TypeproductsComponent,
     ProductsComponent,
     ProductsCreateupdateComponent,
-    TypeproductsCreateupdateComponent
+    TypeproductsCreateupdateComponent,
+    BrandsComponent,
+    BrandsCreateupdateComponent
   ],
   imports: [
     CommonModule,

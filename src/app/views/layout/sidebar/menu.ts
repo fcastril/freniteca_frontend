@@ -34,6 +34,10 @@ export const MENU: MenuItem[] = [
       {
         label: 'Tipos de Productos',
         link: '/masters/typeproducts',
+      },
+      {
+        label: 'Marcas',
+        link: '/masters/brands',
       }
     ]
   },
