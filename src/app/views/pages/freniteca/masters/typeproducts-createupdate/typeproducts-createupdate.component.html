@@ -16,6 +16,19 @@
             <span *ngIf="(f.submitted || frm.controls['description'].dirty) && frm.controls['description'].errors" class="text-danger">* Obligatorio</span>
         </div>
     </div>
+    <br>
+    <h4>Atributos</h4><hr>
+    <ng-container formArrayName="attributes">
+        <div class="container mr-5 row col-md-12 col-sm-12 col-xl-12 col-lg-12 mt-5">
+            <div class="form-group col-lg-9 col-md-9 col-xl-9 col-sm-11">
+                <label for="description">Descripción</label>
+                <input type="text" class="form-control " id="typeProductAttribute" formControlName="typeProductAttribute" name="typeProductAttribute" autocomplete="off" required>
+            </div>
+            <div class="col-lg-3 col-md-3 col-xl-3 col-sm-1"  >
+                <button type="button" class="btn btn-success" (click)="addDetail()"><i class="fas fa-plus-circle"></i></button>
+            </div>
+        </div>   
+    </ng-container> 
     <div class="row botones">
         <button type="submit " class="btn btn-success submit col"><i class="fas fa-save "></i> Guardar</button>
         <button type="button " class="btn btn-danger cancel col" [routerLink]="['/masters/typeproducts']"><i class="fa fa-ban " aria-hidden="true "></i> Regresar</button>

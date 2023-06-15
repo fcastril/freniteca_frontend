@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TypeProductModel } from 'src/app/models/typeProduct.model';
 import { ApiService } from 'src/app/services/api.service';
@@ -17,7 +17,12 @@ export class TypeproductsCreateupdateComponent implements OnInit {
 
   frm = this.fb.group({
     code: ['', Validators.required],
-    description: ['', Validators.required]
+    description: ['', Validators.required],
+    attributes: this.fb.array([])
+  });
+
+  frmDetail = this.fb.group({
+    typeProductAttribute: ['',Validators.required]
   });
 
   id: string;
@@ -29,6 +34,7 @@ export class TypeproductsCreateupdateComponent implements OnInit {
   constructor(private route: ActivatedRoute, private api: ApiService, private router: Router, private fb: FormBuilder) { }
 
   ngOnInit(): void {
+    this.detail.push(this.frmDetail);
     this.id = this.route.snapshot.paramMap.get('id')??'';
     if (this.id === '') {
       this.subtitle = 'CREANDO';
@@ -106,5 +112,15 @@ export class TypeproductsCreateupdateComponent implements OnInit {
     this.frm.controls['code'].setValue(this.reg.code);
     this.frm.controls['description'].setValue(this.reg.description);
     
+  }
+  get detail(){
+    return this.frm.controls['attributes'] as FormArray;
+  }
+  addDetail(){
+    debugger;
+    this.detail.push(this.frmDetail);
+  }
+  deleteDetail(idx: number){
+    this.detail.removeAt(idx);
   }
 }
