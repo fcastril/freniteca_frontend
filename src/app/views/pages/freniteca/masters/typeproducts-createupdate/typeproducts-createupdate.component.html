@@ -1,4 +1,4 @@
-<form (ngSubmit)="Submit(f)" #f="ngForm">
+<form [formGroup]="frm" (ngSubmit)="Submit()" #f="ngForm">
     <div class="row">
         <div class="col-10">
             <h3><i class="fas fa-boxes"></i> {{ title | uppercase}} <b><small *ngIf="id===''" style="color: green;">CREANDO</small><small *ngIf="id!==''" style="color: blue;">EDITANDO</small></b></h3>
@@ -7,13 +7,13 @@
     <div class="container mr-5 row col-md-12 col-sm-12 col-xl-12 col-lg-12 mt-5">
         <div class="form-group col-lg-3 col-md-3 col-xl-3 col-sm-12">
             <label for="code">Código</label>
-            <input type=" text " class="form-control " id="code" [(ngModel)]="reg.code" name="code" autocomplete="off" required>
-            <span *ngIf="f.submitted && f.controls['code'].errors" class="text-danger">* Obligatorio</span>
+            <input type="text" class="form-control" id="code" formControlName="code" name="code" autocomplete="off" required>
+            <span *ngIf="(f.submitted || frm.controls['code'].dirty) && frm.controls['code'].errors" class="text-danger">* Obligatorio</span>
         </div>
         <div class="form-group col-lg-9 col-md-9 col-xl-9 col-sm-12">
             <label for="description">Descripción</label>
-            <input type=" text " class="form-control " id="description" [(ngModel)]="reg.description" name="description" autocomplete="off" required>
-            <span *ngIf="f.submitted && f.controls['description'].errors" class="text-danger">* Obligatorio</span>
+            <input type="text" class="form-control " id="description" formControlName="description" name="description" autocomplete="off" required>
+            <span *ngIf="(f.submitted || frm.controls['description'].dirty) && frm.controls['description'].errors" class="text-danger">* Obligatorio</span>
         </div>
     </div>
     <div class="row botones">

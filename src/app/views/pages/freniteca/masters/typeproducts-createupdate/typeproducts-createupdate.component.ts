@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TypeProductModel } from 'src/app/models/typeProduct.model';
 import { ApiService } from 'src/app/services/api.service';
@@ -13,32 +13,41 @@ import { v4 as uuidv4 } from 'uuid';
 })
 export class TypeproductsCreateupdateComponent implements OnInit {
 
+  
+
+  frm = this.fb.group({
+    code: ['', Validators.required],
+    description: ['', Validators.required]
+  });
+
   id: string;
   title = 'Tipos de productos';
   subtitle: string;
   reg = new TypeProductModel();
 
 
-  constructor(private route: ActivatedRoute, private api: ApiService, private router: Router) { }
+  constructor(private route: ActivatedRoute, private api: ApiService, private router: Router, private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id')??'';
     if (this.id === '') {
       this.subtitle = 'CREANDO';
       this.reg = new TypeProductModel();
+      this.setFields();
     } else {
       this.subtitle = 'EDITANDO';
       this.api.getId('typeproduct',this.id).subscribe(
         (resp: any) => {
           console.log('resp', resp)
           this.reg = resp.data;
+          this.setFields();
         }
       );
     }
   }
-  Submit(form: NgForm) {
-    if (form.invalid) {
-      Object.values(form.control).forEach(ctrl => {
+  Submit() {
+    if (this.frm.invalid) {
+      Object.values(this.frm.controls).forEach(ctrl => {
         ctrl.markAsTouched();
       });
       Swal.fire({
@@ -58,6 +67,9 @@ export class TypeproductsCreateupdateComponent implements OnInit {
       }
     ).then((result) => {
       if (result.isConfirmed) {
+
+        this.setValues();
+
         this.reg.id = this.id;
         this.reg.dateLastUpdate = new Date();
         if (this.reg.id === ''){
@@ -84,5 +96,15 @@ export class TypeproductsCreateupdateComponent implements OnInit {
         }
       }
     });
+  }
+
+  setValues(){
+    this.reg.code = this.frm.get('code')?.value??'';
+    this.reg.description = this.frm.get('description')?.value??'';
+  }
+  setFields(){
+    this.frm.controls['code'].setValue(this.reg.code);
+    this.frm.controls['description'].setValue(this.reg.description);
+    
   }
 }
