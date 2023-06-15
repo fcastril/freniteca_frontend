@@ -17,21 +17,24 @@
         </div>
     </div>
     <br>
-    <h4>Atributos</h4><hr>
-    <div class="col-lg-3 col-md-3 col-xl-3 col-sm-1"  >
-        <button type="button" class="btn btn-success" (click)="addDetail()"><i class="fas fa-plus-circle"></i></button>
+    <hr>
+    <div class="row"  >
+        <h4 class="col-lg-9 col-md-9 col-xl-9 col-sm-9" style="display: flex; align-items:center">Atributos</h4>
+        <button type="button" class="btn btn-success col-lg-1 col-md-1 col-xl-1 col-sm-1" style="width:50px; height:50px" (click)="addDetail()"><i class="fas fa-plus-circle"></i></button>
     </div>
+    <hr>
     <ng-container  formArrayName="attributes">
-        <ng-container *ngFor="let frmDetail of detail.controls; let idx = index">
-            <div [formGroup]="frmDetail">
-                <div class="container mr-5 row col-md-12 col-sm-12 col-xl-12 col-lg-12 mt-5">
-                    <div class="form-group col-lg-9 col-md-9 col-xl-9 col-sm-11">
-                        <label for="description">Descripción</label>
+        <ng-container *ngFor="let det of detail.controls; let idx = index">
+            <div [formGroup]="frmDetail" >
+                <div class="row col-md-12 col-sm-12 col-xl-12 col-lg-12" style="display: flex; align-items:center">
+                    <div class="form-group col-lg-9 col-md-9 col-xl-9 col-sm-9">
+                        
+                        <label for="description"></label>
                         <input type="text" class="form-control " id="typeProductAttribute" formControlName="typeProductAttribute" name="typeProductAttribute" autocomplete="off" required>
                     </div>
+                    <button type="button" class="btn btn-danger col-lg-1 col-md-1 col-xl-1 col-sm-1" style="width:50px; height:50px"  (click)="deleteDetail(idx)"><i class="fa fa-trash" aria-hidden="true "></i></button>
                 </div>   
             </div>
-            <button type="button " class="btn btn-danger" (click)="deleteDetail(idx)"><i class="fa fa-ban " aria-hidden="true "></i></button>
 
             
 
