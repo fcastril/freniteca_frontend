@@ -18,12 +18,12 @@ export class TypeproductsCreateupdateComponent implements OnInit {
   frm = this.fb.group({
     code: ['', Validators.required],
     description: ['', Validators.required],
-    attributes: this.fb.array([])
+    attributes: this.fb.array<FormArray>([])
   });
-
   frmDetail = this.fb.group({
     typeProductAttribute: ['',Validators.required]
   });
+
 
   id: string;
   title = 'Tipos de productos';
@@ -31,10 +31,11 @@ export class TypeproductsCreateupdateComponent implements OnInit {
   reg = new TypeProductModel();
 
 
-  constructor(private route: ActivatedRoute, private api: ApiService, private router: Router, private fb: FormBuilder) { }
+  constructor(private route: ActivatedRoute, private api: ApiService, private router: Router, private fb: FormBuilder) {
+    this.detail.push(this.frmDetail);
+   }
 
   ngOnInit(): void {
-    this.detail.push(this.frmDetail);
     this.id = this.route.snapshot.paramMap.get('id')??'';
     if (this.id === '') {
       this.subtitle = 'CREANDO';
@@ -117,7 +118,8 @@ export class TypeproductsCreateupdateComponent implements OnInit {
     return this.frm.controls['attributes'] as FormArray;
   }
   addDetail(){
-    debugger;
+
+
     this.detail.push(this.frmDetail);
   }
   deleteDetail(idx: number){
