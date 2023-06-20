@@ -30,7 +30,7 @@ export class ApiService {
     }
 
     delete(controller: string, id: string){
-      return this.http.delete(`${ environment.urlApi }${ controller }/delete/${id}`, {headers: this.auth.getHeaders()});
+      return this.http.delete(`${ environment.urlApi }${ controller }/delete?id=${id}`, {headers: this.auth.getHeaders()});
     }
 
     paginate(controller: string, paginate: PaginateModel){
@@ -44,5 +44,9 @@ export class ApiService {
     }
     searchList(controller: string, property: string, value: string){
       return this.http.get(`${ environment.urlApi }${ controller }/searchList/${property}/data/${value}`, {headers: this.auth.getHeaders()});
+    }
+    getCustom(controller: string, action: string, parameter: string, value: string){
+      return this.http.get(`${ environment.urlApi }${ controller }/${action}?${parameter}=${value}`, {headers: this.auth.getHeaders()});
+
     }
 }

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { FormArray, FormBuilder,  Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TypeProductModel } from 'src/app/models/typeProduct.model';
+import { TypeProductAttributeModel } from 'src/app/models/typeProductAttribute.model';
 import { ApiService } from 'src/app/services/api.service';
 import Swal from 'sweetalert2';
 import { v4 as uuidv4 } from 'uuid';
@@ -18,21 +19,21 @@ export class TypeproductsCreateupdateComponent implements OnInit {
   frm = this.fb.group({
     code: ['', Validators.required],
     description: ['', Validators.required],
-    attributes: this.fb.array<FormArray>([])
+    attributes: this.fb.array([])
   });
-  frmDetail = this.fb.group({
-    typeProductAttribute: ['',Validators.required]
-  });
+
 
 
   id: string;
   title = 'Tipos de productos';
   subtitle: string;
   reg = new TypeProductModel();
+  details: TypeProductAttributeModel[]=[];
 
 
   constructor(private route: ActivatedRoute, private api: ApiService, private router: Router, private fb: FormBuilder) {
-    this.detail.push(this.frmDetail);
+   // this.detail.push(this.frmDetail);
+   //this.addDetail();
    }
 
   ngOnInit(): void {
@@ -45,9 +46,14 @@ export class TypeproductsCreateupdateComponent implements OnInit {
       this.subtitle = 'EDITANDO';
       this.api.getId('typeproduct',this.id).subscribe(
         (resp: any) => {
-          console.log('resp', resp)
           this.reg = resp.data;
           this.setFields();
+          this.api.getCustom('typeproductattribute','listbyTypeProductId','typeProductId',this.id).subscribe(
+            (resp: any) => {
+              this.details = resp.data;
+              this.loadDetail();
+            }
+          );
         }
       );
     }
@@ -88,6 +94,7 @@ export class TypeproductsCreateupdateComponent implements OnInit {
             if (resp.error) {
                 Swal.fire('Error al crear el Registro','Se presentó un error al crear el registro', 'error');
             } else {
+              this.createUpdateDetail(resp.data.id);
               this.router.navigateByUrl('/masters/typeproducts');
             }
           });
@@ -97,6 +104,7 @@ export class TypeproductsCreateupdateComponent implements OnInit {
             if (resp.error) {
                 Swal.fire('Error al actualizar el Registro','Se presentó un error al actualizar el registro', 'error');
             } else {
+              this.createUpdateDetail(resp.data.id);
               this.router.navigateByUrl('/masters/typeproducts');
             }
           });
@@ -105,6 +113,32 @@ export class TypeproductsCreateupdateComponent implements OnInit {
     });
   }
 
+  createUpdateDetail(id: string){
+
+      this.detail.controls.forEach((element:any) => {
+        let arrayFind = this.details.find(x =>x.id == element.value.id);
+        if (arrayFind == null){
+          var elem = this.setDetail(id, uuidv4(), element.value);
+          this.api.create('typeProductAttribute',elem).subscribe(
+            (resp:any) => {
+              console.log('Create Type Product', resp);
+            }
+          );
+        }
+
+      });
+  }
+
+  setDetail(id: string, idDetail: string, element: any): TypeProductAttributeModel{
+    let newElement = new TypeProductAttributeModel();
+    newElement.id = uuidv4();
+    newElement.typeProductId = id;
+    newElement.name = element.typeProductAttribute;
+    newElement.dateCreation = new Date();
+    newElement.dateLastUpdate = new Date();
+    newElement.status = 'active';
+    return newElement;
+  }
   setValues(){
     this.reg.code = this.frm.get('code')?.value??'';
     this.reg.description = this.frm.get('description')?.value??'';
@@ -117,12 +151,29 @@ export class TypeproductsCreateupdateComponent implements OnInit {
   get detail(){
     return this.frm.controls['attributes'] as FormArray;
   }
-  addDetail(){
+  addDetail(value:string = '', id: string = ''){
+   const  frmDetail = this.fb.group({
+      typeProductAttribute: [value,Validators.required],
+      id: [id],
+    });
 
-
-    this.detail.push(this.frmDetail);
+    this.detail.push(frmDetail);
   }
   deleteDetail(idx: number){
-    this.detail.removeAt(idx);
+    var reg = this.detail.at(idx);
+
+    this.api.delete('typeProductAttribute',reg.value.id).subscribe(
+      (resp: any) => {
+        console.log('Delete Type Product', resp);
+        this.detail.removeAt(idx);
+      }
+    );
+
+  }
+
+  loadDetail(){
+    this.details.forEach((element:any)=>{
+      this.addDetail(element.name, element.id);
+    });
   }
 }
