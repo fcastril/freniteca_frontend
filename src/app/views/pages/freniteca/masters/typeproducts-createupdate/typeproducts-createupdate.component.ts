@@ -156,7 +156,9 @@ export class TypeproductsCreateupdateComponent implements OnInit {
       typeProductAttribute: [value,Validators.required],
       id: [id],
     });
-
+    if (this.id!=''){
+      frmDetail.controls['typeProductAttribute'].disable();
+    }
     this.detail.push(frmDetail);
   }
   deleteDetail(idx: number){
