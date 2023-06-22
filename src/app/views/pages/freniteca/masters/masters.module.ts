@@ -12,6 +12,7 @@ import { TypeproductsCreateupdateComponent } from './typeproducts-createupdate/t
 import { BrandsComponent } from './brands/brands.component';
 import { BrandsCreateupdateComponent } from './brands-createupdate/brands-createupdate.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 
 const routes: Routes = [
@@ -68,7 +69,8 @@ const routes: Routes = [
     FeatherIconModule,
     QuillModule.forRoot(), // ngx-quill
     ArchwizardModule, // angular-archwizard
-    NgSelectModule
+    NgSelectModule,
+    PdfViewerModule
   ]
 })
 export class MastersModule { }

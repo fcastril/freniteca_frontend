@@ -96,24 +96,22 @@
     </div>
 
     <br>
-    <hr>
     <div class="row"  >
         <h4 class="col-lg-9 col-md-9 col-xl-9 col-sm-9" style="display: flex; align-items:center">Imagénes / Documentos</h4>
-        <button type="button" class="btn btn-success col-lg-1 col-md-1 col-xl-1 col-sm-1" style="width:40px; height:40px" (click)="addImage()"><i class="fas fa-plus-circle"></i></button>
     </div>
-    <hr>
     <ng-container  formArrayName="images">
         <ng-container *ngFor="let img of Images.controls; let idx = index">
+            <hr>
             <div [formGroup]="img" >
                 <div class="row col-md-12 col-sm-12 col-xl-12 col-lg-12" style="display: flex; align-items:center">
                     <div class="form-group row">
                         <label for="data">Selecciona una imagen o documento PDF</label>
                         <input type="file" class="form-control imgdoc col-lg-7 col-md-7 col-xl-7 col-sm-7" style="width:600px" id="data" formControlName="data" name="data" (change)="handleFileInput($event, img)" title="Selecciona una imagen o documento">
-                        <button type="button" class="btn btn-danger col-lg-1 col-md-1 col-xl-1 col-sm-1" style="width:40px; height:40px"  (click)="deleteDetail(idx)"><i class="fa fa-trash" aria-hidden="true "></i></button>
+                        <button type="button" class="btn btn-danger col-lg-1 col-md-1 col-xl-1 col-sm-1" style="width:40px; height:40px; margin-left:2px"  (click)="deleteDetail(idx)"><i class="fa fa-trash" aria-hidden="true "></i></button>
                     </div>
-                    <div class="row mt-5">
-                        <img *ngIf="img.value.type != 'pdf'" [src]="img.value.doc" width="10%">
-                        <embed *ngIf="img.value.type == 'pdf'" [src]="img.value.doc" type="application/pdf" width="100%" height="600px" />
+                    <div class="row mt-3">
+                        <img *ngIf="img.value.type != 'pdf'" [src]="img.value.doc" style="max-width:400px">
+                        <iframe *ngIf="img.value.type == 'pdf'" [src]="transform(img.value.doc)" style="width:100%; height:40%"></iframe>
                     </div>
                 </div>   
             </div>
@@ -122,6 +120,8 @@
 
         </ng-container>
     </ng-container> 
+    <button type="button" class="btn btn-success col-lg-1 col-md-1 col-xl-1 col-sm-1 mt-5" style="width:40px; height:40px" (click)="addImage()"><i class="fas fa-plus-circle"></i></button>
+
 
     <div class="row botones">
         <button type="submit " class="btn btn-success submit col"><i class="fas fa-save "></i> Guardar</button>

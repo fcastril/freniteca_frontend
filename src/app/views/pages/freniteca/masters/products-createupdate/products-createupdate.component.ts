@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BrandModel } from 'src/app/models/brand.model';
 import { ProductModel } from 'src/app/models/product.model';
@@ -44,7 +45,7 @@ export class ProductsCreateupdateComponent implements OnInit {
   productsEquivalence: ProductModel[]=[];
 
 
-  constructor(private route: ActivatedRoute, private api: ApiService, private router: Router, private fb: FormBuilder) {
+  constructor(private route: ActivatedRoute, private api: ApiService, private router: Router, private fb: FormBuilder,private sanitizer: DomSanitizer) {
    // this.detail.push(this.frmDetail);
    //this.addDetail();
    }
@@ -224,9 +225,13 @@ export class ProductsCreateupdateComponent implements OnInit {
         };
         reader.readAsDataURL(event.target.files[0]);
       } else { //no
-        alert('Seleccione un archivo compatible.')
+        Swal.fire('Selección de Archivo','Solo se permiten las siguientes extensiones de archivos: PNG, JPG, JPGE, PDF','error');
       }
     }
+  }
+
+  transform(url: string) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
 }

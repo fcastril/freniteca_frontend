@@ -37,6 +37,7 @@ FullCalendarModule.registerPlugins([
 
 // ngx-quill
 import { QuillModule } from 'ngx-quill';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 const routes: Routes = [
   {
@@ -96,6 +97,7 @@ const routes: Routes = [
     NgbNavModule,
     NgbCollapseModule,
     NgSelectModule,
+    PdfViewerModule,
     QuillModule.forRoot(), // ngx-quill
   ],
   providers: [
