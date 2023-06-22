@@ -1,1 +1,84 @@
-<p>masters products works!</p>
+<form (ngSubmit)="Submit(f)" #f="ngForm">
+    <div class="row">
+        <div class="col-10">
+            <h3><i class="fab fa-bandcamp"></i>{{ title | uppercase }} </h3>
+        </div>
+        <div class="col-2"><button type="button" class="btn btn-primary float-right rounded" (click)="register('')" title="Agregar registros"><i class="fa fa-plus-circle" area-hidden="true"></i></button></div>
+        <br>
+    </div>
+    <div class="search-form mt-1">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="btn-icon-prepend">
+                    <button class="btn">
+                        <i class="feather icon-search" (click)="search()"></i>
+                    </button>
+                </div>
+            </div>
+            <input type="text" class="form-control" id="searchText" placeholder="Buscar aqui..." (keyup)='keyupSearch($event)' [(ngModel)]="searchText" autocomplete="off" name="searchText">
+        </div>
+    </div>
+    <br>
+    <table class="table" *ngIf="regs.length > 0">
+        <thead>
+            <tr>
+                <th >Acciones</th>
+                <th colspan="4" style="text-align:center">Producto</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let reg of regs; let idx = index">
+                <td>
+                    <button class="btn btn-success rounded"  style="margin-right:5px" [routerLink]="['/masters/brands', reg.id]" title="Actualizar Registro"><i class="fas fa-pencil-alt"></i></button>
+                    <button class="btn btn-danger  rounded" (click)=delete(reg.id,idx) title="Eliminar Registro"><i class="fas fa-trash"></i></button>
+                </td>
+                <td>
+                    <img src='{{urlImages+reg.id+"/01.png"}}' width="30px"/>
+                </td>
+                <td>
+                    <div class="row">
+                        <div class="col-5"><b>Código:</b></div>
+                        <div class="col-7">{{reg.code}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5"><b>Marca:</b></div>
+                        <div class="col-7">{{reg.brandNavigation.description}}</div>
+                    </div>
+                </td>
+                <td>
+                    <div class="row">
+                        <div class="col-4"><b>Ref.:</b></div>
+                        <div class="col-8">{{reg.reference}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4"><b>Ref. Prov.:</b></div>
+                        <div class="col-8">{{reg.referenceProvider}}</div>
+                    </div>                    
+                </td>
+                <td>
+                    <div class="row">
+                        <div class="col-3"><b>Descripción:</b></div>
+                        <div class="col-9">{{reg.description}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3"><b>Tipo Producto:</b></div>
+                        <div class="col-9">{{reg.typeProductNavigation.description}}</div>
+                    </div>                    
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="row" *ngIf="regs.length>0" style="margin-top: 5px">
+        <div class="col-2">
+
+            <button class="btn btn-success float-left" (click)="back()" *ngIf="currentPage > 1">Anterior</button>
+        </div>
+        <div class="col-8">
+
+        </div>
+        <div class="col-2">
+
+            <button class="btn btn-success float-right" (click)="next()" *ngIf="currentPage < totalPage">Siguiente</button>
+        </div>
+    </div>
+</form>

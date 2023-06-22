@@ -11,6 +11,7 @@ import { ProductsCreateupdateComponent } from './products-createupdate/products-
 import { TypeproductsCreateupdateComponent } from './typeproducts-createupdate/typeproducts-createupdate.component';
 import { BrandsComponent } from './brands/brands.component';
 import { BrandsCreateupdateComponent } from './brands-createupdate/brands-createupdate.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 const routes: Routes = [
@@ -67,6 +68,7 @@ const routes: Routes = [
     FeatherIconModule,
     QuillModule.forRoot(), // ngx-quill
     ArchwizardModule, // angular-archwizard
+    NgSelectModule
   ]
 })
 export class MastersModule { }
