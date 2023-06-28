@@ -29,7 +29,7 @@
         <tbody>
             <tr *ngFor="let reg of regs; let idx = index">
                 <td>
-                    <button class="btn btn-success rounded"  style="margin-right:5px" [routerLink]="['/masters/brands', reg.id]" title="Actualizar Registro"><i class="fas fa-pencil-alt"></i></button>
+                    <button class="btn btn-success rounded"  style="margin-right:5px" [routerLink]="['/masters/products', reg.id]" title="Actualizar Registro"><i class="fas fa-pencil-alt"></i></button>
                     <button class="btn btn-danger  rounded" (click)=delete(reg.id,idx) title="Eliminar Registro"><i class="fas fa-trash"></i></button>
                 </td>
                 <td>

@@ -47,7 +47,7 @@
             bindValue="id"
             placeholder="Tipo de Producto a Buscar..."
             formControlName="typeProductId"
-            (change)="selectedTypeProduct($event)">
+            (change)="selectedTypeProduct($event.id)">
             </ng-select>
             <span *ngIf="(f.submitted || frm.controls['typeProductId'].dirty) && frm.controls['typeProductId'].errors" class="text-danger">* Obligatorio</span>
         </div>
