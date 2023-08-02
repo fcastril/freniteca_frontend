@@ -13,6 +13,8 @@ import { BrandsComponent } from './brands/brands.component';
 import { BrandsCreateupdateComponent } from './brands-createupdate/brands-createupdate.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { ApplicationsComponent } from './applications/applications.component';
+import { ApplicationsCreateupdateComponent } from './applications-createupdate/applications-createupdate.component';
 
 
 const routes: Routes = [
@@ -47,7 +49,15 @@ const routes: Routes = [
       {
         path: 'brands/:id',
         component: BrandsCreateupdateComponent
-      }
+      },
+      {
+        path: 'applications',
+        component: ApplicationsComponent
+      },
+      {
+        path: 'applications/:id',
+        component: ApplicationsCreateupdateComponent
+      }      
     ]
   }
 ]
@@ -59,7 +69,9 @@ const routes: Routes = [
     ProductsCreateupdateComponent,
     TypeproductsCreateupdateComponent,
     BrandsComponent,
-    BrandsCreateupdateComponent
+    BrandsCreateupdateComponent,
+    ApplicationsComponent,
+    ApplicationsCreateupdateComponent
   ],
   imports: [
     CommonModule,

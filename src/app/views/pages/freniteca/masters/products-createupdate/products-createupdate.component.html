@@ -64,12 +64,6 @@
             <span *ngIf="(f.submitted || frm.controls['productEquivalenceId'].dirty) && frm.controls['productEquivalenceId'].errors" class="text-danger">* Obligatorio</span>
         </div>    
     </div>
-    <div class="row col-md-12 col-sm-12 col-xl-12 col-lg-12 mt-3">
-        <div class="form-group col-lg-12 col-md-12 col-xl-12 col-sm-12">
-            <label for="aplication">Aplicación</label>
-            <textarea class="form-control" id="aplication" formControlName="aplication" name="aplication" autocomplete="off"></textarea>
-        </div>
-    </div>
     <div *ngIf="ProductAttribute.length>0">
         <br>
         <hr>
@@ -88,9 +82,6 @@
                         </div>
                     </div>   
                 </div>
-    
-                
-    
             </ng-container>
         </ng-container> 
     </div>

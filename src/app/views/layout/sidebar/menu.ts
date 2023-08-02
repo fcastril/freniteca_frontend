@@ -38,6 +38,10 @@ export const MENU: MenuItem[] = [
       {
         label: 'Marcas',
         link: '/masters/brands',
+      },
+      {
+        label: 'Aplicaciones',
+        link: '/masters/applications',
       }
     ]
   },

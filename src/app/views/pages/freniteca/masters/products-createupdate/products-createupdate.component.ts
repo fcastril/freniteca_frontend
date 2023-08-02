@@ -43,7 +43,7 @@ export class ProductsCreateupdateComponent implements OnInit {
   typeProducts: TypeProductModel[]=[];
   brands: BrandModel[]=[];
   productsEquivalence: ProductModel[]=[];
-
+  typeProductsAttributes: TypeProductAttributeModel[] = [];
 
   constructor(private route: ActivatedRoute, private api: ApiService, private router: Router, private fb: FormBuilder,private sanitizer: DomSanitizer) {
    // this.detail.push(this.frmDetail);
@@ -66,12 +66,32 @@ export class ProductsCreateupdateComponent implements OnInit {
         async (resp: any) => {
           this.reg = resp.data;
           await this.setFields();
-          this.api.getCustom('productattribute','listbyProductId','ProductId',this.id).subscribe(
+          
+          this.typeProductsAttributes = [];
+          await this.api.getCustom('typeProductAttribute','ListByTypeProductId','TypeProductId',this.reg.typeProductId).subscribe(
             (resp: any) => {
-              this.ProductAttributes = resp.data;
-              console.log('ProductAttribute', this.ProductAttributes);
+                this.typeProductsAttributes = resp.data;
+
+                this.api.getCustom('productattribute','listbyProductId','ProductId',this.id).subscribe(
+                  (resp: any) => {
+                    this.ProductAttributes = resp.data;
+                    this.typeProductsAttributes.forEach((element: TypeProductAttributeModel)=>{
+                      var res = this.ProductAttributes.filter(x=>x.typeProductAttributeId == element.id);
+                      if (res.length >0)
+                      {
+                        element.value = res[0].value;
+                      }
+                    });              
+
+                    this.ProductAttribute.clear();
+                    this.loadProductAttributes();
+      
+      
+                  }
+                );
             }
           );
+          
         }
       );
     }
@@ -159,7 +179,6 @@ export class ProductsCreateupdateComponent implements OnInit {
     this.reg.reference = this.frm.get('reference')?.value??'';
     this.reg.referenceProvider = this.frm.get('referenceProvider')?.value??'';
     this.reg.description = this.frm.get('description')?.value??'';
-    this.reg.aplication = this.frm.get('aplication')?.value ?? '';
     this.reg.brandId = this.frm.get('brandId')?.value??'';
     this.reg.typeProductId = this.frm.get('typeProductId')?.value ?? '';
     this.reg.productEquivalenceId = this.frm.get('productEquivalence')?.value ?? '';
@@ -171,7 +190,6 @@ export class ProductsCreateupdateComponent implements OnInit {
     this.frm.controls['description'].setValue(this.reg.description);
     this.frm.controls['reference'].setValue(this.reg.reference);
     this.frm.controls['referenceProvider'].setValue(this.reg.referenceProvider);
-    this.frm.controls['aplication'].setValue(this.reg.aplication);
     this.frm.controls['brandId'].setValue(this.reg.brandId);
     this.frm.controls['typeProductId'].setValue(this.reg.typeProductId);
     this.frm.controls['typeProductId'].disable();
@@ -198,7 +216,7 @@ export class ProductsCreateupdateComponent implements OnInit {
     });
   }
 
-  typeProductsAttributes: TypeProductAttributeModel[] = [];
+  
   async selectedTypeProduct(id:string){
 
     this.typeProductsAttributes = [];
