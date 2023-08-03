@@ -3,8 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ApplicationModel } from 'src/app/models/application.model';
 import { BrandModel } from 'src/app/models/brand.model';
 import { ProductModel } from 'src/app/models/product.model';
+import { ProductApplicationModel } from 'src/app/models/productApplication.model';
 import { ProductAttributeModel } from 'src/app/models/productAttribute.model';
 import { TypeProductModel } from 'src/app/models/typeProduct.model';
 import { TypeProductAttributeModel } from 'src/app/models/typeProductAttribute.model';
@@ -31,7 +33,7 @@ export class ProductsCreateupdateComponent implements OnInit {
     reference: ['', Validators.required],
     referenceProvider: ['', Validators.required],
     description: ['', Validators.required],
-    aplication: ['', Validators.required],
+    productApplications: this.fb.array([]),
     typeProductId: ['', Validators.required],
     productEquivalenceId: [''],
     brandId: ['', Validators.required],
@@ -46,7 +48,9 @@ export class ProductsCreateupdateComponent implements OnInit {
   subtitle: string;
   reg = new ProductModel();
   ProductAttributes: ProductAttributeModel[]=[];
+  ProductApplications: ProductApplicationModel[]=[];
   typeProducts: TypeProductModel[]=[];
+  Applications: ApplicationModel[] = [];
   brands: BrandModel[]=[];
   productsEquivalence: ProductModel[]=[];
   typeProductsAttributes: TypeProductAttributeModel[] = [];
@@ -69,6 +73,7 @@ export class ProductsCreateupdateComponent implements OnInit {
     await this.getTypeProducts();
     await this.getBrands();
     await this.getProductsEquivalence();
+    await this.getApplications();
 
     if (this.id === '') {
       this.subtitle = 'CREANDO';
@@ -95,17 +100,40 @@ export class ProductsCreateupdateComponent implements OnInit {
 
                 this.api.getCustom('productattribute','listbyProductId','ProductId',this.id).subscribe(
                   (resp: any) => {
-                    this.ProductAttributes = resp.data;
-                    this.typeProductsAttributes.forEach((element: TypeProductAttributeModel)=>{
-                      var res = this.ProductAttributes.filter(x=>x.typeProductAttributeId == element.id);
-                      if (res.length >0)
-                      {
-                        element.value = res[0].value;
-                      }
-                    });              
-
                     this.ProductAttribute.clear();
-                    this.loadProductAttributes();
+                    if (resp.status){
+                      this.ProductAttributes = resp.data;
+                      this.typeProductsAttributes.forEach((element: TypeProductAttributeModel)=>{
+                        var res = this.ProductAttributes.filter(x=>x.typeProductAttributeId == element.id);
+                        if (res.length >0)
+                        {
+                          element.value = res[0].value;
+                        }
+                      });              
+  
+                      this.loadProductAttributes();
+        
+                    }
+      
+                  }
+                );
+
+                this.api.getCustom('productApplication','listbyProductId','ProductId',this.id).subscribe(
+                  (resp: any) => {
+                    this.ProductAttribute.clear();
+                    if (resp.status) {
+
+                      this.ProductApplications = resp.data;
+                      this.typeProductsAttributes.forEach((element: TypeProductAttributeModel)=>{
+                        var res = this.ProductAttributes.filter(x=>x.typeProductAttributeId == element.id);
+                        if (res.length >0)
+                        {
+                          element.value = res[0].value;
+                        }
+                      });              
+  
+                      this.loadProductAttributes();
+                    }
       
       
                   }
@@ -122,7 +150,8 @@ export class ProductsCreateupdateComponent implements OnInit {
   async getTypeProducts(){
     this.api.get('typeProduct').subscribe(
       (resp: any) => {
-        this.typeProducts = resp.data;
+        if (resp.status)
+          this.typeProducts = resp.data;
       }
     );
   }
@@ -130,14 +159,25 @@ export class ProductsCreateupdateComponent implements OnInit {
   async getBrands(){
     this.api.get('brand').subscribe(
       (resp: any) => {
-        this.brands = resp.data;
+        if (resp.status)
+          this.brands = resp.data;
       }
     );
   }
   async getProductsEquivalence(){
     this.api.get('product').subscribe(
       (resp: any) => {
-        this.productsEquivalence = resp.data;
+        if (resp.status)
+          this.productsEquivalence = resp.data;
+      }
+    );
+  }
+  async getApplications(){
+    this.api.get('application').subscribe(
+      (resp: any) => {
+        if (resp.status)
+          this.Applications = resp.data;
+        console.log('this.Applications', this.Applications);
       }
     );
   }
@@ -177,7 +217,9 @@ export class ProductsCreateupdateComponent implements OnInit {
             if (resp.error) {
                 Swal.fire('Error al crear el Registro','Se presentó un error al crear el registro', 'error');
             } else {
-//TODO: Guaradar datos de atributos
+//TODO: Guardar datos de atributos
+//TODO: Guardar documentos
+//TODO: Guardar Aplicaciones
               this.router.navigateByUrl('/masters/products');
             }
           });
@@ -188,6 +230,8 @@ export class ProductsCreateupdateComponent implements OnInit {
                 Swal.fire('Error al actualizar el Registro','Se presentó un error al actualizar el registro', 'error');
             } else {
 //TODO: Actualizar datos de atributos
+//TODO: Guardar documentos
+//TODO: Guardar Aplicaciones
               this.router.navigateByUrl('/masters/products');
             }
           });
@@ -220,6 +264,7 @@ export class ProductsCreateupdateComponent implements OnInit {
     
     
   }
+
   get ProductAttribute(){
     return this.frm.controls['productAttributes'] as FormArray;
   }
@@ -238,7 +283,51 @@ export class ProductsCreateupdateComponent implements OnInit {
     });
   }
 
-  
+
+
+  get ProductApplication(){
+    return this.frm.controls['productApplications'] as FormArray;
+  }
+  addApplication(applicationId:string = '', id: string = '', application: ApplicationModel){
+   const  frmDetail = this.fb.group({
+      applicationId: [applicationId],
+      application: [application],
+      id: [id],
+    });
+    this.ProductApplication.push(frmDetail);
+  }
+  deleteApplication(idx: number){
+    var reg = this.ProductApplication.at(idx);
+
+    this.api.delete('ProductApplication',reg.value.id).subscribe(
+      (resp: any) => {
+        if (resp.status)
+          this.ProductApplication.removeAt(idx);
+          this.Applications.push(reg.value['application']);
+      }
+    );
+
+  }
+  selectedApplication(idx: number, id: string, application: ApplicationModel){
+    var reg = this.ProductApplication.at(idx);
+    var regEncontrar = this.Applications.findIndex(x=>x.id == id);
+    reg.value['applicationId'] = id;
+    reg.value['id'] = this.id;
+    reg.value['application'] = this.Applications[regEncontrar];
+    this.Applications.splice(regEncontrar, 1);
+    //this.loadProductApplications();
+  }
+  loadProductApplications(){
+    this.ProductApplications.forEach((element:any)=>{
+      this.api.getId('Application', element.applicationId).subscribe(
+        (resp:any) => {
+          if (resp.status){
+            this.addApplication(element.applicationId, element.id, resp.data);
+          }
+        }
+      );
+    });
+  }
   async selectedTypeProduct(id:string){
 
     this.typeProductsAttributes = [];
@@ -288,5 +377,5 @@ export class ProductsCreateupdateComponent implements OnInit {
   transform(url: string) {
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
-
+  
 }

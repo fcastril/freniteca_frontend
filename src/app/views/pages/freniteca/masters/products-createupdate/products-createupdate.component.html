@@ -64,7 +64,36 @@
             <span *ngIf="(f.submitted || frm.controls['productEquivalenceId'].dirty) && frm.controls['productEquivalenceId'].errors" class="text-danger">* Obligatorio</span>
         </div>    
     </div>
-    <div *ngIf="ProductAttribute.length>0">
+
+    <br>
+    <hr>
+    <div class="row"  >
+        <h4 class="col-lg-9 col-md-9 col-xl-9 col-sm-9" style="display: flex; align-items:center">Aplicaciones</h4>
+        <button *ngIf="Applications.length > 0"
+        type="button" class="btn btn-success col-lg-1 col-md-1 col-xl-1 col-sm-1" style="width:50px; height:50px" (click)="addApplication()"><i class="fas fa-plus-circle"></i></button>
+    </div>
+    <hr>
+    <ng-container  formArrayName="attributes">
+        <ng-container *ngFor="let det of ProductApplication.controls; let idx = index">
+            <div [formGroup]="det" >
+                <div class="row col-md-12 col-sm-12 col-xl-12 col-lg-12" style="display: flex; align-items:center; margin-bottom:5px">
+                    <div class="form-group col-lg-9 col-md-9 col-xl-9 col-sm-9">
+                        <ng-select [items]="Applications"
+                        bindLabel="description"
+                        bindValue="id"
+                        placeholder="Aplicación a Buscar..."
+                        formControlName="id"
+                        (change)="selectedApplication(idx, $event.id)">
+                        </ng-select>                        
+                    </div>
+                    <button type="button" class="btn  btn-outline-danger col-lg-1 col-md-1 col-xl-1 col-sm-1 btnEliminarAplicacion" (click)="deleteApplication(idx)"><i class="fa fa-trash" aria-hidden="true "></i></button>
+                </div>   
+            </div>
+
+            
+
+        </ng-container>
+    </ng-container>     <div *ngIf="ProductAttribute.length>0">
         <br>
         <hr>
         <div class="row"  >
@@ -90,6 +119,7 @@
     <div class="row"  >
         <h4 class="col-lg-9 col-md-9 col-xl-9 col-sm-9" style="display: flex; align-items:center">Imagénes / Documentos</h4>
     </div>
+    <button type="button" class="btn btn-success col-lg-1 col-md-1 col-xl-1 col-sm-1 mt-5" style="width:40px; height:40px" (click)="addImage()"><i class="fas fa-plus-circle"></i></button>
     <ng-container  formArrayName="images">
         <ng-container *ngFor="let img of Images.controls; let idx = index">
             <hr>
@@ -102,18 +132,18 @@
                     </div>
                     <div class="row mt-3">
                         <img *ngIf="img.value.type != 'pdf'" [src]="img.value.doc" style="max-width:400px">
-                        <iframe *ngIf="img.value.type == 'pdf'" [src]="transform(img.value.doc)" style="width:100%; height:40%"></iframe>
+                        <iframe *ngIf="img.value.type == 'pdf'" [src]="transform(img.value.doc)" style="width:400px!important; height:200px!important"></iframe>
                     </div>
                 </div>   
             </div>
         </ng-container>
     </ng-container> 
+    <br>
     <div class="row" *ngFor="let img of listImagenes">
         <b>Nombre del Archivo: </b><label>{{img.split('/')[img.split('/').length-1]}}</label>
         <img class="imagen" src='{{urlImages+img}}' alt="" *ngIf="img.indexOf('pdf') == -1">
         <iframe *ngIf="img.indexOf('pdf') !== -1" [src]="transform(urlImages+img)" style="width:400px!important; height:200px!important"></iframe>
     </div>
-    <button type="button" class="btn btn-success col-lg-1 col-md-1 col-xl-1 col-sm-1 mt-5" style="width:40px; height:40px" (click)="addImage()"><i class="fas fa-plus-circle"></i></button>
 
 
     <div class="row botones">
