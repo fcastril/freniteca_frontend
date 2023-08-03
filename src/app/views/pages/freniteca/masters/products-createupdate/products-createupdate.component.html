@@ -106,16 +106,18 @@
                     </div>
                 </div>   
             </div>
-
-            
-
         </ng-container>
     </ng-container> 
+    <div class="row" *ngFor="let img of listImagenes">
+        <b>Nombre del Archivo: </b><label>{{img.split('/')[img.split('/').length-1]}}</label>
+        <img class="imagen" src='{{urlImages+img}}' alt="" *ngIf="img.indexOf('pdf') == -1">
+        <iframe *ngIf="img.indexOf('pdf') !== -1" [src]="transform(urlImages+img)" style="width:400px!important; height:200px!important"></iframe>
+    </div>
     <button type="button" class="btn btn-success col-lg-1 col-md-1 col-xl-1 col-sm-1 mt-5" style="width:40px; height:40px" (click)="addImage()"><i class="fas fa-plus-circle"></i></button>
 
 
     <div class="row botones">
         <button type="submit " class="btn btn-success submit col"><i class="fas fa-save "></i> Guardar</button>
-        <button type="button " class="btn btn-danger cancel col" [routerLink]="['/masters/typeproducts']"><i class="fa fa-ban " aria-hidden="true "></i> Regresar</button>
+        <button type="button " class="btn btn-danger cancel col" [routerLink]="['/masters/products']"><i class="fa fa-ban " aria-hidden="true "></i> Regresar</button>
     </div>
 </form>

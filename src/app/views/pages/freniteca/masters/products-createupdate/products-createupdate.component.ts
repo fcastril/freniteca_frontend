@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -8,8 +9,13 @@ import { ProductAttributeModel } from 'src/app/models/productAttribute.model';
 import { TypeProductModel } from 'src/app/models/typeProduct.model';
 import { TypeProductAttributeModel } from 'src/app/models/typeProductAttribute.model';
 import { ApiService } from 'src/app/services/api.service';
+import { ProductService } from 'src/app/services/product.service';
+import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 import { v4 as uuidv4 } from 'uuid';
+
+
+
 
 @Component({
   selector: 'app-products-createupdate',
@@ -44,10 +50,18 @@ export class ProductsCreateupdateComponent implements OnInit {
   brands: BrandModel[]=[];
   productsEquivalence: ProductModel[]=[];
   typeProductsAttributes: TypeProductAttributeModel[] = [];
+  urlImages: string = '';
+  listImagenes: string[] = [];
 
-  constructor(private route: ActivatedRoute, private api: ApiService, private router: Router, private fb: FormBuilder,private sanitizer: DomSanitizer) {
+  constructor(private route: ActivatedRoute, 
+    private api: ApiService, 
+    private router: Router, 
+    private fb: FormBuilder,
+    private sanitizer: DomSanitizer, 
+    private productService: ProductService) {
    // this.detail.push(this.frmDetail);
    //this.addDetail();
+   this.urlImages = environment.urlImages;
    }
 
   async ngOnInit(): Promise<void> {
@@ -66,6 +80,13 @@ export class ProductsCreateupdateComponent implements OnInit {
         async (resp: any) => {
           this.reg = resp.data;
           await this.setFields();
+          await this.productService.getFiles(this.id).subscribe(
+            (resp: any) => {
+              if (resp.status){
+                this.listImagenes = resp.data;
+              }
+            }
+          );
           
           this.typeProductsAttributes = [];
           await this.api.getCustom('typeProductAttribute','ListByTypeProductId','TypeProductId',this.reg.typeProductId).subscribe(
@@ -95,6 +116,7 @@ export class ProductsCreateupdateComponent implements OnInit {
         }
       );
     }
+
   }
 
   async getTypeProducts(){
@@ -254,7 +276,6 @@ export class ProductsCreateupdateComponent implements OnInit {
           if(event.target?.result) {
             imgReg.controls["doc"].setValue(event.target?.result);
             imgReg.controls["type"].setValue(extension);
-            console.log(imgReg);
           }
         };
         reader.readAsDataURL(event.target.files[0]);
