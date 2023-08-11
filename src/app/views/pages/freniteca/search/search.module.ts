@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProductsComponent } from './products/products.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { FeatherIconModule } from 'src/app/core/feather-icon/feather-icon.module';
 import { QuillModule } from 'ngx-quill';
 import { ArchwizardModule } from 'angular-archwizard';
-import { ProductsDetailsComponent } from './products-details/products-details.component';
+import { ProductsCreateupdateComponent } from '../masters/products-createupdate/products-createupdate.component';
+import { ProductsComponent } from '../masters/products/products.component';
 
 
 const routes: Routes = [
@@ -20,12 +20,12 @@ const routes: Routes = [
         pathMatch: 'full'
       },
       {
-        path: 'products',
+        path: 'products/:search',
         component: ProductsComponent,
       },
       {
-        path: 'products/:id',
-        component: ProductsDetailsComponent,
+        path: 'products/:id/:view',
+        component: ProductsCreateupdateComponent,
       }            
     ]
   }
@@ -34,8 +34,6 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    ProductsComponent,
-    ProductsDetailsComponent
   ],
   imports: [
     CommonModule,

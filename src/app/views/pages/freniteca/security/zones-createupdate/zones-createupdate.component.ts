@@ -30,7 +30,6 @@ export class ZonesCreateupdateComponent implements OnInit {
       this.subtitle = 'EDITANDO';
       this.api.getId('zone',this.id).subscribe(
         (resp: any) => {
-          console.log('resp', resp)
           this.reg = resp.data;
         }
       );

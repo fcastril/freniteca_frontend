@@ -121,7 +121,6 @@ export class TypeproductsCreateupdateComponent implements OnInit {
           var elem = this.setDetail(id, uuidv4(), element.value);
           this.api.create('typeProductAttribute',elem).subscribe(
             (resp:any) => {
-              console.log('Create Type Product', resp);
             }
           );
         }
@@ -166,7 +165,6 @@ export class TypeproductsCreateupdateComponent implements OnInit {
 
     this.api.delete('typeProductAttribute',reg.value.id).subscribe(
       (resp: any) => {
-        console.log('Delete Type Product', resp);
         this.detail.removeAt(idx);
       }
     );

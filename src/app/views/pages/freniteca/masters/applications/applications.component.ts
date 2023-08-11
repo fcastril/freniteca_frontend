@@ -49,7 +49,11 @@ export class ApplicationsComponent implements OnInit {
       filters: [
         { property: 'code', value: this.searchText, operator: Operations.Contains, conditional: LogicalOperators.Or },
         { property: 'description', value: this.searchText, operator: Operations.Contains, conditional: LogicalOperators.Or },
+        { property: 'descriptionBrand', value: this.searchText, operator: Operations.Contains, conditional: LogicalOperators.Or },
+
+
       ],
+
       orders: [],
       rowsTotal:0,
       pagesTotal:0,

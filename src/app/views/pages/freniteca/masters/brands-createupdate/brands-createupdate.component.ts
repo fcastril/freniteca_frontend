@@ -31,7 +31,6 @@ export class BrandsCreateupdateComponent implements OnInit {
       this.subtitle = 'EDITANDO';
       this.api.getId('brand',this.id).subscribe(
         (resp: any) => {
-          console.log('resp', resp)
           this.reg = resp.data;
         }
       );

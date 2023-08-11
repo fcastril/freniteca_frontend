@@ -1,30 +1,33 @@
 <form [formGroup]="frm" (ngSubmit)="Submit()" #f="ngForm">
     <div class="row">
         <div class="col-10">
-            <h3><i class="fas fa-boxes"></i> {{ title | uppercase}} <b><small *ngIf="id===''" style="color: green;">CREANDO</small><small *ngIf="id!==''" style="color: blue;">EDITANDO</small></b></h3>
+            <h3><i class="fas fa-boxes"></i> {{ title | uppercase}} <b>
+            <small *ngIf="id===''" style="color: green;">{{subtitle}}</small>
+            <small *ngIf="id!=='' && !isView" style="color: blue;">{{subtitle}}</small>
+            <small *ngIf="id!=='' && isView" style="color: orange;">{{subtitle}}</small></b></h3>
         </div>
     </div>
     <div class="row col-md-12 col-sm-12 col-xl-12 col-lg-12 mt-3">
         <div class="form-group col-lg-3 col-md-3 col-xl-3 col-sm-12">
             <label for="code">Código</label>
-            <input type="text" class="form-control" id="code" formControlName="code" name="code" autocomplete="off" required>
+            <input type="text" class="form-control" id="code" formControlName="code" name="code" autocomplete="off" required placeholder="Digite el código del producto">
             <span *ngIf="(f.submitted || frm.controls['code'].dirty) && frm.controls['code'].errors" class="text-danger">* Obligatorio</span>
         </div>
         <div class="form-group col-lg-3 col-md-3 col-xl-3 col-sm-12">
             <label for="reference">Referencia</label>
-            <input type="text" class="form-control" id="reference" formControlName="reference" name="reference" autocomplete="off" required>
+            <input type="text" class="form-control" id="reference" formControlName="reference" name="reference" autocomplete="off" required placeholder="Digite la referencia del producto">
             <span *ngIf="(f.submitted || frm.controls['reference'].dirty) && frm.controls['reference'].errors" class="text-danger">* Obligatorio</span>
         </div>
         <div class="form-group col-lg-3 col-md-3 col-xl-3 col-sm-12">
             <label for="referenceProvider">Referencia Proveedor</label>
-            <input type="text" class="form-control" id="referenceProvider" formControlName="referenceProvider" name="referenceProvider" autocomplete="off" required>
+            <input type="text" class="form-control" id="referenceProvider" formControlName="referenceProvider" name="referenceProvider" autocomplete="off" required placeholder="Digite la referencia del proveedor del producto">
             <span *ngIf="(f.submitted || frm.controls['referenceProvider'].dirty) && frm.controls['referenceProvider'].errors" class="text-danger">* Obligatorio</span>
         </div>
     </div>
     <div class="row col-md-12 col-sm-12 col-xl-12 col-lg-12 mt-3">
         <div class="form-group col-lg-6 col-md-6 col-xl-6 col-sm-12">
             <label for="description">Descripción</label>
-            <input type="text" class="form-control" id="description" formControlName="description" name="description" autocomplete="off" required>
+            <input type="text" class="form-control" id="description" formControlName="description" name="description" autocomplete="off" required placeholder="Digite la descripción del producto">
             <span *ngIf="(f.submitted || frm.controls['description'].dirty) && frm.controls['description'].errors" class="text-danger">* Obligatorio</span>
         </div>
         <div class="form-group col-lg-6 col-md-6 col-xl-6 col-sm-12">
@@ -51,42 +54,32 @@
             </ng-select>
             <span *ngIf="(f.submitted || frm.controls['typeProductId'].dirty) && frm.controls['typeProductId'].errors" class="text-danger">* Obligatorio</span>
         </div>
-        <div class="form-group col-lg-6 col-md-6 col-xl-6 col-sm-12">
-            <label for="productEquivalenceId">Producto Equivalente</label>
-            <ng-select 
-                formControlName="productEquivalenceId"
-                placeholder="Producto Equivalente a Buscar"
-            >
-                <ng-option *ngFor="let prod of productsEquivalence" [value]="prod.id">{{prod.code}} - {{prod.reference}} - {{prod.referenceProvider}} - {{prod.description}}</ng-option>
-            </ng-select>
-
-
-            <span *ngIf="(f.submitted || frm.controls['productEquivalenceId'].dirty) && frm.controls['productEquivalenceId'].errors" class="text-danger">* Obligatorio</span>
-        </div>    
     </div>
 
     <br>
     <hr>
     <div class="row"  >
-        <h4 class="col-lg-9 col-md-9 col-xl-9 col-sm-9" style="display: flex; align-items:center">Aplicaciones</h4>
-        <button *ngIf="Applications.length > 0"
+        <h4 class="col-lg-9 col-md-9 col-xl-9 col-sm-9" style="display: flex; align-items:center; margin-bottom:5px">Aplicaciones</h4>
+        <button *ngIf="Applications.length > 0 && !isView"
         type="button" class="btn btn-success col-lg-1 col-md-1 col-xl-1 col-sm-1" style="width:50px; height:50px" (click)="addApplication()"><i class="fas fa-plus-circle"></i></button>
     </div>
-    <hr>
-    <ng-container  formArrayName="attributes">
+    <br>
+    <ng-container  formArrayName="productApplications">
         <ng-container *ngFor="let det of ProductApplication.controls; let idx = index">
             <div [formGroup]="det" >
                 <div class="row col-md-12 col-sm-12 col-xl-12 col-lg-12" style="display: flex; align-items:center; margin-bottom:5px">
+                    <label class="form-group col-md-1 col-sm-1 col-xl-1 col-lg-1">{{idx+1}}</label>
                     <div class="form-group col-lg-9 col-md-9 col-xl-9 col-sm-9">
-                        <ng-select [items]="Applications"
+                        <ng-select [items]="Applications" *ngIf="!isView"
                         bindLabel="description"
                         bindValue="id"
                         placeholder="Aplicación a Buscar..."
                         formControlName="id"
                         (change)="selectedApplication(idx, $event.id)">
-                        </ng-select>                        
+                        </ng-select>  
+                        <label *ngIf="isView">{{det.value.application.description}}</label>                      
                     </div>
-                    <button type="button" class="btn  btn-outline-danger col-lg-1 col-md-1 col-xl-1 col-sm-1 btnEliminarAplicacion" (click)="deleteApplication(idx)"><i class="fa fa-trash" aria-hidden="true "></i></button>
+                    <button *ngIf="!isView"  type="button" class="btn  btn-outline-danger col-lg-1 col-md-1 col-xl-1 col-sm-1 btnEliminarAplicacion" (click)="deleteApplication(idx)"><i class="fa fa-trash" aria-hidden="true "></i></button>
                 </div>   
             </div>
 
@@ -99,15 +92,17 @@
         <div class="row"  >
             <h4 class="col-lg-9 col-md-9 col-xl-9 col-sm-9" style="display: flex; align-items:center">Atributos</h4>
         </div>
-        <hr>
+        <br>
         <ng-container  formArrayName="productAttributes">
             <ng-container *ngFor="let det of ProductAttribute.controls; let idx = index">
                 <div [formGroup]="det" >
-                    <div class="row col-md-12 col-sm-12 col-xl-12 col-lg-12" style="display: flex; align-items:center">
-                        <div class="form-group col-lg-9 col-md-9 col-xl-9 col-sm-9">
-                            
+                    <div class="row col-md-12 col-sm-12 col-xl-12 col-lg-12" style="display: flex; align-items:center ; margin-bottom:5px">
+                        <div class="col-lg-1 col-md-1 col-xl-1 col-sm-1">
                             <label >{{det.value.descriptionTypeProduct}}</label>
-                            <input type="text" class="form-control " id="value" formControlName="value" name="value" autocomplete="off" required>
+                        </div>
+                        <div class="form-group col-lg-9 col-md-9 col-xl-9 col-sm-9">
+                            <input *ngIf="!isView"  type="text" class="form-control " id="value" formControlName="value" name="value" autocomplete="off" required>
+                            <label *ngIf="isView">{{det.value.value}}</label>
                         </div>
                     </div>   
                 </div>
@@ -119,7 +114,7 @@
     <div class="row"  >
         <h4 class="col-lg-9 col-md-9 col-xl-9 col-sm-9" style="display: flex; align-items:center">Imagénes / Documentos</h4>
     </div>
-    <button type="button" class="btn btn-success col-lg-1 col-md-1 col-xl-1 col-sm-1 mt-5" style="width:40px; height:40px" (click)="addImage()"><i class="fas fa-plus-circle"></i></button>
+    <button *ngIf="!isView"  type="button" class="btn btn-success col-lg-1 col-md-1 col-xl-1 col-sm-1" style="width:40px; height:40px" (click)="addImage()"><i class="fas fa-plus-circle"></i></button>
     <ng-container  formArrayName="images">
         <ng-container *ngFor="let img of Images.controls; let idx = index">
             <hr>
@@ -147,7 +142,8 @@
 
 
     <div class="row botones">
-        <button type="submit " class="btn btn-success submit col"><i class="fas fa-save "></i> Guardar</button>
-        <button type="button " class="btn btn-danger cancel col" [routerLink]="['/masters/products']"><i class="fa fa-ban " aria-hidden="true "></i> Regresar</button>
+        <button *ngIf="!isView" type="submit " class="btn btn-success submit col"><i class="fas fa-save "></i> Guardar</button>
+        <button *ngIf="isView" type="submit " class="btn btn-warning submit col"><i class="fas fa-print "></i> Imprimir</button>
+        <button type="button " class="btn btn-danger cancel col" (click)="back()"><i class="fa fa-ban " aria-hidden="true "></i> Regresar</button>
     </div>
 </form>

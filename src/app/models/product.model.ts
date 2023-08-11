@@ -6,7 +6,6 @@ export class ProductModel extends BaseModel{
     referenceProvider: string;
     description: string;
     typeProductId: string;
-    productEquivalenceId: string;
     brandId: string;
     
 }

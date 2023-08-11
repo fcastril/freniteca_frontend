@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LogicalOperators } from 'src/app/enums/logicalOperators.enum';
 import { Operations } from 'src/app/enums/operations.enum';
 import { PaginateModel } from 'src/app/models/paginate.model';
@@ -25,12 +25,15 @@ export class ProductsComponent implements OnInit {
   pageCount: number = 10;
   totalPage: number = 0;
   urlImages: string = '';
+  isView: boolean = false;
 
-  constructor(private route: Router, private api: ApiService) {
+  constructor(private route: Router, private api: ApiService, private rout: ActivatedRoute) {
     this.urlImages = environment.urlImages;
    }
 
   ngOnInit(): void {
+    var param = this.rout.snapshot.paramMap.get('view') 
+    this.isView = param==='ppal' ??false;
     this.search();
   }
 
@@ -38,7 +41,7 @@ export class ProductsComponent implements OnInit {
 
   register(id: string){
     if(id=== '') {
-      this.route.navigateByUrl('/masters/products/'+id);
+      this.route.navigateByUrl('/masters/products/admin/'+id);
     }
   }
 
@@ -63,7 +66,6 @@ export class ProductsComponent implements OnInit {
 
     this.api.paginate('product', paginate).subscribe(
       (resp: any)=>{
-        console.log(resp);
         this.regs = resp.data.data;
         this.totalPage = resp.data.pagesTotal;
       }

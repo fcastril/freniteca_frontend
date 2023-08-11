@@ -17,7 +17,7 @@ export const MENU: MenuItem[] = [
   {
     label: 'Productos',
     icon: 'codesandbox',
-    link: '/search/products'
+    link: '/masters/products/ppal'
   },
   {
     label: 'Configuración',
@@ -29,7 +29,7 @@ export const MENU: MenuItem[] = [
     subItems: [
       {
         label: 'Productos',
-        link: '/masters/products',
+        link: '/masters/products/admin',
       },
       {
         label: 'Tipos de Productos',
