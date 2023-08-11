@@ -10,11 +10,13 @@ import { ProductAttributeModel } from 'src/app/models/productAttribute.model';
 import { TypeProductModel } from 'src/app/models/typeProduct.model';
 import { TypeProductAttributeModel } from 'src/app/models/typeProductAttribute.model';
 import { ApiService } from 'src/app/services/api.service';
+import { ProductApplicationService } from 'src/app/services/product-application.service';
 import { ProductAttributeService } from 'src/app/services/product-attribute.service';
 import { ProductService } from 'src/app/services/product.service';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 import { v4 as uuidv4 } from 'uuid';
+import { DateSelectArg } from '@fullcalendar/angular';
 
 
 
@@ -50,8 +52,8 @@ export class ProductsCreateupdateComponent implements OnInit {
   ProductAttributes: ProductAttributeModel[]=[];
   ProductApplications: ProductApplicationModel[]=[];
   typeProducts: TypeProductModel[]=[];
-  Applications: ApplicationModel[] = [];
   brands: BrandModel[]=[];
+  Applications: ApplicationModel[] = [];
   typeProductsAttributes: TypeProductAttributeModel[] = [];
   urlImages: string = '';
   listImagenes: string[] = [];
@@ -63,6 +65,7 @@ export class ProductsCreateupdateComponent implements OnInit {
     private fb: FormBuilder,
     private sanitizer: DomSanitizer, 
     private productAttributeService: ProductAttributeService,
+    private productApplicationService: ProductApplicationService,
     private productService: ProductService) {
    this.urlImages = environment.urlImages;
    }
@@ -94,7 +97,7 @@ export class ProductsCreateupdateComponent implements OnInit {
         async (resp: any) => {
           this.reg = resp.data;
           await this.setFields();
-          await this.productService.getFiles(this.id).subscribe(
+          await this.productService.getFiles(this.reg.code).subscribe(
             (resp: any) => {
               if (resp.status){
                 this.listImagenes = resp.data;
@@ -255,7 +258,6 @@ export class ProductsCreateupdateComponent implements OnInit {
                 Swal.fire('Error al crear el Registro','Se presentó un error al crear el registro', 'error');
             } else {
               
-//TODO: Guardar datos de atributos
             var controls = this.ProductAttribute.controls;
             controls.forEach((element:any)=>{
               let productAttributeModel: ProductAttributeModel = {
@@ -272,6 +274,19 @@ export class ProductsCreateupdateComponent implements OnInit {
 
 //TODO: Guardar documentos
 //TODO: Guardar Aplicaciones
+              var app = this.ProductApplication.controls;
+              app.forEach((element:any)=>{
+                let productApplication: ProductApplicationModel = {
+                  id: uuidv4(),
+                  productId: this.reg.id,
+                  applicationId: element.value.applicationId,
+                  value : element.value.value,
+                  dateCreation: new Date(),
+                  status : 'active',
+                  dateLastUpdate: new Date()
+                }
+                this.api.create('ProductApplication',productApplication).subscribe();
+              });
               this.router.navigateByUrl('/masters/products/admin');
             }
           });
@@ -298,37 +313,47 @@ export class ProductsCreateupdateComponent implements OnInit {
                       if (resp.data == null) // crear registros
                       {
                         productAttributeModel.id = uuidv4();
-                        this.api.create('productAttribute', productAttributeModel).subscribe(
-                          (resp:any) => {
-                            if (resp.status){
-                              console.log('productAttribute Creado');
-                            }
-                          },
-                          (error: any) => { console.log('error Creado', productAttributeModel); }
-                        );
+                        this.api.create('productAttribute', productAttributeModel).subscribe();
                       } 
                       else {
                         productAttributeModel.id = resp.data.id;
                         productAttributeModel.dateCreation = resp.data.dateCreation;
-                        this.api.update('productAttribute', productAttributeModel).subscribe(
-                          (resp:any) => {
-                            if (resp.status){
-                              console.log('productAttribute Creado');
-                            }
-                          },
-                          (error: any) => { console.log('error Creado', productAttributeModel); }
-                        );
-
+                        this.api.update('productAttribute', productAttributeModel).subscribe();
                       }
-                    
-                      console.log('resp', resp);
                     }
                   }
                 );
               });
-
+              //TODO: Guardar Aplicaciones
+              var app = this.ProductApplication.controls;
+              app.forEach((element:any)=>{
+                this.productApplicationService.getByProductIdAndApplicationId(this.id, element.value.applicationId).subscribe(
+                  (resp: any)=>{
+                    if (resp.status) {
+                      let productApplication: ProductApplicationModel = {
+                        id: '',
+                        productId: this.reg.id,
+                        applicationId: element.value.applicationId,
+                        value : element.value.value,
+                        dateCreation: new Date(),
+                        status : 'active',
+                        dateLastUpdate: new Date()
+                      }
+                      if (resp.data == null) // crear registro
+                      {
+                        productApplication.id = uuidv4();
+                        this.api.create('productApplication', productApplication).subscribe();
+                      }
+                      else {
+                        productApplication.id = resp.data.id;
+                        productApplication.dateCreation = resp.data.dateCreation;
+                        this.api.update('productApplication', productApplication).subscribe();
+                      }
+                    }
+                  }
+                );
+              });
 //TODO: Guardar documentos
-//TODO: Guardar Aplicaciones
               this.router.navigateByUrl('/masters/products/admin');
             }
           });
@@ -385,11 +410,12 @@ export class ProductsCreateupdateComponent implements OnInit {
   get ProductApplication(){
     return this.frm.controls['productApplications'] as FormArray;
   }
-  addApplication(applicationId:string = '', id: string = '', application: ApplicationModel){
+  addApplication(applicationId:string = '', id: string = '', value: string= '', application: ApplicationModel){
    const  frmDetail = this.fb.group({
       applicationId: [applicationId],
       application: [application],
       id: [id],
+      value: [value]
     });
     this.ProductApplication.push(frmDetail);
   }
@@ -411,18 +437,19 @@ export class ProductsCreateupdateComponent implements OnInit {
 
   }
   selectedApplication(idx: number, id: string, application: ApplicationModel){
-    debugger;
     var reg = this.ProductApplication.at(idx);
-    reg.value['applicationId'] = id;
-    reg.value['id'] = this.id;
+    this.ProductApplication.removeAt(idx);
+    reg.value.applicationId = id;
+    reg.value.id = this.id;
     var regEncontrar = this.Applications.findIndex(x=>x.id == id);
-    reg.value['application'] = this.Applications[regEncontrar];
+    reg.value.application = application;
     this.Applications.splice(regEncontrar, 1);
-    //this.loadProductApplications();
+    this.ProductApplication.push(reg);
+    console.log('ProductApplication', this.ProductApplication);
   }
   loadProductApplications(){
     this.ProductApplications.forEach((element:any)=>{
-      this.addApplication(element.applicationId, element.applicationId, element.applicationNavigation);
+      this.addApplication(element.applicationId, element.applicationId, element.value, element.applicationNavigation);
 
     });
   }

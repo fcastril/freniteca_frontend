@@ -7,4 +7,5 @@ export class ApplicationModel extends BaseModel{
     brandId: string;
     brandDescription: string;
     brandNavigation: BrandModel;
+    descriptionFull: string;
 }

@@ -15,7 +15,7 @@ export class ProductService {
     return this.http.post(`${ environment.urlApi }product/uploadFiles/${idProduct}`, file, {headers: this.auth.getHeaders()});
   }
 
-  getFiles(idProduct: string){
-    return this.http.get(`${ environment.urlApi }product/getFiles/${idProduct}`,  {headers: this.auth.getHeaders()});
+  getFiles(code: string){
+    return this.http.get(`${ environment.urlApi }product/getFiles/${code}`,  {headers: this.auth.getHeaders()});
   }
 }

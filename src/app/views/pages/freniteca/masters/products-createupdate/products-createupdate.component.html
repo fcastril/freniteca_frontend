@@ -67,20 +67,29 @@
     <ng-container  formArrayName="productApplications">
         <ng-container *ngFor="let det of ProductApplication.controls; let idx = index">
             <div [formGroup]="det" >
-                <div class="row col-md-12 col-sm-12 col-xl-12 col-lg-12" style="display: flex; align-items:center; margin-bottom:5px">
-                    <label class="form-group col-md-1 col-sm-1 col-xl-1 col-lg-1">{{idx+1}}</label>
-                    <div class="form-group col-lg-9 col-md-9 col-xl-9 col-sm-9">
-                        <ng-select [items]="Applications" *ngIf="!isView"
-                        bindLabel="description"
-                        bindValue="id"
-                        placeholder="Aplicación a Buscar..."
-                        formControlName="id"
-                        (change)="selectedApplication(idx, $event.id)">
-                        </ng-select>  
-                        <label *ngIf="isView">{{det.value.application.description}}</label>                      
-                    </div>
-                    <button *ngIf="!isView"  type="button" class="btn  btn-outline-danger col-lg-1 col-md-1 col-xl-1 col-sm-1 btnEliminarAplicacion" (click)="deleteApplication(idx)"><i class="fa fa-trash" aria-hidden="true "></i></button>
-                </div>   
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xl-6 col-lg-6" style="display: flex; align-items:center; margin-bottom:5px">
+                        <label class="form-group col-md-1 col-sm-1 col-xl-1 col-lg-1">{{idx+1}}</label>
+                        <div class="form-group col-lg-9 col-md-9 col-xl-9 col-sm-9">
+                            <ng-select [items]="Applications" *ngIf="!isView"
+                            bindLabel="descriptionFull"
+                            bindValue="id"
+                            placeholder="Aplicación a Buscar..."
+                            formControlName="applicationId"
+                            (change)="selectedApplication(idx, $event.id, $event)">
+                            </ng-select>  
+                            <label *ngIf="isView">{{det.value.application.description}}</label>                      
+                        </div>
+                    </div>   
+                    <div class="row col-md-6 col-sm-6 col-xl-6 col-lg-6" style="display: flex; align-items:center ; margin-bottom:5px">
+                        <div class="form-group col-lg-9 col-md-9 col-xl-9 col-sm-9">
+                            <input *ngIf="!isView"  type="text" class="form-control " id="value" formControlName="value" name="value" autocomplete="off">
+                            <label *ngIf="isView">{{det.value.value}}</label>
+                        </div>
+                        <button *ngIf="!isView"  type="button" class="btn  btn-outline-danger col-lg-1 col-md-1 col-xl-1 col-sm-1 btnEliminarAplicacion" (click)="deleteApplication(idx)"><i class="fa fa-trash" aria-hidden="true "></i></button>
+                    </div>   
+
+                </div>
             </div>
 
             

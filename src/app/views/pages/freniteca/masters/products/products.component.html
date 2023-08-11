@@ -1,4 +1,4 @@
-<form (ngSubmit)="Submit(f)" #f="ngForm">
+<form (ngSubmit)="Submit()" #f="ngForm">
     <div class="row">
         <div class="col-10">
             <h3><i class="fab fa-bandcamp"></i>{{ title | uppercase }} </h3>
@@ -15,8 +15,49 @@
                     </button>
                 </div>
             </div>
-            <input type="text" class="form-control" id="searchText" placeholder="Buscar aquí..." (keyup)='keyupSearch($event)' [(ngModel)]="searchText" autocomplete="off" name="searchText">
+            <h3 class="text-warning">FILTROS A BUSCAR</h3>
+            <!-- <input type="text" class="form-control" id="searchText" placeholder="Buscar aquí..." (keyup)='keyupSearch($event)' [(ngModel)]="searchText" autocomplete="off" name="searchText"> -->
         </div>
+        <form [formGroup]="frm" (ngSubmit)="Submit()" #f="ngForm">
+            <div class="row col-md-12 col-sm-12 col-xl-12 col-lg-12 mt-3">
+                <div class="form-group col-lg-3 col-md-3 col-xl-3 col-sm-12">
+                    <label for="code">Código</label>
+                    <input type="text" class="form-control" id="code" formControlName="code" name="code" autocomplete="off" required placeholder="Digite el código del producto">
+                </div>
+                <div class="form-group col-lg-9 col-md-9 col-xl-9 col-sm-12">
+                    <label for="description">Descripción</label>
+                    <input type="text" class="form-control" id="description" formControlName="description" name="description" autocomplete="off" required placeholder="Digite la descripción del producto">
+                </div>
+            </div>
+            <div class="row col-md-12 col-sm-12 col-xl-12 col-lg-12 mt-3">
+                <div class="form-group col-lg-6 col-md-6 col-xl-6 col-sm-12">
+                    <label for="brandId">Marca</label>
+                    <ng-select [items]="brands"
+                    bindLabel="description"
+                    bindValue="id"
+                    placeholder="Marca a Buscar..."
+                    formControlName="brandId">
+                    </ng-select>
+                </div>    
+                <div class="form-group col-lg-6 col-md-6 col-xl-6 col-sm-12">
+                    <label for="typeProductId">Tipo de Producto</label>
+                    <ng-select [items]="typeProducts"
+                    bindLabel="description"
+                    bindValue="id"
+                    placeholder="Tipo de Producto a Buscar..."
+                    formControlName="typeProductId"
+                    (change)="selectedTypeProduct($event.id)">
+                    </ng-select>
+                </div>
+            </div>    
+            <div class="row col-md-12 col-sm-12 col-xl-12 col-lg-12 mt-3">
+                <div class="form-group col-lg-10 col-md-10 col-xl-10 col-sm-12">
+                    <label for="application">Aplicación</label>
+                    <input type="text" class="form-control" id="application" formControlName="application" name="application" autocomplete="off" required placeholder="Digite la aplicación del producto">
+                </div>  
+                <button type="submit" class="btn btn-warning col-lg-2 col-md-2 col-xl-2 col-sm-12" style="color:white"><i class="feather icon-search"></i> Buscar ...</button>
+            </div>                       
+        </form>
     </div>
     <br>
     <table class="table" *ngIf="regs.length > 0">
@@ -34,27 +75,14 @@
                     <button *ngIf="!isView"  class="btn btn-danger  rounded" (click)=delete(reg.id,idx) title="Eliminar Registro"><i class="fas fa-trash"></i></button>
                 </td>
                 <td>
-                    <img src='{{urlImages+"productCatalog/products/"+reg.id+"/01.png"}}' width="30px"/>
-                </td>
-                <td>
                     <div class="row">
-                        <div class="col-5"><b>Código:</b></div>
+                        <div class="col-6"><b>Código:</b></div>
                         <div class="col-7">{{reg.code}}</div>
                     </div>
                     <div class="row">
-                        <div class="col-5"><b>Marca:</b></div>
+                        <div class="col-6"><b>Marca:</b></div>
                         <div class="col-7">{{reg.brandNavigation.description}}</div>
                     </div>
-                </td>
-                <td>
-                    <div class="row">
-                        <div class="col-4"><b>Ref.:</b></div>
-                        <div class="col-8">{{reg.reference}}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-4"><b>Ref. Prov.:</b></div>
-                        <div class="col-8">{{reg.referenceProvider}}</div>
-                    </div>                    
                 </td>
                 <td>
                     <div class="row">
