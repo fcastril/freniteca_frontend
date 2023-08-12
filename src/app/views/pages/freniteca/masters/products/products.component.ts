@@ -11,6 +11,7 @@ import { SearchModel } from 'src/app/models/search.model';
 import { TypeProductModel } from 'src/app/models/typeProduct.model';
 import { TypeProductAttributeModel } from 'src/app/models/typeProductAttribute.model';
 import { ApiService } from 'src/app/services/api.service';
+import { ProductService } from 'src/app/services/product.service';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 
@@ -49,6 +50,7 @@ export class ProductsComponent implements OnInit {
   constructor(private route: Router, 
               private fb: FormBuilder,
               private api: ApiService, 
+              private productService: ProductService,
               private rout: ActivatedRoute) {
     this.urlImages = environment.urlImages;
    }
@@ -155,12 +157,19 @@ export class ProductsComponent implements OnInit {
     let search: SearchModel = {
       code: this.frm.controls['code'].value??'',
       description: this.frm.controls['description'].value??'',
-      brandId: this.frm.controls['brandId'].value??'',
-      typeProductId: this.frm.controls['typeProductId'].value??'',
+      brandId: this.frm.controls['brandId'].value??'00000000-0000-0000-0000-000000000000',
+      typeProductId: this.frm.controls['typeProductId'].value??'00000000-0000-0000-0000-000000000000',
       application: this.frm.controls['application'].value??'',
 
     }
-    console.log('buscar', search);
+    console.log('search', search);
+
+    this.productService.postSearch(search).subscribe(
+      (resp: any) => {
+        console.log('buscar', resp);
+      }
+    );
+    
 
   }
 

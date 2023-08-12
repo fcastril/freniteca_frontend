@@ -3,6 +3,7 @@ import { AuthService } from './auth.service';
 import { HttpClient } from '@angular/common/http';
 import { FileModel } from '../models/file.model';
 import { environment } from 'src/environments/environment';
+import { SearchModel } from '../models/search.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,5 +18,9 @@ export class ProductService {
 
   getFiles(code: string){
     return this.http.get(`${ environment.urlApi }product/getFiles/${code}`,  {headers: this.auth.getHeaders()});
+  }
+
+  postSearch(search: SearchModel){
+    return this.http.post(`${ environment.urlApi }product/searchNew`, search,  {headers: this.auth.getHeaders()});
   }
 }

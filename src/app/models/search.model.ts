@@ -1,7 +1,7 @@
 export class SearchModel{
     code: string;
     description: string;
-    brandId: string;
-    typeProductId: string;
+    brandId: string | null;
+    typeProductId: string | null;
     application: string
 }
