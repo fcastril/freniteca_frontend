@@ -7,117 +7,122 @@
             <small *ngIf="id!=='' && isView" style="color: orange;">{{subtitle}}</small></b></h3>
         </div>
     </div>
-    <div class="row col-md-12 col-sm-12 col-xl-12 col-lg-12 mt-3">
-        <div class="form-group col-lg-3 col-md-3 col-xl-3 col-sm-12">
-            <label for="code">Código</label>
-            <input type="text" class="form-control" id="code" formControlName="code" name="code" autocomplete="off" required placeholder="Digite el código del producto">
-            <span *ngIf="(f.submitted || frm.controls['code'].dirty) && frm.controls['code'].errors" class="text-danger">* Obligatorio</span>
-        </div>
-        <div class="form-group col-lg-3 col-md-3 col-xl-3 col-sm-12">
-            <label for="reference">Referencia</label>
-            <input type="text" class="form-control" id="reference" formControlName="reference" name="reference" autocomplete="off" required placeholder="Digite la referencia del producto">
-            <span *ngIf="(f.submitted || frm.controls['reference'].dirty) && frm.controls['reference'].errors" class="text-danger">* Obligatorio</span>
-        </div>
-        <div class="form-group col-lg-3 col-md-3 col-xl-3 col-sm-12">
-            <label for="referenceProvider">Referencia Proveedor</label>
-            <input type="text" class="form-control" id="referenceProvider" formControlName="referenceProvider" name="referenceProvider" autocomplete="off" required placeholder="Digite la referencia del proveedor del producto">
-            <span *ngIf="(f.submitted || frm.controls['referenceProvider'].dirty) && frm.controls['referenceProvider'].errors" class="text-danger">* Obligatorio</span>
-        </div>
-    </div>
-    <div class="row col-md-12 col-sm-12 col-xl-12 col-lg-12 mt-3">
-        <div class="form-group col-lg-6 col-md-6 col-xl-6 col-sm-12">
-            <label for="description">Descripción</label>
-            <input type="text" class="form-control" id="description" formControlName="description" name="description" autocomplete="off" required placeholder="Digite la descripción del producto">
-            <span *ngIf="(f.submitted || frm.controls['description'].dirty) && frm.controls['description'].errors" class="text-danger">* Obligatorio</span>
-        </div>
-        <div class="form-group col-lg-6 col-md-6 col-xl-6 col-sm-12">
-            <label for="brandId">Marca</label>
-            <ng-select [items]="brands"
-            bindLabel="description"
-            bindValue="id"
-            placeholder="Marca a Buscar..."
-            formControlName="brandId">
-            </ng-select>
 
-            <span *ngIf="(f.submitted || frm.controls['brandId'].dirty) && frm.controls['brandId'].errors" class="text-danger">* Obligatorio</span>
-        </div>    
-    </div>
-    <div class="row col-md-12 col-sm-12 col-xl-12 col-lg-12 mt-3">
-        <div class="form-group col-lg-6 col-md-6 col-xl-6 col-sm-12">
-            <label for="typeProductId">Tipo de Producto</label>
-            <ng-select [items]="typeProducts"
-            bindLabel="description"
-            bindValue="id"
-            placeholder="Tipo de Producto a Buscar..."
-            formControlName="typeProductId"
-            (change)="selectedTypeProduct($event.id)">
-            </ng-select>
-            <span *ngIf="(f.submitted || frm.controls['typeProductId'].dirty) && frm.controls['typeProductId'].errors" class="text-danger">* Obligatorio</span>
-        </div>
-    </div>
-
-    <br>
-    <hr>
-    <div class="row"  >
-        <h4 class="col-lg-9 col-md-9 col-xl-9 col-sm-9" style="display: flex; align-items:center; margin-bottom:5px">Aplicaciones</h4>
-        <button *ngIf="Applications.length > 0 && !isView"
-        type="button" class="btn btn-success col-lg-1 col-md-1 col-xl-1 col-sm-1" style="width:50px; height:50px" (click)="addApplication()"><i class="fas fa-plus-circle"></i></button>
-    </div>
-    <br>
-    <ng-container  formArrayName="productApplications">
-        <ng-container *ngFor="let det of ProductApplication.controls; let idx = index">
-            <div [formGroup]="det" >
-                <div class="row">
-                    <div class="col-md-6 col-sm-6 col-xl-6 col-lg-6" style="display: flex; align-items:center; margin-bottom:5px">
-                        <label class="form-group col-md-1 col-sm-1 col-xl-1 col-lg-1">{{idx+1}}</label>
-                        <div class="form-group col-lg-9 col-md-9 col-xl-9 col-sm-9">
-                            <ng-select [items]="Applications" *ngIf="!isView"
-                            bindLabel="descriptionFull"
-                            bindValue="id"
-                            placeholder="Aplicación a Buscar..."
-                            formControlName="applicationId"
-                            (change)="selectedApplication(idx, $event.id, $event)">
-                            </ng-select>  
-                            <label *ngIf="isView">{{det.value.application.description}}</label>                      
-                        </div>
-                    </div>   
-                    <div class="row col-md-6 col-sm-6 col-xl-6 col-lg-6" style="display: flex; align-items:center ; margin-bottom:5px">
-                        <div class="form-group col-lg-9 col-md-9 col-xl-9 col-sm-9">
-                            <input *ngIf="!isView"  type="text" class="form-control " id="value" formControlName="value" name="value" autocomplete="off">
-                            <label *ngIf="isView">{{det.value.value}}</label>
-                        </div>
-                        <button *ngIf="!isView"  type="button" class="btn  btn-outline-danger col-lg-1 col-md-1 col-xl-1 col-sm-1 btnEliminarAplicacion" (click)="deleteApplication(idx)"><i class="fa fa-trash" aria-hidden="true "></i></button>
-                    </div>   
-
+    <div class="row">
+        <div class="col-md-6 col-sm-12 col-xl-6 col-lg-6">
+            <div class="row">
+                <div class="form-group col-lg-3 col-md-3 col-xl-3 col-sm-12">
+                    <label for="code">Código</label>
+                    <input type="text" class="form-control" id="code" formControlName="code" name="code" autocomplete="off" required placeholder="Digite el código del producto">
+                    <span *ngIf="(f.submitted || frm.controls['code'].dirty) && frm.controls['code'].errors" class="text-danger">* Obligatorio</span>
                 </div>
             </div>
-
-            
-
-        </ng-container>
-    </ng-container>     <div *ngIf="ProductAttribute.length>0">
-        <br>
-        <hr>
-        <div class="row"  >
-            <h4 class="col-lg-9 col-md-9 col-xl-9 col-sm-9" style="display: flex; align-items:center">Atributos</h4>
-        </div>
-        <br>
-        <ng-container  formArrayName="productAttributes">
-            <ng-container *ngFor="let det of ProductAttribute.controls; let idx = index">
-                <div [formGroup]="det" >
-                    <div class="row col-md-12 col-sm-12 col-xl-12 col-lg-12" style="display: flex; align-items:center ; margin-bottom:5px">
-                        <div class="col-lg-1 col-md-1 col-xl-1 col-sm-1">
-                            <label >{{det.value.descriptionTypeProduct}}</label>
-                        </div>
-                        <div class="form-group col-lg-9 col-md-9 col-xl-9 col-sm-9">
-                            <input *ngIf="!isView"  type="text" class="form-control " id="value" formControlName="value" name="value" autocomplete="off" required>
-                            <label *ngIf="isView">{{det.value.value}}</label>
-                        </div>
-                    </div>   
+            <div class="row">
+                <div class="form-group col-lg-10 col-md-10 col-xl-10 col-sm-10">
+                    <label for="brandId">Marca</label>
+                    <ng-select [items]="brands"
+                    bindLabel="description"
+                    bindValue="id"
+                    placeholder="Marca a Buscar..."
+                    formControlName="brandId">
+                    </ng-select>
+        
+                    <span *ngIf="(f.submitted || frm.controls['brandId'].dirty) && frm.controls['brandId'].errors" class="text-danger">* Obligatorio</span>
+                </div>    
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-10 col-md-10 col-xl-10 col-sm-10">
+                    <label for="typeProductId">Tipo de Producto</label>
+                    <ng-select [items]="typeProducts"
+                    bindLabel="description"
+                    bindValue="id"
+                    placeholder="Tipo de Producto a Buscar..."
+                    formControlName="typeProductId"
+                    (change)="selectedTypeProduct($event.id)">
+                    </ng-select>
+                    <span *ngIf="(f.submitted || frm.controls['typeProductId'].dirty) && frm.controls['typeProductId'].errors" class="text-danger">* Obligatorio</span>
                 </div>
-            </ng-container>
-        </ng-container> 
+            </div>
+        
+
+        </div>
+        <div class="col-md-6 col-sm-12 col-xl-6 col-lg-6">
+            Imagenes
+        </div>
+
     </div>
+    <br><hr>
+    <div class="row">
+        <div class="col-md-6 col-sm-12 col-xl-6 col-lg-6">
+            <div class="row"  >
+                <h4 class="col-lg-9 col-md-9 col-xl-9 col-sm-9" style="display: flex; align-items:center; margin-bottom:5px">Aplicaciones</h4>
+                <button *ngIf="Applications.length > 0 && !isView"
+                type="button" class="btn btn-success col-lg-1 col-md-1 col-xl-1 col-sm-1" style="width:50px; height:50px" (click)="addApplication()"><i class="fas fa-plus-circle"></i></button>
+            </div>
+            <br>
+            <ng-container  formArrayName="productApplications">
+                <ng-container *ngFor="let det of ProductApplication.controls; let idx = index">
+                    <div [formGroup]="det" >
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6 col-xl-6 col-lg-6" style="display: flex; align-items:center; margin-bottom:5px">
+                                <label class="form-group col-md-1 col-sm-1 col-xl-1 col-lg-1">{{idx+1}}</label>
+                                <div class="form-group col-lg-9 col-md-9 col-xl-9 col-sm-9">
+                                    <ng-select [items]="Applications" *ngIf="!isView"
+                                    bindLabel="descriptionFull"
+                                    bindValue="id"
+                                    placeholder="Aplicación a Buscar..."
+                                    formControlName="applicationId"
+                                    (change)="selectedApplication(idx, $event.id, $event)">
+                                    </ng-select>  
+                                    <label *ngIf="isView">{{det.value.application.description}}</label>                      
+                                </div>
+                            </div>   
+                            <div class="row col-md-6 col-sm-6 col-xl-6 col-lg-6" style="display: flex; align-items:center ; margin-bottom:5px">
+                                <div class="form-group col-lg-8 col-md-8 col-xl-8 col-sm-8">
+                                    <input *ngIf="!isView"  type="text" class="form-control " id="value" formControlName="value" name="value" autocomplete="off">
+                                    <label *ngIf="isView">{{det.value.value}}</label>
+                                </div>
+                                <button *ngIf="!isView"  type="button" class="btn  btn-outline-danger col-lg-2 col-md-2 col-xl-2 col-sm-2 btnEliminarAplicacion" (click)="deleteApplication(idx)"><i class="fa fa-trash" aria-hidden="true "></i></button>
+                            </div>   
+        
+                        </div>
+                    </div>
+        
+                    
+        
+                </ng-container>
+            </ng-container>     
+        
+        </div>
+        <div class="col-md-6 col-sm-12 col-xl-6 col-lg-6">
+            <div *ngIf="ProductAttribute.length>0">
+                <div class="row"  >
+                    <h4 class="col-lg-9 col-md-9 col-xl-9 col-sm-9" style="display: flex; align-items:center">Atributos</h4>
+                </div>
+                <br>
+                <ng-container  formArrayName="productAttributes">
+                    <ng-container *ngFor="let det of ProductAttribute.controls; let idx = index">
+                        <div [formGroup]="det" >
+                            <div class="row" style="display: flex; align-items:center ; margin-bottom:5px">
+                                <div class="col-lg-2 col-md-2 col-xl-2 col-sm-2">
+                                    <label >{{det.value.descriptionTypeProduct}}</label>
+                                </div>
+                                <div class="form-group col-lg-9 col-md-9 col-xl-9 col-sm-9">
+                                    <input *ngIf="!isView"  type="text" class="form-control " id="value" formControlName="value" name="value" autocomplete="off" required>
+                                    <label *ngIf="isView">{{det.value.value}}</label>
+                                </div>
+                            </div>   
+                        </div>
+                    </ng-container>
+                </ng-container> 
+            </div>
+        </div>
+    </div>
+
+
+
+
+
 
     <br>
     <div class="row"  >

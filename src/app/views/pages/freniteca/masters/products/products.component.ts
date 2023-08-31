@@ -152,13 +152,15 @@ export class ProductsComponent implements OnInit {
   //     this.addTypeProductAttribute(element.typeProductId, element.name, element.value, element.id);
   //   });
   // }
-
+  limpiarBusqueda(){
+    this.search();
+  }
   Submit() { 
     let search: SearchModel = {
       code: this.frm.controls['code'].value??'',
       description: this.frm.controls['description'].value??'',
-      brandId: this.frm.controls['brandId'].value??'00000000-0000-0000-0000-000000000000',
-      typeProductId: this.frm.controls['typeProductId'].value??'00000000-0000-0000-0000-000000000000',
+      brandId: this.frm.controls['brandId'].value??'',
+      typeProductId: this.frm.controls['typeProductId'].value??'',
       application: this.frm.controls['application'].value??'',
 
     }
@@ -166,6 +168,8 @@ export class ProductsComponent implements OnInit {
 
     this.productService.postSearch(search).subscribe(
       (resp: any) => {
+        this.regs = resp.data;
+        this.totalPage = 1;
         console.log('buscar', resp);
       }
     );

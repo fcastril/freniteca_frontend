@@ -16,7 +16,6 @@ import { ProductService } from 'src/app/services/product.service';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 import { v4 as uuidv4 } from 'uuid';
-import { DateSelectArg } from '@fullcalendar/angular';
 
 
 
@@ -32,9 +31,6 @@ export class ProductsCreateupdateComponent implements OnInit {
 
   frm = this.fb.group({
     code: ['', Validators.required],
-    reference: ['', Validators.required],
-    referenceProvider: ['', Validators.required],
-    description: ['', Validators.required],
     productApplications: this.fb.array([]),
     typeProductId: ['', Validators.required],
     productEquivalenceId: [''],
@@ -101,6 +97,7 @@ export class ProductsCreateupdateComponent implements OnInit {
             (resp: any) => {
               if (resp.status){
                 this.listImagenes = resp.data;
+                console.log('listImagenes', this.listImagenes);
               }
             }
           );
@@ -172,9 +169,6 @@ export class ProductsCreateupdateComponent implements OnInit {
   }
   disabledAll(){
     this.frm.controls['code'].disable();
-    this.frm.controls['description'].disable();
-    this.frm.controls['reference'].disable();
-    this.frm.controls['referenceProvider'].disable();
     this.frm.controls['brandId'].disable();
     this.frm.controls['typeProductId'].disable();
     this.frm.controls['typeProductId'].disable();
@@ -364,9 +358,6 @@ export class ProductsCreateupdateComponent implements OnInit {
 
   setValues(){
     this.reg.code = this.frm.get('code')?.value??'';
-    this.reg.reference = this.frm.get('reference')?.value??'';
-    this.reg.referenceProvider = this.frm.get('referenceProvider')?.value??'';
-    this.reg.description = this.frm.get('description')?.value??'';
     this.reg.brandId = this.frm.get('brandId')?.value??'';
     this.reg.typeProductId = this.frm.get('typeProductId')?.value ?? '';
 
@@ -374,9 +365,6 @@ export class ProductsCreateupdateComponent implements OnInit {
   }
   async setFields(){
     this.frm.controls['code'].setValue(this.reg.code);
-    this.frm.controls['description'].setValue(this.reg.description);
-    this.frm.controls['reference'].setValue(this.reg.reference);
-    this.frm.controls['referenceProvider'].setValue(this.reg.referenceProvider);
     this.frm.controls['brandId'].setValue(this.reg.brandId);
     this.frm.controls['typeProductId'].setValue(this.reg.typeProductId);
     if (this.id !== ''){

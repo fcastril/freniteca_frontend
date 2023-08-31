@@ -20,17 +20,11 @@
         </div>
         <form [formGroup]="frm" (ngSubmit)="Submit()" #f="ngForm">
             <div class="row col-md-12 col-sm-12 col-xl-12 col-lg-12 mt-3">
-                <div class="form-group col-lg-3 col-md-3 col-xl-3 col-sm-12">
+                <div class="form-group col-lg-4 col-md-4 col-xl-4 col-sm-12">
                     <label for="code">Código</label>
                     <input type="text" class="form-control" id="code" formControlName="code" name="code" autocomplete="off" required placeholder="Digite el código del producto">
                 </div>
-                <div class="form-group col-lg-9 col-md-9 col-xl-9 col-sm-12">
-                    <label for="description">Descripción</label>
-                    <input type="text" class="form-control" id="description" formControlName="description" name="description" autocomplete="off" required placeholder="Digite la descripción del producto">
-                </div>
-            </div>
-            <div class="row col-md-12 col-sm-12 col-xl-12 col-lg-12 mt-3">
-                <div class="form-group col-lg-6 col-md-6 col-xl-6 col-sm-12">
+                <div class="form-group col-lg-4 col-md-4 col-xl-4 col-sm-12">
                     <label for="brandId">Marca</label>
                     <ng-select [items]="brands"
                     bindLabel="description"
@@ -39,7 +33,7 @@
                     formControlName="brandId">
                     </ng-select>
                 </div>    
-                <div class="form-group col-lg-6 col-md-6 col-xl-6 col-sm-12">
+                <div class="form-group col-lg-4 col-md-4 col-xl-4 col-sm-12">
                     <label for="typeProductId">Tipo de Producto</label>
                     <ng-select [items]="typeProducts"
                     bindLabel="description"
@@ -51,11 +45,12 @@
                 </div>
             </div>    
             <div class="row col-md-12 col-sm-12 col-xl-12 col-lg-12 mt-3">
-                <div class="form-group col-lg-10 col-md-10 col-xl-10 col-sm-12">
+                <div class="form-group col-lg-9 col-md-9 col-xl-9 col-sm-12">
                     <label for="application">Aplicación</label>
                     <input type="text" class="form-control" id="application" formControlName="application" name="application" autocomplete="off" required placeholder="Digite la aplicación del producto">
                 </div>  
-                <button type="submit" class="btn btn-warning col-lg-2 col-md-2 col-xl-2 col-sm-12" style="color:white"><i class="feather icon-search"></i> Buscar ...</button>
+                <button type="submit" class="btn btn-warning col-lg-1 col-md-1 col-xl-1 col-sm-12" style="color:black; margin-right: 5px"><i class="feather icon-search"></i> Buscar ...</button>
+                <button type="button" class="btn btn-success col-lg-1 col-md-1 col-xl-1 col-sm-12" style="color:white" (click)="limpiarBusqueda()"><i class="feather refresh-ccw"></i> Limpiar</button>
             </div>                       
         </form>
     </div>
@@ -63,8 +58,10 @@
     <table class="table" *ngIf="regs.length > 0">
         <thead>
             <tr>
-                <th >Acciones</th>
-                <th colspan="4" style="text-align:center">Producto</th>
+                <th width="10%">Acciones</th>
+                <th  width="20%"> Código</th>
+                <th  width="30%"> Marca</th>
+                <th  width="30%"> Tipo Producto</th>
             </tr>
         </thead>
         <tbody>
@@ -74,26 +71,9 @@
                     <button *ngIf="!isView"  class="btn btn-success rounded"  style="margin-right:5px" [routerLink]="['/masters/products', 'admin', reg.id]" title="Actualizar Registro"><i class="fas fa-pencil-alt"></i></button>
                     <button *ngIf="!isView"  class="btn btn-danger  rounded" (click)=delete(reg.id,idx) title="Eliminar Registro"><i class="fas fa-trash"></i></button>
                 </td>
-                <td>
-                    <div class="row">
-                        <div class="col-6"><b>Código:</b></div>
-                        <div class="col-7">{{reg.code}}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6"><b>Marca:</b></div>
-                        <div class="col-7">{{reg.brandNavigation.description}}</div>
-                    </div>
-                </td>
-                <td>
-                    <div class="row">
-                        <div class="col-3"><b>Descripción:</b></div>
-                        <div class="col-9">{{reg.description}}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-3"><b>Tipo Producto:</b></div>
-                        <div class="col-9">{{reg.typeProductNavigation.description}}</div>
-                    </div>                    
-                </td>
+                <td>{{reg.code}}</td>  
+                <td>{{reg.brandNavigation.description}}</td>
+                <td>{{reg.typeProductNavigation.description}}</td>
             </tr>
         </tbody>
     </table>
