@@ -40,7 +40,7 @@ export class ProductsCreateupdateComponent implements OnInit {
   });
 
 
-
+  imagenSeleccionada = '';
   id: string;
   title = 'Productos';
   subtitle: string;
@@ -97,6 +97,7 @@ export class ProductsCreateupdateComponent implements OnInit {
             (resp: any) => {
               if (resp.status){
                 this.listImagenes = resp.data;
+                this.imagenSeleccionada = this.listImagenes[0];
                 console.log('listImagenes', this.listImagenes);
               }
             }
@@ -499,5 +500,8 @@ export class ProductsCreateupdateComponent implements OnInit {
       this.router.navigateByUrl('/masters/products/admin');
 
     }
+  }
+  seleccionarImagen(img: string){
+    this.imagenSeleccionada = img;
   }
 }

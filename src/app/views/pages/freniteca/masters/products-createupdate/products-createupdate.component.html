@@ -9,7 +9,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-6 col-sm-12 col-xl-6 col-lg-6">
+        <div class="col-md-6 col-sm-12 col-xl-6 col-lg-6 div-principal">
             <div class="row">
                 <div class="form-group col-lg-3 col-md-3 col-xl-3 col-sm-12">
                     <label for="code">Código</label>
@@ -18,7 +18,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="form-group col-lg-10 col-md-10 col-xl-10 col-sm-10">
+                <div class="form-group col-lg-12 col-md-12 col-xl-12 col-sm-12">
                     <label for="brandId">Marca</label>
                     <ng-select [items]="brands"
                     bindLabel="description"
@@ -31,7 +31,7 @@
                 </div>    
             </div>
             <div class="row">
-                <div class="form-group col-lg-10 col-md-10 col-xl-10 col-sm-10">
+                <div class="form-group col-lg-12 col-md-12 col-xl-12 col-sm-12">
                     <label for="typeProductId">Tipo de Producto</label>
                     <ng-select [items]="typeProducts"
                     bindLabel="description"
@@ -46,14 +46,27 @@
         
 
         </div>
-        <div class="col-md-6 col-sm-12 col-xl-6 col-lg-6">
-            Imagenes
+        <div class="col-md-6 col-sm-12 col-xl-6 col-lg-6 div-principal">
+            <div class="row">
+                <img src='{{urlImages+imagenSeleccionada}}' alt="" *ngIf="imagenSeleccionada.indexOf('pdf') == -1" class="file-div img">
+                <iframe *ngIf="imagenSeleccionada.indexOf('pdf') !== -1" [src]="transform(urlImages+imagenSeleccionada)" class="file-div-pdf"></iframe>
+            </div>
+            <div class="row">
+                <div class="col thumbnail" *ngFor="let img of listImagenes; let idx=index">
+                    <img src='{{urlImages+img}}' class="img-thumbnail file-div-miniatura" alt="" *ngIf="img.indexOf('pdf') == -1" (click)="seleccionarImagen(img)">
+                    <img src='https://icons.veryicon.com/png/o/file-type/file-type-1/pdf-icon.png' class="img-thumbnail file-div-miniatura" alt="" *ngIf="img.indexOf('pdf') !== -1" (click)="seleccionarImagen(img)">
+
+                    
+                    <!-- <iframe *ngIf="img.indexOf('pdf') !== -1" [src]="transform(urlImages+img)" (click)="seleccionarImagen(img)"></iframe> -->
+    
+
+                </div>
+            </div>
         </div>
 
     </div>
-    <br><hr>
     <div class="row">
-        <div class="col-md-6 col-sm-12 col-xl-6 col-lg-6">
+        <div class="col-md-6 col-sm-12 col-xl-6 col-lg-6 div-principal">
             <div class="row"  >
                 <h4 class="col-lg-9 col-md-9 col-xl-9 col-sm-9" style="display: flex; align-items:center; margin-bottom:5px">Aplicaciones</h4>
                 <button *ngIf="Applications.length > 0 && !isView"
@@ -94,7 +107,7 @@
             </ng-container>     
         
         </div>
-        <div class="col-md-6 col-sm-12 col-xl-6 col-lg-6">
+        <div class="col-md-6 col-sm-12 col-xl-6 col-lg-6 div-principal">
             <div *ngIf="ProductAttribute.length>0">
                 <div class="row"  >
                     <h4 class="col-lg-9 col-md-9 col-xl-9 col-sm-9" style="display: flex; align-items:center">Atributos</h4>
@@ -104,8 +117,8 @@
                     <ng-container *ngFor="let det of ProductAttribute.controls; let idx = index">
                         <div [formGroup]="det" >
                             <div class="row" style="display: flex; align-items:center ; margin-bottom:5px">
-                                <div class="col-lg-2 col-md-2 col-xl-2 col-sm-2">
-                                    <label >{{det.value.descriptionTypeProduct}}</label>
+                                <div class="col-lg-3 col-md-3 col-xl-3 col-sm-3">
+                                    <label ><b>{{det.value.descriptionTypeProduct}}</b></label>
                                 </div>
                                 <div class="form-group col-lg-9 col-md-9 col-xl-9 col-sm-9">
                                     <input *ngIf="!isView"  type="text" class="form-control " id="value" formControlName="value" name="value" autocomplete="off" required>
@@ -118,14 +131,7 @@
             </div>
         </div>
     </div>
-
-
-
-
-
-
-    <br>
-    <div class="row"  >
+    <!-- <div class="row"  >
         <h4 class="col-lg-9 col-md-9 col-xl-9 col-sm-9" style="display: flex; align-items:center">Imagénes / Documentos</h4>
     </div>
     <button *ngIf="!isView"  type="button" class="btn btn-success col-lg-1 col-md-1 col-xl-1 col-sm-1" style="width:40px; height:40px" (click)="addImage()"><i class="fas fa-plus-circle"></i></button>
@@ -152,7 +158,7 @@
         <b>Nombre del Archivo: </b><label>{{img.split('/')[img.split('/').length-1]}}</label>
         <img class="imagen" src='{{urlImages+img}}' alt="" *ngIf="img.indexOf('pdf') == -1">
         <iframe *ngIf="img.indexOf('pdf') !== -1" [src]="transform(urlImages+img)" style="width:400px!important; height:200px!important"></iframe>
-    </div>
+    </div> -->
 
 
     <div class="row botones">
