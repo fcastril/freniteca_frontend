@@ -3,8 +3,8 @@
         <div class="col-10">
             <h3><i class="fas fa-boxes"></i> {{ title | uppercase}} <b>
             <small *ngIf="id===''" style="color: green;">{{subtitle}}</small>
-            <small *ngIf="id!=='' && !isView" style="color: blue;">{{subtitle}}</small>
-            <small *ngIf="id!=='' && isView" style="color: orange;">{{subtitle}}</small></b></h3>
+            <small *ngIf="id!==''" style="color: blue;">{{subtitle}}</small>
+            </b></h3>
         </div>
     </div>
 
@@ -69,7 +69,7 @@
         <div class="col-md-6 col-sm-12 col-xl-6 col-lg-6 div-principal">
             <div class="row"  >
                 <h4 class="col-lg-9 col-md-9 col-xl-9 col-sm-9" style="display: flex; align-items:center; margin-bottom:5px">Aplicaciones</h4>
-                <button *ngIf="Applications.length > 0 && !isView"
+                <button *ngIf="Applications.length > 0"
                 type="button" class="btn btn-success col-lg-1 col-md-1 col-xl-1 col-sm-1" style="width:50px; height:50px" (click)="addApplication()"><i class="fas fa-plus-circle"></i></button>
             </div>
             <br>
@@ -80,22 +80,20 @@
                             <div class="col-md-6 col-sm-6 col-xl-6 col-lg-6" style="display: flex; align-items:center; margin-bottom:5px">
                                 <label class="form-group col-md-1 col-sm-1 col-xl-1 col-lg-1">{{idx+1}}</label>
                                 <div class="form-group col-lg-9 col-md-9 col-xl-9 col-sm-9">
-                                    <ng-select [items]="Applications" *ngIf="!isView"
+                                    <ng-select [items]="Applications"
                                     bindLabel="descriptionFull"
                                     bindValue="id"
                                     placeholder="Aplicación a Buscar..."
                                     formControlName="applicationId"
                                     (change)="selectedApplication(idx, $event.id, $event)">
                                     </ng-select>  
-                                    <label *ngIf="isView">{{det.value.application.description}}</label>                      
                                 </div>
                             </div>   
                             <div class="row col-md-6 col-sm-6 col-xl-6 col-lg-6" style="display: flex; align-items:center ; margin-bottom:5px">
                                 <div class="form-group col-lg-8 col-md-8 col-xl-8 col-sm-8">
-                                    <input *ngIf="!isView"  type="text" class="form-control " id="value" formControlName="value" name="value" autocomplete="off">
-                                    <label *ngIf="isView">{{det.value.value}}</label>
+                                    <input  type="text" class="form-control " id="value" formControlName="value" name="value" autocomplete="off">
                                 </div>
-                                <button *ngIf="!isView"  type="button" class="btn  btn-outline-danger col-lg-2 col-md-2 col-xl-2 col-sm-2 btnEliminarAplicacion" (click)="deleteApplication(idx)"><i class="fa fa-trash" aria-hidden="true "></i></button>
+                                <button  type="button" class="btn  btn-outline-danger col-lg-2 col-md-2 col-xl-2 col-sm-2 btnEliminarAplicacion" (click)="deleteApplication(idx)"><i class="fa fa-trash" aria-hidden="true "></i></button>
                             </div>   
         
                         </div>
@@ -121,8 +119,7 @@
                                     <label ><b>{{det.value.descriptionTypeProduct}}</b></label>
                                 </div>
                                 <div class="form-group col-lg-9 col-md-9 col-xl-9 col-sm-9">
-                                    <input *ngIf="!isView"  type="text" class="form-control " id="value" formControlName="value" name="value" autocomplete="off" required>
-                                    <label *ngIf="isView">{{det.value.value}}</label>
+                                    <input  type="text" class="form-control " id="value" formControlName="value" name="value" autocomplete="off" required>
                                 </div>
                             </div>   
                         </div>
@@ -131,39 +128,9 @@
             </div>
         </div>
     </div>
-    <!-- <div class="row"  >
-        <h4 class="col-lg-9 col-md-9 col-xl-9 col-sm-9" style="display: flex; align-items:center">Imagénes / Documentos</h4>
-    </div>
-    <button *ngIf="!isView"  type="button" class="btn btn-success col-lg-1 col-md-1 col-xl-1 col-sm-1" style="width:40px; height:40px" (click)="addImage()"><i class="fas fa-plus-circle"></i></button>
-    <ng-container  formArrayName="images">
-        <ng-container *ngFor="let img of Images.controls; let idx = index">
-            <hr>
-            <div [formGroup]="img" >
-                <div class="row col-md-12 col-sm-12 col-xl-12 col-lg-12" style="display: flex; align-items:center">
-                    <div class="form-group row">
-                        <label for="data">Selecciona una imagen o documento PDF</label>
-                        <input type="file" class="form-control imgdoc col-lg-7 col-md-7 col-xl-7 col-sm-7" style="width:600px" id="data" formControlName="data" name="data" (change)="handleFileInput($event, img)" title="Selecciona una imagen o documento">
-                        <button type="button" class="btn btn-danger col-lg-1 col-md-1 col-xl-1 col-sm-1" style="width:40px; height:40px; margin-left:2px"  (click)="deleteDetail(idx)"><i class="fa fa-trash" aria-hidden="true "></i></button>
-                    </div>
-                    <div class="row mt-3">
-                        <img *ngIf="img.value.type != 'pdf'" [src]="img.value.doc" style="max-width:400px">
-                        <iframe *ngIf="img.value.type == 'pdf'" [src]="transform(img.value.doc)" style="width:400px!important; height:200px!important"></iframe>
-                    </div>
-                </div>   
-            </div>
-        </ng-container>
-    </ng-container> 
-    <br>
-    <div class="row" *ngFor="let img of listImagenes">
-        <b>Nombre del Archivo: </b><label>{{img.split('/')[img.split('/').length-1]}}</label>
-        <img class="imagen" src='{{urlImages+img}}' alt="" *ngIf="img.indexOf('pdf') == -1">
-        <iframe *ngIf="img.indexOf('pdf') !== -1" [src]="transform(urlImages+img)" style="width:400px!important; height:200px!important"></iframe>
-    </div> -->
-
-
+ 
     <div class="row botones">
-        <button *ngIf="!isView" type="submit " class="btn btn-success submit col"><i class="fas fa-save "></i> Guardar</button>
-        <button *ngIf="isView" type="submit " class="btn btn-warning submit col"><i class="fas fa-print "></i> Imprimir</button>
+        <button type="submit " class="btn btn-success submit col"><i class="fas fa-save "></i> Guardar</button>
         <button type="button " class="btn btn-danger cancel col" (click)="back()"><i class="fa fa-ban " aria-hidden="true "></i> Regresar</button>
     </div>
 </form>

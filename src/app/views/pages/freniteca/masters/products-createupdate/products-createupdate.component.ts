@@ -53,7 +53,6 @@ export class ProductsCreateupdateComponent implements OnInit {
   typeProductsAttributes: TypeProductAttributeModel[] = [];
   urlImages: string = '';
   listImagenes: string[] = [];
-  isView: boolean= false;
 
   constructor(private route: ActivatedRoute, 
     private api: ApiService, 
@@ -68,7 +67,6 @@ export class ProductsCreateupdateComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.id = this.route.snapshot.paramMap.get('id')??'';
-    this.isView = this.route.snapshot.paramMap.get('view')=='view'??false;
 
     await this.getTypeProducts();
     await this.getBrands();
@@ -79,16 +77,8 @@ export class ProductsCreateupdateComponent implements OnInit {
       this.reg = new ProductModel();
       await this.setFields();
     } else {
-      if (this.isView)
-      {
-        this.subtitle = 'CONSULTANDO';
-        this.disabledAll();
-      }
-      else
-      {
         this.subtitle = 'EDITANDO';
 
-      }
       await this.api.getId('product',this.id).subscribe(
         async (resp: any) => {
           this.reg = resp.data;
@@ -282,7 +272,7 @@ export class ProductsCreateupdateComponent implements OnInit {
                 }
                 this.api.create('ProductApplication',productApplication).subscribe();
               });
-              this.router.navigateByUrl('/masters/products/admin');
+              this.router.navigateByUrl('/masters/products');
             }
           });
         } else {
@@ -349,7 +339,7 @@ export class ProductsCreateupdateComponent implements OnInit {
                 );
               });
 //TODO: Guardar documentos
-              this.router.navigateByUrl('/masters/products/admin');
+              this.router.navigateByUrl('/masters/products');
             }
           });
         }
@@ -492,14 +482,7 @@ export class ProductsCreateupdateComponent implements OnInit {
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
   back(){
-    if (this.isView){
-      this.router.navigateByUrl('/masters/products/ppal');
-
-    }else
-    {
-      this.router.navigateByUrl('/masters/products/admin');
-
-    }
+      this.router.navigateByUrl('/masters/products');
   }
   seleccionarImagen(img: string){
     this.imagenSeleccionada = img;

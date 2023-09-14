@@ -27,11 +27,11 @@ const routes: Routes = [
         pathMatch: 'full'
       },
       {
-        path: 'products/:view',
+        path: 'products',
         component: ProductsComponent,
       },
       {
-        path: 'products/:view/:id',
+        path: 'products/:id',
         component: ProductsCreateupdateComponent,
       },
       {

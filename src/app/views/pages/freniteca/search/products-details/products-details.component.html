@@ -1,1 +1,135 @@
-<p>products-details works!</p>
+<form [formGroup]="frm" (ngSubmit)="Submit()" #f="ngForm">
+    <div class="row">
+        <div class="col-10">
+            <h3><i class="fas fa-boxes"></i> {{ title | uppercase}} <b>
+            <small *ngIf="id===''" style="color: green;">{{subtitle}}</small>
+            <small *ngIf="id!==''" style="color: blue;">{{subtitle}}</small>
+            </b></h3>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 col-sm-12 col-xl-6 col-lg-6 div-principal">
+            <div class="row">
+                <div class="form-group col-lg-3 col-md-3 col-xl-3 col-sm-12">
+                    <label for="code">Código</label>
+                    <input type="text" class="form-control" id="code" formControlName="code" name="code" autocomplete="off" required placeholder="Digite el código del producto" readonly>
+                    <span *ngIf="(f.submitted || frm.controls['code'].dirty) && frm.controls['code'].errors" class="text-danger">* Obligatorio</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-12 col-md-12 col-xl-12 col-sm-12">
+                    <label for="brandId">Marca</label>
+                    <ng-select [items]="brands"
+                    bindLabel="description"
+                    bindValue="id"
+                    placeholder="Marca a Buscar..."
+                    readonly="readonly"
+                    formControlName="brandId">
+                    </ng-select>
+        
+                    <span *ngIf="(f.submitted || frm.controls['brandId'].dirty) && frm.controls['brandId'].errors" class="text-danger">* Obligatorio</span>
+                </div>    
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-12 col-md-12 col-xl-12 col-sm-12">
+                    <label for="typeProductId">Tipo de Producto</label>
+                    <ng-select [items]="typeProducts"
+                    bindLabel="description"
+                    bindValue="id"
+                    placeholder="Tipo de Producto a Buscar..."
+                    formControlName="typeProductId"
+                    readonly="readonly"
+                    (change)="selectedTypeProduct($event.id)">
+                    </ng-select>
+                    <span *ngIf="(f.submitted || frm.controls['typeProductId'].dirty) && frm.controls['typeProductId'].errors" class="text-danger">* Obligatorio</span>
+                </div>
+            </div>
+        
+
+        </div>
+        <div class="col-md-6 col-sm-12 col-xl-6 col-lg-6 div-principal">
+            <div class="row">
+                <img src='{{urlImages+imagenSeleccionada}}' alt="" *ngIf="imagenSeleccionada.indexOf('pdf') == -1" class="file-div img">
+                <iframe *ngIf="imagenSeleccionada.indexOf('pdf') !== -1" [src]="transform(urlImages+imagenSeleccionada)" class="file-div-pdf"></iframe>
+            </div>
+            <div class="row">
+                <div class="col thumbnail" *ngFor="let img of listImagenes; let idx=index">
+                    <img src='{{urlImages+img}}' class="img-thumbnail file-div-miniatura" alt="" *ngIf="img.indexOf('pdf') == -1" (click)="seleccionarImagen(img)">
+                    <img src='https://icons.veryicon.com/png/o/file-type/file-type-1/pdf-icon.png' class="img-thumbnail file-div-miniatura" alt="" *ngIf="img.indexOf('pdf') !== -1" (click)="seleccionarImagen(img)">
+
+                    
+                    <!-- <iframe *ngIf="img.indexOf('pdf') !== -1" [src]="transform(urlImages+img)" (click)="seleccionarImagen(img)"></iframe> -->
+    
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-sm-12 col-xl-6 col-lg-6 div-principal">
+            <div class="row"  >
+                <h4 class="col-lg-9 col-md-9 col-xl-9 col-sm-9" style="display: flex; align-items:center; margin-bottom:5px">Aplicaciones</h4>
+            </div>
+            <br>
+            <ng-container  formArrayName="productApplications">
+                <ng-container *ngFor="let det of ProductApplication.controls; let idx = index">
+                    <div [formGroup]="det" >
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6 col-xl-6 col-lg-6" style="display: flex; align-items:center; margin-bottom:5px">
+                                <label class="form-group col-md-1 col-sm-1 col-xl-1 col-lg-1">{{idx+1}}</label>
+                                <div class="form-group col-lg-9 col-md-9 col-xl-9 col-sm-9">
+                                    <ng-select [items]="Applications"
+                                    bindLabel="descriptionFull"
+                                    bindValue="id"
+                                    placeholder="Aplicación a Buscar..."
+                                    formControlName="applicationId"
+                                    readonly="readonly"
+                                    (change)="selectedApplication(idx, $event.id, $event)">
+                                    </ng-select>  
+                                </div>
+                            </div>   
+                            <div class="row col-md-6 col-sm-6 col-xl-6 col-lg-6" style="display: flex; align-items:center ; margin-bottom:5px">
+                                <div class="form-group col-lg-8 col-md-8 col-xl-8 col-sm-8">
+                                    <input readonly type="text" class="form-control " id="value" formControlName="value" name="value" autocomplete="off">
+                                </div>
+                            </div>   
+        
+                        </div>
+                    </div>
+        
+                    
+        
+                </ng-container>
+            </ng-container>     
+        
+        </div>
+        <div class="col-md-6 col-sm-12 col-xl-6 col-lg-6 div-principal">
+            <div *ngIf="ProductAttribute.length>0">
+                <div class="row"  >
+                    <h4 class="col-lg-9 col-md-9 col-xl-9 col-sm-9" style="display: flex; align-items:center">Atributos</h4>
+                </div>
+                <br>
+                <ng-container  formArrayName="productAttributes">
+                    <ng-container *ngFor="let det of ProductAttribute.controls; let idx = index">
+                        <div [formGroup]="det" >
+                            <div class="row" style="display: flex; align-items:center ; margin-bottom:5px">
+                                <div class="col-lg-3 col-md-3 col-xl-3 col-sm-3">
+                                    <label ><b>{{det.value.descriptionTypeProduct}}</b></label>
+                                </div>
+                                <div class="form-group col-lg-9 col-md-9 col-xl-9 col-sm-9">
+                                    <input readonly type="text" class="form-control " id="value" formControlName="value" name="value" autocomplete="off" required>
+                                </div>
+                            </div>   
+                        </div>
+                    </ng-container>
+                </ng-container> 
+            </div>
+        </div>
+    </div>
+ 
+    <div class="row botones">
+        <button type="button " class="btn btn-danger cancel col" (click)="back()"><i class="fa fa-ban " aria-hidden="true "></i> Regresar</button>
+    </div>
+</form>

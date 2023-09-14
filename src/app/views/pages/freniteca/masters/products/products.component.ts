@@ -39,7 +39,6 @@ export class ProductsComponent implements OnInit {
   pageCount: number = 10;
   totalPage: number = 0;
   urlImages: string = '';
-  isView: boolean = false;
   typeProducts: TypeProductModel[]=[];
   Applications: ApplicationModel[] = [];
   brands: BrandModel[]=[];
@@ -56,8 +55,6 @@ export class ProductsComponent implements OnInit {
    }
 
   async ngOnInit(): Promise<void> {
-    var param = this.rout.snapshot.paramMap.get('view') 
-    this.isView = param==='ppal' ??false;
     await this.getTypeProducts();
     await this.getBrands();
     await this.getApplications();
@@ -178,9 +175,7 @@ export class ProductsComponent implements OnInit {
   }
 
   register(id: string){
-    if(id=== '') {
-      this.route.navigateByUrl('/masters/products/admin/'+id);
-    }
+      this.route.navigateByUrl('/masters/products/'+id);
   }
 
   search(){
