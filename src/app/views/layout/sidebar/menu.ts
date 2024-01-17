@@ -42,7 +42,11 @@ export const MENU: MenuItem[] = [
       {
         label: 'Aplicaciones',
         link: '/masters/applications',
-      }
+      },
+      {
+        label: 'Ensambladoras',
+        link: '/masters/assemblers',
+      },
     ]
   },
   {

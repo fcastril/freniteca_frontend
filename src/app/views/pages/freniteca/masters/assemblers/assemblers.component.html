@@ -1,7 +1,7 @@
 <form (ngSubmit)="Submit(f)" #f="ngForm">
     <div class="row">
         <div class="col-10">
-            <h3><i class="fa fa-rocket"></i>{{ title | uppercase }} </h3>
+            <h3><i class="fa fa-car"></i> {{ title | uppercase }} </h3>
         </div>
         <div class="col-2"><button type="button" class="btn btn-primary float-right rounded" (click)="register('')" title="Agregar registros"><i class="fa fa-plus-circle" area-hidden="true"></i></button></div>
         <br>
@@ -24,19 +24,17 @@
             <tr>
                 <th width="5%">Acciones</th>
                 <th width="10%">Código</th>
-                <th width="40%">Descripción</th>
-                <th width="40%">Ensambladora</th>
+                <th width="85%">Descripción</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let reg of regs; let idx = index">
                 <td>
-                    <button class="btn btn-success rounded"  style="margin-right:5px" [routerLink]="['/masters/applications', reg.id]" title="Actualizar Registro"><i class="fas fa-pencil-alt"></i></button>
+                    <button class="btn btn-success rounded"  style="margin-right:5px" [routerLink]="['/masters/assemblers', reg.id]" title="Actualizar Registro"><i class="fas fa-pencil-alt"></i></button>
                     <button class="btn btn-danger  rounded" (click)=delete(reg.id,idx) title="Eliminar Registro"><i class="fas fa-trash"></i></button>
                 </td>
                 <td>{{reg.code}}</td>
                 <td>{{reg.description}}</td>
-                <td>{{reg.assemblerDescription}}</td>
             </tr>
         </tbody>
     </table>

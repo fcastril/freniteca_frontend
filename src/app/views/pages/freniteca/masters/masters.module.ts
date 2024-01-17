@@ -15,6 +15,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { ApplicationsComponent } from './applications/applications.component';
 import { ApplicationsCreateupdateComponent } from './applications-createupdate/applications-createupdate.component';
+import { AssemblersComponent } from './assemblers/assemblers.component';
+import { AssemblersCreateupdateComponent } from './assemblers-createupdate/assemblers-createupdate.component';
 
 
 const routes: Routes = [
@@ -41,6 +43,14 @@ const routes: Routes = [
       {
         path: 'typeproducts/:id',
         component: TypeproductsCreateupdateComponent
+      },
+      {
+        path: 'assemblers',
+        component: AssemblersComponent
+      },
+      {
+        path: 'assembler/:id',
+        component: AssemblersCreateupdateComponent
       },
       {
         path: 'brands',
@@ -71,7 +81,9 @@ const routes: Routes = [
     BrandsComponent,
     BrandsCreateupdateComponent,
     ApplicationsComponent,
-    ApplicationsCreateupdateComponent
+    ApplicationsCreateupdateComponent,
+    AssemblersComponent,
+    AssemblersCreateupdateComponent
   ],
   imports: [
     CommonModule,

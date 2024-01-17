@@ -3,27 +3,25 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LogicalOperators } from 'src/app/enums/logicalOperators.enum';
 import { Operations } from 'src/app/enums/operations.enum';
-import { ApplicationModel } from 'src/app/models/application.model';
+import { AssemblerModel } from 'src/app/models/assembler.model';
 import { PaginateModel } from 'src/app/models/paginate.model';
 import { ApiService } from 'src/app/services/api.service';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-applications',
-  templateUrl: './applications.component.html',
-  styleUrls: ['./applications.component.scss']
+  selector: 'app-assemblers',
+  templateUrl: './assemblers.component.html',
+  styleUrls: ['./assemblers.component.scss']
 })
-export class ApplicationsComponent implements OnInit {
+export class AssemblersComponent implements OnInit {
 
 
-
-  regs: ApplicationModel[] = [];
+  regs: AssemblerModel[] = [];
   searchText: '';
-  title = "Aplicaciones";
+  title = "Ensambladoras";
   currentPage: number = 1;
   pageCount: number = 10;
   totalPage: number = 0;
-  controller: string = 'application';
 
   constructor(private route: Router, private api: ApiService) { }
 
@@ -35,7 +33,7 @@ export class ApplicationsComponent implements OnInit {
 
   register(id: string){
     if(id=== '') {
-      this.route.navigateByUrl('/masters/applications/'+id);
+      this.route.navigateByUrl('/masters/assemblers/'+id);
     }
   }
 
@@ -49,11 +47,7 @@ export class ApplicationsComponent implements OnInit {
       filters: [
         { property: 'code', value: this.searchText, operator: Operations.Contains, conditional: LogicalOperators.Or },
         { property: 'description', value: this.searchText, operator: Operations.Contains, conditional: LogicalOperators.Or },
-        { property: 'descriptionAssembler', value: this.searchText, operator: Operations.Contains, conditional: LogicalOperators.Or },
-
-
       ],
-
       orders: [],
       rowsTotal:0,
       pagesTotal:0,
@@ -61,7 +55,7 @@ export class ApplicationsComponent implements OnInit {
     };
     
 
-    this.api.paginate(this.controller, paginate).subscribe(
+    this.api.paginate('assembler', paginate).subscribe(
       (resp: any)=>{
         this.regs = resp.data.data;
         this.totalPage = resp.data.pagesTotal;
@@ -88,7 +82,7 @@ export class ApplicationsComponent implements OnInit {
       }
     ).then((result)=> {
       if (result.isConfirmed){
-        this.api.delete(this.controller, id).subscribe(
+        this.api.delete('assembler', id).subscribe(
           (resp:any) =>
           {
             if (resp.error) {

@@ -20,18 +20,18 @@
         </div>
         <div class="mr-5 row col-md-12 col-sm-12 col-xl-12 col-lg-12 mt-5">
             <div class="form-group col-lg-12 col-md-12 col-xl-12 col-sm-12">
-                <label for="brandId">Marca</label>
-                <ng-select [items]="brands"
+                <label for="assemblerId">Ensambladora</label>
+                <ng-select [items]="assemblers"
                 bindLabel="description"
                 bindValue="id"
                 placeholder="Marca a Buscar..."
-                id="brandId"
-                [(ngModel)]="reg.brandId"
-                (change)="selectedBrand($event)"
-                name="brandId">
+                id="assemblerId"
+                [(ngModel)]="reg.assemblerId"
+                (change)="selectedAssembler($event)"
+                name="assemblerId">
                 </ng-select>
 
-                <span *ngIf="(f.submitted || f.controls['brandId'].dirty) && f.controls['brandId'].errors" class="text-danger">* Obligatorio</span>
+                <span *ngIf="(f.submitted || f.controls['assemblerId'].dirty) && f.controls['assemblerId'].errors" class="text-danger">* Obligatorio</span>
             </div>    
         </div>
     </div>
