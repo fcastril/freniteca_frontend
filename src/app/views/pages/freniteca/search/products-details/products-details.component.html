@@ -1,4 +1,4 @@
-<form [formGroup]="frm" (ngSubmit)="Submit()" #f="ngForm">
+<form [formGroup]="frm"  #f="ngForm">
   <div class="row">
     <div class="col-10">
       <h3>
@@ -287,6 +287,10 @@
   </div>
 
   <div class="row botones">
+    <button type="button " class="btn btn-success print col" (click)="createPdf()">
+      <i class="fa fa-print" aria-hidden="true "></i> Imprimir
+    </button>
+
     <button type="button " class="btn btn-danger cancel col" (click)="back()">
       <i class="fa fa-ban" aria-hidden="true "></i> Regresar
     </button>

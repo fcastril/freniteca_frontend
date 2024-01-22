@@ -9,6 +9,7 @@ import { ProductsComponent } from './products/products.component';
 import { ProductsDetailsComponent } from './products-details/products-details.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { ProductsPdfComponent } from './products-pdf/products-pdf.component';
 
 
 const routes: Routes = [
@@ -27,7 +28,11 @@ const routes: Routes = [
       {
         path: 'productsView/:id',
         component: ProductsDetailsComponent,
-      }            
+      },
+            {
+        path: 'productsPDF',
+        component: ProductsPdfComponent,
+      }           
     ]
   }
 ]
@@ -37,6 +42,7 @@ const routes: Routes = [
   declarations: [
     ProductsComponent,
     ProductsDetailsComponent,
+    ProductsPdfComponent
   ],
   imports: [
     CommonModule,
