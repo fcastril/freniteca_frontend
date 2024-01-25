@@ -124,7 +124,7 @@
             >
           </div>
         </div>
-        <div class="row">
+        <div class="row" *ngIf="isShowPrice">
           <div class="form-group col-lg-3 col-md-3 col-xl-3 col-sm-12">
             <label for="price1">Precio No. 1</label>
             <input
@@ -138,7 +138,7 @@
             />
           </div>
         </div>
-        <div class="row">
+        <div class="row" *ngIf="isShowPrice">
           <div class="form-group col-lg-3 col-md-3 col-xl-3 col-sm-12">
             <label for="price2">Precio No. 2</label>
             <input
@@ -152,7 +152,7 @@
             />
           </div>
         </div>
-        <div class="row">
+        <div class="row" *ngIf="isShowPrice">
           <div class="form-group col-lg-3 col-md-3 col-xl-3 col-sm-12">
             <label for="price3">Precio No. 3</label>
             <input

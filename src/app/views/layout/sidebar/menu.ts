@@ -19,6 +19,7 @@ export const MENU: MenuItem[] = [
       Constants.roles.administrator,
       Constants.roles.operator,
       Constants.roles.viewer,
+      Constants.roles.distribuitor,
     ],
   },
   {
@@ -29,6 +30,7 @@ export const MENU: MenuItem[] = [
       Constants.roles.administrator,
       Constants.roles.operator,
       Constants.roles.viewer,
+      Constants.roles.distribuitor
     ],
   },
   {

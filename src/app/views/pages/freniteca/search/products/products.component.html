@@ -1,92 +1,168 @@
 <form (ngSubmit)="Submit()" #f="ngForm">
-    <div class="row">
-        <div class="col-10">
-            <h3><i class="fab fa-bandcamp"></i>BUSCAR {{ title | uppercase }} </h3>
-        </div>
+  <div class="row">
+    <div class="col-10">
+      <h3><i class="fab fa-bandcamp"></i>BUSCAR {{ title | uppercase }}</h3>
     </div>
-    <div class="search-form mt-1">
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <div class="btn-icon-prepend">
-                    <button class="btn">
-                        <i class="feather icon-search" (click)="search()"></i>
-                    </button>
-                </div>
-            </div>
-            <h3 class="text-warning">FILTROS A BUSCAR</h3>
-            <!-- <input type="text" class="form-control" id="searchText" placeholder="Buscar aquí..." (keyup)='keyupSearch($event)' [(ngModel)]="searchText" autocomplete="off" name="searchText"> -->
+  </div>
+  <div class="search-form mt-1">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <div class="btn-icon-prepend">
+          <button class="btn">
+            <i class="feather icon-search" (click)="search()"></i>
+          </button>
         </div>
-        <form [formGroup]="frm" (ngSubmit)="Submit()" #f="ngForm">
-            <div class="row col-md-12 col-sm-12 col-xl-12 col-lg-12 mt-3">
-                <div class="form-group col-lg-4 col-md-4 col-xl-4 col-sm-12">
-                    <label for="code">Código</label>
-                    <input type="text" class="form-control" id="code" formControlName="code" name="code" autocomplete="off" required placeholder="Digite el código del producto">
-                </div>
-                <div class="form-group col-lg-4 col-md-4 col-xl-4 col-sm-12">
-                    <label for="brandId">Marca</label>
-                    <ng-select [items]="brands"
-                    bindLabel="description"
-                    bindValue="id"
-                    placeholder="Marca a Buscar..."
-                    formControlName="brandId">
-                    </ng-select>
-                </div>    
-                <div class="form-group col-lg-4 col-md-4 col-xl-4 col-sm-12">
-                    <label for="typeProductId">Tipo de Producto</label>
-                    <ng-select [items]="typeProducts"
-                    bindLabel="description"
-                    bindValue="id"
-                    placeholder="Tipo de Producto a Buscar..."
-                    formControlName="typeProductId"
-                    (change)="selectedTypeProduct($event.id)">
-                    </ng-select>
-                </div>
-            </div>    
-            <div class="row col-md-12 col-sm-12 col-xl-12 col-lg-12 mt-3">
-                <div class="form-group col-lg-9 col-md-9 col-xl-9 col-sm-12">
-                    <label for="application">Aplicación</label>
-                    <input type="text" class="form-control" id="application" formControlName="application" name="application" autocomplete="off" required placeholder="Digite la aplicación del producto">
-                </div>  
-                <button type="submit" class="btn btn-warning col-lg-1 col-md-1 col-xl-1 col-sm-12" style="color:black; margin-right: 5px"><i class="feather icon-search"></i> Buscar ...</button>
-                <button type="button" class="btn btn-success col-lg-1 col-md-1 col-xl-1 col-sm-12" style="color:white" (click)="limpiarBusqueda()"><i class="feather refresh-ccw"></i> Limpiar</button>
-            </div>                       
-        </form>
+      </div>
+      <h3 class="text-warning">FILTROS A BUSCAR</h3>
+      <!-- <input type="text" class="form-control" id="searchText" placeholder="Buscar aquí..." (keyup)='keyupSearch($event)' [(ngModel)]="searchText" autocomplete="off" name="searchText"> -->
     </div>
-    <br>
+    <form [formGroup]="frm" (ngSubmit)="Submit()" #f="ngForm">
+      <div class="row col-md-12 col-sm-12 col-xl-12 col-lg-12 mt-3">
+        <div class="form-group col-lg-4 col-md-4 col-xl-4 col-sm-12">
+          <label for="code">Código</label>
+          <input
+            type="text"
+            class="form-control"
+            id="code"
+            formControlName="code"
+            name="code"
+            autocomplete="off"
+            required
+            placeholder="Digite el código del producto"
+          />
+        </div>
+        <div class="form-group col-lg-4 col-md-4 col-xl-4 col-sm-12">
+          <label for="brandId">Marca</label>
+          <ng-select
+            [items]="brands"
+            bindLabel="description"
+            bindValue="id"
+            placeholder="Marca a Buscar..."
+            formControlName="brandId"
+          >
+          </ng-select>
+        </div>
+        <div class="form-group col-lg-4 col-md-4 col-xl-4 col-sm-12">
+          <label for="typeProductId">Tipo de Producto</label>
+          <ng-select
+            [items]="typeProducts"
+            bindLabel="description"
+            bindValue="id"
+            placeholder="Tipo de Producto a Buscar..."
+            formControlName="typeProductId"
+            (change)="selectedTypeProduct($event.id)"
+          >
+          </ng-select>
+        </div>
+      </div>
+      <div class="row col-md-12 col-sm-12 col-xl-12 col-lg-12 mt-3">
+        <div class="form-group col-lg-9 col-md-9 col-xl-9 col-sm-12">
+          <label for="application">Aplicación</label>
+          <input
+            type="text"
+            class="form-control"
+            id="application"
+            formControlName="application"
+            name="application"
+            autocomplete="off"
+            required
+            placeholder="Digite la aplicación del producto"
+          />
+        </div>
+        <button
+          type="submit"
+          class="btn btn-warning col-lg-1 col-md-1 col-xl-1 col-sm-12"
+          style="color: black; margin-right: 5px"
+        >
+          <i class="feather icon-search"></i> Buscar ...
+        </button>
+        <button
+          type="button"
+          class="btn btn-success col-lg-1 col-md-1 col-xl-1 col-sm-12"
+          style="color: white"
+          (click)="limpiarBusqueda()"
+        >
+          <i class="feather refresh-ccw"></i> Limpiar
+        </button>
+      </div>
+    </form>
+  </div>
+  <br />
 
-    <div class="row">
-        <div class="card col-6 card-product" style="width: 18rem;" *ngFor="let reg of regs; let idx = index">
-            <center><img class="card-img-top" src='{{urlImages+"productCatalog/products/"+reg.code+"/"+reg.principalImage}}' alt=""></center>
-            <div class="card-body">
-                <h5 class="card-title"><b>Marca: </b> {{reg.brandNavigation.description}} </h5>
-                <h5 class="card-subtitle"><b>Código: </b> {{reg.code}} </h5>
-                <br>
-                <ul>
-                    <li *ngFor="let app of reg.productApplications">
-                        {{app.applicationNavigation.descriptionFull}} <small *ngIf="app.value != ''">{{app.value}}</small>
-                    </li>
-                </ul>
-                <p class="card-text"><b>Producto: </b>{{reg.typeProductNavigation.description}}</p>
-                <br>
-                <div class="price"><b>Precio de Lista:</b>    {{reg.price1| currency}}</div>
-                <button class="btn btn-primary rounded" (click)="viewRegister(reg.id)" title="Ver Registro" >Ver mas...</button>
-            </div>
-            <br>
-          </div>
+  <div class="row">
+    <div
+      class="card col-6 card-product"
+      style="width: 18rem"
+      *ngFor="let reg of regs; let idx = index"
+    >
+      <center>
+        <img
+          class="card-img-top"
+          src="{{
+            urlImages +
+              'productCatalog/products/' +
+              reg.code +
+              '/' +
+              reg.principalImage
+          }}"
+          alt=""
+        />
+      </center>
+      <div class="card-body">
+        <h5 class="card-title">
+          <b>Marca: </b> {{ reg.brandNavigation.description }}
+        </h5>
+        <h5 class="card-subtitle"><b>Código: </b> {{ reg.code }}</h5>
+        <br />
+        <ul>
+          <li *ngFor="let app of reg.productApplications">
+            {{ app.applicationNavigation.descriptionFull }}
+            <small *ngIf="app.value != ''">{{ app.value }}</small>
+          </li>
+        </ul>
+        <p class="card-text">
+          <b>Producto: </b>{{ reg.typeProductNavigation.description }}
+        </p>
+        <br />
+        <div
+          *ngIf="
+            isShowPrice
+          "
+          class="price"
+        >
+          <b>Precio de Lista:</b> {{ reg.price1 | currency }}
+        </div>
+        <button
+          class="btn btn-primary rounded"
+          (click)="viewRegister(reg.id)"
+          title="Ver Registro"
+        >
+          Ver mas...
+        </button>
+      </div>
+      <br />
     </div>
-    
+  </div>
 
-    <div class="row" *ngIf="regs.length>0" style="margin-top: 5px">
-        <div class="col-2">
-
-            <button class="btn btn-success float-left" (click)="back()" *ngIf="currentPage > 1">Anterior</button>
-        </div>
-        <div class="col-8">
-
-        </div>
-        <div class="col-2">
-
-            <button class="btn btn-success float-right" (click)="next()" *ngIf="currentPage < totalPage">Siguiente</button>
-        </div>
+  <div class="row" *ngIf="regs.length > 0" style="margin-top: 5px">
+    <div class="col-2">
+      <button
+        class="btn btn-success float-left"
+        (click)="back()"
+        *ngIf="currentPage > 1"
+      >
+        Anterior
+      </button>
     </div>
+    <div class="col-8"></div>
+    <div class="col-2">
+      <button
+        class="btn btn-success float-right"
+        (click)="next()"
+        *ngIf="currentPage < totalPage"
+      >
+        Siguiente
+      </button>
+    </div>
+  </div>
 </form>
