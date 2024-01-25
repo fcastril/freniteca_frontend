@@ -14,7 +14,7 @@
   <div class="row">
     <div class="col">
       <div class="row">
-        <div class="col-1 div-miniatura">
+        <div class="col-2 div-miniatura">
           <div
             class="col thumbnail"
             *ngFor="let img of listImagenes; let idx = index"
@@ -37,7 +37,7 @@
             <!-- <iframe *ngIf="img.indexOf('pdf') !== -1" [src]="transform(urlImages+img)" (click)="seleccionarImagen(img)"></iframe> -->
           </div>
         </div>
-        <div class="col div-image">
+        <div class="col-10 div-image">
           <img
             src="{{ urlImages + imagenSeleccionada }}"
             alt=""

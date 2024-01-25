@@ -6,6 +6,7 @@ import MetisMenu from 'metismenujs';
 import { MENU } from './menu';
 import { MenuItem } from './menu.model';
 import { Router, NavigationEnd } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-sidebar',
@@ -40,7 +41,13 @@ export class SidebarComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.menuItems = MENU;
+
+    
+    var roleId:string = atob(localStorage.getItem(environment.roleId));
+    console.log('roleId',roleId);
+    var result = MENU.filter(menuItem => menuItem.roles?.includes(roleId) || menuItem.roles == null);
+    console.log('result', result);
+    this.menuItems = result; 
 
     /**
      * Sidebar-folded on desktop (min-width:992px and max-width: 1199px)

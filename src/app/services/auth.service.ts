@@ -31,6 +31,7 @@ export class AuthService {
             localStorage.setItem(environment.token, resp.data.token);
             localStorage.setItem(environment.username, btoa(resp.data.userName));
             localStorage.setItem(environment.expires, btoa(resp.data.expira.toString()));
+            localStorage.setItem(environment.roleId, btoa(resp.data.profile.id));
           }
 
           return resp;
@@ -44,6 +45,7 @@ export class AuthService {
     localStorage.removeItem(environment.token);
     localStorage.removeItem(environment.username);
     localStorage.removeItem(environment.expires);
+    localStorage.removeItem(environment.roleId);
   }
 
   getUsername(): string {
@@ -66,6 +68,14 @@ export class AuthService {
      token = localStorage.getItem(environment.token)??'';
     }
     return token;
+  }
+  getRoleId(): string {
+    let roleId = '';
+    if (this.isLoggedin())
+    {
+     roleId = localStorage.getItem(environment.roleId)??'';
+    }
+    return roleId;
   }
 
   getHeaders(){

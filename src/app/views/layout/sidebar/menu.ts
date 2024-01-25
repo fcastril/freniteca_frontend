@@ -1,74 +1,98 @@
-import { MenuItem } from './menu.model';
+import { constants } from "buffer";
+import { MenuItem } from "./menu.model";
+import { Constants } from "src/app/common/constants";
 
 export const MENU: MenuItem[] = [
-//   {
-//     label: 'Principal',
-//     isTitle: true
-//   },
-//   {
-//     label: 'Dashboard',
-//     icon: 'home',
-//     link: '/dashboard'
-//   },
+  //   {
+  //     label: 'Principal',
+  //     isTitle: true
+  //   },
+  //   {
+  //     label: 'Dashboard',
+  //     icon: 'home',
+  //     link: '/dashboard'
+  //   },
   {
-    label: 'Busquedas',
-    isTitle: true
+    label: "Busquedas",
+    isTitle: true,
+    roles: [
+      Constants.roles.administrator,
+      Constants.roles.operator,
+      Constants.roles.viewer,
+    ],
   },
   {
-    label: 'Productos',
-    icon: 'codesandbox',
-    link: '/search/products'
+    label: "Productos",
+    icon: "codesandbox",
+    link: "/search/products",
+    roles: [
+      Constants.roles.administrator,
+      Constants.roles.operator,
+      Constants.roles.viewer,
+    ],
   },
   {
-    label: 'Configuración',
-    isTitle: true
+    label: "Configuración",
+    isTitle: true,
+    roles: [Constants.roles.administrator, Constants.roles.operator],
   },
   {
-    label: 'Productos',
-    icon: 'box',
+    label: "Productos",
+    icon: "box",
+    roles: [Constants.roles.administrator, Constants.roles.operator],
     subItems: [
       {
-        label: 'Productos',
-        link: '/masters/products',
+        label: "Productos",
+        link: "/masters/products",
+        roles: [Constants.roles.administrator, Constants.roles.operator],
       },
       {
-        label: 'Tipos de Productos',
-        link: '/masters/typeproducts',
+        label: "Tipos de Productos",
+        link: "/masters/typeproducts",
+        roles: [Constants.roles.administrator, Constants.roles.operator],
       },
       {
-        label: 'Marcas',
-        link: '/masters/brands',
+        label: "Marcas",
+        link: "/masters/brands",
+        roles: [Constants.roles.administrator, Constants.roles.operator],
       },
       {
-        label: 'Aplicaciones',
-        link: '/masters/applications',
+        label: "Aplicaciones",
+        link: "/masters/applications",
+        roles: [Constants.roles.administrator, Constants.roles.operator],
       },
       {
-        label: 'Ensambladoras',
-        link: '/masters/assemblers',
+        label: "Ensambladoras",
+        link: "/masters/assemblers",
+        roles: [Constants.roles.administrator, Constants.roles.operator],
       },
-    ]
+    ],
   },
   {
-    label: 'Seguridad',
-    icon: 'lock',
+    label: "Seguridad",
+    icon: "lock",
+    roles: [Constants.roles.administrator],
     subItems: [
       {
-        label: 'Usuarios',
-        link: '/security/users',
+        label: "Usuarios",
+        link: "/security/users",
+        roles: [Constants.roles.administrator],
       },
       {
-        label: 'Vendedores',
-        link: '/security/sellers',
+        label: "Vendedores",
+        link: "/security/sellers",
+        roles: [Constants.roles.administrator],
       },
       {
-        label: 'Zonas',
-        link: '/security/zones',
+        label: "Zonas",
+        link: "/security/zones",
+        roles: [Constants.roles.administrator],
       },
       {
-        label: 'Logs',
-        link: '/security/logs',
-      }
-    ]
-  }
+        label: "Logs",
+        link: "/security/logs",
+        roles: [Constants.roles.administrator],
+      },
+    ],
+  },
 ];

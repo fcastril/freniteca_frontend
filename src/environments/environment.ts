@@ -11,7 +11,8 @@ export const environment = {
   isLoggin: '58afcb0a-1360-4fde-a968-2cf239589f4c',
   urlApi: 'https://localhost:7009/api/v1/',
   isAdministrator: 'f35d9564-c373-49d7-a007-a8cdfb9fd593',
-  urlImages: 'https://saorangesoftware.blob.core.windows.net/freniteca/'
+  urlImages: 'https://saorangesoftware.blob.core.windows.net/freniteca/',
+  roleId: 'f35d9564-c373-49d7-a007-a8cdfb9fd593',
   
 };
 
