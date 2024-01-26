@@ -8,31 +8,35 @@
   height: 50px;
 }
 
-.print { 
-    margin-right: 5px;
+.print {
+  margin-right: 5px;
 }
 
-.div-principal {
-  background-color: lightgray;
-  padding: 20px;
-  margin: 20px;
-  border-radius: 20px;
-  height: 500px;
-  width: 550px;
-}
 .div-image {
-  background-color: transparent;
-  padding: 10px;
-  margin: 10px;
-  border-radius: 20px;
+  // padding: 10px;
+  // margin: 10px;
+    border-radius: 20px;
+
+
   width: 100%;
   max-width: 100%;
   align-items: center;
-}
 
-.file-div {
-  align-items: center;
-  width: 50%;
+  .file-div {
+    align-items: center;
+    justify-content: center;
+    max-width: 400px;
+  }
+
+  .file-div:hover {
+    margin-top: 110px;
+    margin-left: 200px;
+    transform: scale(1.8);
+    border-radius: 20px;
+    border: 1px solid lightgray;
+    box-shadow: 10px 5px 5px lightgray;
+    z-index: 99; /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+  }
 }
 
 .file-div-pdf {
@@ -42,13 +46,58 @@
   border: 1px solid black;
 }
 .div-miniatura {
-  margin-top: 40px;
+  margin-top: 20px;
 }
 
 .file-div-miniatura {
   background-color: transparent;
   border: 1px solid black;
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   margin: 2px;
+}
+
+.informacion {
+  .code{
+    font-size: 5em;
+    font-weight: bold;
+    color: #E7353A;
+    font-style: italic;
+  }
+  .subtitle {
+    font-size: 1.5em;
+    color: darkgray;
+    margin-right: 5px;
+  }
+  .appSubtitle {
+    font-size: 1.3em;
+    color: darkgray;
+    margin-right: 5px;
+    word-wrap: break-word;
+  }
+  .dato {
+    font-size: 1.5em;  
+  }
+  .appDato {
+    font-size: 1.3em;  
+    word-wrap: break-word;
+  }
+  .appValue {
+    font-size: 1.3em;  
+    word-wrap: break-word;
+  }
+  hr  {
+    max-width: 500px;
+    z-index: auto;
+  }
+  .title {
+    text-transform: uppercase;
+    display: flex; 
+    align-items: center; 
+    margin-bottom: 5px;
+    font-size: 1.5em;
+    color: #35398E;
+    font-weight: bold;
+
+  }
 }

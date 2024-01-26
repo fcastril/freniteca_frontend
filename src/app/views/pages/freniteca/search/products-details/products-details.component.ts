@@ -18,8 +18,6 @@ import Swal from "sweetalert2";
 import { v4 as uuidv4 } from "uuid";
 import pdfmake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
-import { style } from "@angular/animations";
-import { ApplicationsComponent } from "../../masters/applications/applications.component";
 import { Constants } from "src/app/common/constants";
 pdfmake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -84,6 +82,7 @@ export class ProductsDetailsComponent implements OnInit {
 
     await this.api.getId("product", this.id).subscribe(async (resp: any) => {
       this.reg = resp.data;
+      console.log('reg', this.reg);
       await this.setFields();
       await this.productService
         .getFiles(this.reg.code)
@@ -117,6 +116,7 @@ export class ProductsDetailsComponent implements OnInit {
               this.ProductAttribute.clear();
               if (resp.status) {
                 this.ProductAttributes = resp.data;
+                console.log('productAttributes', this.ProductAttributes);
                 this.typeProductsAttributes.forEach(
                   (element: TypeProductAttributeModel) => {
                     var res = this.ProductAttributes.filter(
@@ -141,9 +141,10 @@ export class ProductsDetailsComponent implements OnInit {
           this.id
         )
         .subscribe((resp: any) => {
-          this.ProductAttribute.clear();
+          this.ProductApplication.clear();
           if (resp.status) {
             this.ProductApplications = resp.data;
+           console.log('productApplications', this.ProductApplications);
             this.loadProductApplications();
           }
         });
@@ -244,6 +245,7 @@ export class ProductsDetailsComponent implements OnInit {
                   id: uuidv4(),
                   productId: this.reg.id,
                   typeProductAttributeId: element.value.id,
+                  typeProductAttributeNavigation: null,
                   value: element.value.value,
                   dateCreation: new Date(),
                   status: "active",
@@ -261,7 +263,9 @@ export class ProductsDetailsComponent implements OnInit {
                 let productApplication: ProductApplicationModel = {
                   id: uuidv4(),
                   productId: this.reg.id,
+                  productNavigation: null,
                   applicationId: element.value.applicationId,
+                  applicationNavigation: null,
                   value: element.value.value,
                   dateCreation: new Date(),
                   status: "active",
@@ -296,6 +300,7 @@ export class ProductsDetailsComponent implements OnInit {
                         id: "",
                         productId: this.reg.id,
                         typeProductAttributeId: element.value.id,
+                        typeProductAttributeNavigation: null,
                         value: element.value.value,
                         dateCreation: new Date(),
                         status: "active",
@@ -331,7 +336,9 @@ export class ProductsDetailsComponent implements OnInit {
                       let productApplication: ProductApplicationModel = {
                         id: "",
                         productId: this.reg.id,
+                        productNavigation: null,
                         applicationId: element.value.applicationId,
+                        applicationNavigation: null,
                         value: element.value.value,
                         dateCreation: new Date(),
                         status: "active",

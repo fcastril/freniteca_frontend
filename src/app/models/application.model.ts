@@ -1,3 +1,4 @@
+import { AssemblerModel } from "./assembler.model";
 import { BaseModel } from "./base.model";
 import { BrandModel } from "./brand.model";
 
@@ -6,6 +7,6 @@ export class ApplicationModel extends BaseModel{
     description: string;
     assemblerId: string;
     assemblerDescription: string;
-    assemblerNavigation: BrandModel;
+    assemblerNavigation: AssemblerModel;
     descriptionFull: string;
 }
