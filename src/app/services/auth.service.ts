@@ -29,9 +29,13 @@ export class AuthService {
           if (resp.status) {
             localStorage.setItem(environment.isLoggin, btoa('true'));
             localStorage.setItem(environment.token, resp.data.token);
-            localStorage.setItem(environment.username, btoa(resp.data.userName));
             localStorage.setItem(environment.expires, btoa(resp.data.expira.toString()));
             localStorage.setItem(environment.roleId, btoa(resp.data.profile.id));
+
+            var userJson:string = JSON.stringify(resp.data.user);
+            
+
+            localStorage.setItem(environment.user, btoa(userJson));
           }
 
           return resp;
@@ -43,14 +47,12 @@ export class AuthService {
   {
     localStorage.removeItem(environment.isLoggin);
     localStorage.removeItem(environment.token);
-    localStorage.removeItem(environment.username);
     localStorage.removeItem(environment.expires);
     localStorage.removeItem(environment.roleId);
+    localStorage.removeItem(environment.user);
   }
 
-  getUsername(): string {
-    return atob(localStorage.getItem(environment.username)??'');
-  }
+
   isLoggedin(){
     let resp = false;
     let localStorageData = atob(localStorage.getItem(environment.isLoggin)??'')

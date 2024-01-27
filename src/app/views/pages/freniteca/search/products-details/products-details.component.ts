@@ -82,7 +82,6 @@ export class ProductsDetailsComponent implements OnInit {
 
     await this.api.getId("product", this.id).subscribe(async (resp: any) => {
       this.reg = resp.data;
-      console.log('reg', this.reg);
       await this.setFields();
       await this.productService
         .getFiles(this.reg.code)
@@ -90,7 +89,6 @@ export class ProductsDetailsComponent implements OnInit {
           if (resp.status) {
             this.listImagenes = resp.data;
             this.imagenSeleccionada = this.listImagenes[0];
-            console.log("listImagenes", this.listImagenes);
           }
         });
 
@@ -116,7 +114,6 @@ export class ProductsDetailsComponent implements OnInit {
               this.ProductAttribute.clear();
               if (resp.status) {
                 this.ProductAttributes = resp.data;
-                console.log('productAttributes', this.ProductAttributes);
                 this.typeProductsAttributes.forEach(
                   (element: TypeProductAttributeModel) => {
                     var res = this.ProductAttributes.filter(
@@ -144,7 +141,6 @@ export class ProductsDetailsComponent implements OnInit {
           this.ProductApplication.clear();
           if (resp.status) {
             this.ProductApplications = resp.data;
-           console.log('productApplications', this.ProductApplications);
             this.loadProductApplications();
           }
         });
@@ -452,7 +448,6 @@ export class ProductsDetailsComponent implements OnInit {
     reg.value.application = application;
     this.Applications.splice(regEncontrar, 1);
     this.ProductApplication.push(reg);
-    console.log("ProductApplication", this.ProductApplication);
   }
   loadProductApplications() {
     this.ProductApplications.forEach((element: any) => {
@@ -677,7 +672,6 @@ export class ProductsDetailsComponent implements OnInit {
         },
       };
     }
-    console.log("pdfDefinition", pdfDefinition.content);
     const pdf = pdfmake.createPdf(pdfDefinition);
     pdf.open();
   }

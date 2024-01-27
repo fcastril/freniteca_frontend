@@ -161,13 +161,11 @@ export class ProductsComponent implements OnInit {
       application: this.frm.controls['application'].value??'',
 
     }
-    console.log('search', search);
 
     this.productService.postSearch(search).subscribe(
       (resp: any) => {
         this.regs = resp.data;
         this.totalPage = 1;
-        console.log('buscar', resp);
       }
     );
     

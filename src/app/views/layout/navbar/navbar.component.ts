@@ -1,6 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef, Inject, Renderer2 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
+import { LoginModel } from 'src/app/models/login.model';
+import { UserModel } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-navbar',
@@ -9,11 +12,21 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
 
+  user: UserModel ;
+
   constructor(
     @Inject(DOCUMENT) private document: Document, 
     private renderer: Renderer2,
     private router: Router
-  ) { }
+  ) {
+
+    var user = localStorage.getItem(environment.user);
+    if (user)
+    {
+      this.user = JSON.parse(atob(user));
+    }
+
+   }
 
   ngOnInit(): void {
   }

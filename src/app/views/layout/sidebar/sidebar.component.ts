@@ -44,9 +44,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
 
     
     var roleId:string = atob(localStorage.getItem(environment.roleId));
-    console.log('roleId',roleId);
     var result = MENU.filter(menuItem => menuItem.roles?.includes(roleId) || menuItem.roles == null);
-    console.log('result', result);
     this.menuItems = result; 
 
     /**
