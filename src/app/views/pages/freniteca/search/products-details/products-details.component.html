@@ -60,9 +60,9 @@
             <hr class="divider" />
           </div>
           <div class="row">
-                          <h4 class="title col-lg-9 col-md-9 col-xl-9 col-sm-9">
-                Información
-              </h4>
+            <h4 class="title col-lg-9 col-md-9 col-xl-9 col-sm-9">
+              Información
+            </h4>
             <table class="table-informacion">
               <tbody>
                 <tr>
@@ -81,9 +81,9 @@
           </div>
 
           <div class="row" *ngIf="isShowPrice">
-                          <h4 class="title col-lg-9 col-md-9 col-xl-9 col-sm-9">
-                Lista de Precios
-              </h4>
+            <h4 class="title col-lg-9 col-md-9 col-xl-9 col-sm-9">
+              Lista de Precios
+            </h4>
             <table class="table-informacion">
               <tbody>
                 <tr>
@@ -107,6 +107,27 @@
             <hr class="divider" />
           </div>
           <div class="col-md-12 col-sm-12 col-xl-12 col-lg-12">
+            <div *ngIf="ProductAttribute.length > 0">
+              <div class="row">
+                  <h4 class="title col-10">Atributos 
+                  <small class="col-12">Unidad de medida en milímetros (m.m)</small>
+                </h4>
+
+                <table class="table-informacion">
+                  <tbody>
+                    <tr *ngFor="let det of ProductAttributes; let idx = index">
+                      <td class="appSubtitle" width="50%">
+                        {{ det.typeProductAttributeNavigation.name }}
+                      </td>
+                      <td class="appDato">{{ det.value }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <hr class="divider" />
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 col-sm-12 col-xl-12 col-lg-12">
             <div class="row">
               <h4 class="title col-lg-9 col-md-9 col-xl-9 col-sm-9">
                 Aplicaciones
@@ -115,33 +136,18 @@
               <table class="table-informacion">
                 <tbody>
                   <tr *ngFor="let det of ProductApplications; let idx = index">
-                    <td class="appSubtitle">{{ det.applicationNavigation.assemblerDescription }}</td>
-                    <td class="appDato">{{ det.applicationNavigation.description}}</td>
+                    <td class="appSubtitle">
+                      {{ det.applicationNavigation.assemblerDescription }}
+                    </td>
+                    <td class="appDato">
+                      {{ det.applicationNavigation.description }}
+                    </td>
                     <td class="appValue">{{ det.value }}</td>
                   </tr>
                 </tbody>
               </table>
               <hr class="divider" />
             </div>
-          </div>
-        </div>
-        <div class="col-md-12 col-sm-12 col-xl-12 col-lg-12">
-          <div *ngIf="ProductAttribute.length > 0">
-            <div class="row">
-              <h4 class="title col-lg-9 col-md-9 col-xl-9 col-sm-9">
-                Atributos
-              </h4>
-                            <table class="table-informacion">
-                <tbody>
-                  <tr *ngFor="let det of ProductAttributes; let idx = index">
-                    <td class="appSubtitle">{{ det.typeProductAttributeNavigation.name }}</td>
-                    <td class="appDato">{{ det.value}}</td>
-                  </tr>
-                </tbody>
-              </table>
-              <hr class="divider" />
-            </div>
-          
           </div>
         </div>
       </div>

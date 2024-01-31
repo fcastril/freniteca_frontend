@@ -88,8 +88,18 @@
     </form>
   </div>
   <br />
+  <div *ngIf="isLoading" class="spinner-wrapper">
+    <div class="spinner">Loading...</div>
+  </div>
 
-  <div class="row">
+  <div class="row" *ngIf="!isLoading && regs.length == 0">
+    <div class="col-12">
+      <div class="alert alert-danger" role="alert">
+        No se encontraron registros
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="!isLoading && regs.length > 0">
     <div
       class="card col-6 card-product"
       style="width: 18rem"
@@ -124,12 +134,7 @@
           <b>Producto: </b>{{ reg.typeProductNavigation.description }}
         </p>
         <br />
-        <div
-          *ngIf="
-            isShowPrice
-          "
-          class="price"
-        >
+        <div *ngIf="isShowPrice" class="price">
           <b>Precio de Lista:</b> {{ reg.price1 | currency }}
         </div>
         <button

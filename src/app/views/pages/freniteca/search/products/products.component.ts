@@ -41,6 +41,7 @@ export class ProductsComponent implements OnInit {
   Applications: ApplicationModel[] = [];
   brands: BrandModel[] = [];
   typeProductsAttributes: TypeProductAttributeModel[] = [];
+  isLoading: boolean = false;
 
   isShowPrice: boolean = false;
   roleId = atob(localStorage.getItem(environment.roleId));
@@ -144,6 +145,7 @@ export class ProductsComponent implements OnInit {
     this.search();
   }
   Submit() {
+    this.isLoading = true;
     let search: SearchModel = {
       code: this.frm.controls["code"].value ?? "",
       description: this.frm.controls["description"].value ?? "",
@@ -155,8 +157,9 @@ export class ProductsComponent implements OnInit {
 
     this.productService.postSearch(search).subscribe((resp: any) => {
       this.regs = resp.data;
-      this.totalPage = 1;
       console.log("buscar", resp);
+      this.totalPage = 1;
+      this.isLoading = false;
     });
   }
 
@@ -166,7 +169,7 @@ export class ProductsComponent implements OnInit {
 
   search() {
     //TODO: armar objeto para paginar
-
+    this.isLoading = true;
     var paginate: PaginateModel = {
       count: this.pageCount,
       page: this.currentPage,
@@ -201,11 +204,12 @@ export class ProductsComponent implements OnInit {
       pagesTotal: 0,
       data: [],
     };
-
+    console.log('paginate',paginate);
     this.api.paginate("product", paginate).subscribe((resp: any) => {
       this.regs = resp.data.data;
       console.log(this.regs);
       this.totalPage = resp.data.pagesTotal;
+      this.isLoading = false;
     });
   }
 
