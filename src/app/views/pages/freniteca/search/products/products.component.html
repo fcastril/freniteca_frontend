@@ -19,7 +19,7 @@
     <form [formGroup]="frm" (ngSubmit)="Submit()" #f="ngForm">
       <div class="row col-md-12 col-sm-12 col-xl-12 col-lg-12 mt-3">
         <div class="form-group col-lg-4 col-md-4 col-xl-4 col-sm-12">
-          <label for="code">Código</label>
+          <label for="code">Código de producto</label>
           <input
             type="text"
             class="form-control"
@@ -32,23 +32,23 @@
           />
         </div>
         <div class="form-group col-lg-4 col-md-4 col-xl-4 col-sm-12">
-          <label for="brandId">Marca</label>
+          <label for="brandId">Marca de producto - Fabricante</label>
           <ng-select
             [items]="brands"
             bindLabel="description"
             bindValue="id"
-            placeholder="Marca a Buscar..."
+            placeholder="Marca de producto - Fabricante a Buscar..."
             formControlName="brandId"
           >
           </ng-select>
         </div>
         <div class="form-group col-lg-4 col-md-4 col-xl-4 col-sm-12">
-          <label for="typeProductId">Tipo de Producto</label>
+          <label for="typeProductId">Producto</label>
           <ng-select
             [items]="typeProducts"
             bindLabel="description"
             bindValue="id"
-            placeholder="Tipo de Producto a Buscar..."
+            placeholder="Producto a Buscar..."
             formControlName="typeProductId"
             (change)="selectedTypeProduct($event.id)"
           >
@@ -57,7 +57,9 @@
       </div>
       <div class="row col-md-12 col-sm-12 col-xl-12 col-lg-12 mt-3">
         <div class="form-group col-lg-9 col-md-9 col-xl-9 col-sm-12">
-          <label for="application">Aplicación</label>
+          <label for="application"
+            >Aplicación - Marca o modelo del vehículo</label
+          >
           <input
             type="text"
             class="form-control"
@@ -66,7 +68,7 @@
             name="application"
             autocomplete="off"
             required
-            placeholder="Digite la aplicación del producto"
+            placeholder="Digite la aplicación - Marca o modelo del vehículo"
           />
         </div>
         <button
@@ -106,17 +108,23 @@
       *ngFor="let reg of regs; let idx = index"
     >
       <center>
-        <img
-          class="card-img-top"
-          src="{{
-            urlImages +
-              'productCatalog/products/' +
-              reg.code +
-              '/' +
-              reg.principalImage
-          }}"
-          alt=""
-        />
+        <div *ngIf="reg.principalImage != ''; else noImage">
+          <img
+            class="card-img-top"
+            src="{{ urlImages + reg.principalImage }}"
+            alt=""
+            (click)="viewRegister(reg.id)"
+          />
+        </div>
+
+        <ng-template #noImage>
+          <img
+            class="card-img-top"
+            src="../../../../../../assets/images/no-disponible.png.webp"
+            alt=""
+            (click)="viewRegister(reg.id)"
+          />
+        </ng-template>
       </center>
       <div class="card-body">
         <h5 class="card-title">

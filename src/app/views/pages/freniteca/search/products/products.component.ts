@@ -1,3 +1,4 @@
+import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, NgForm } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -51,7 +52,8 @@ export class ProductsComponent implements OnInit {
     private fb: FormBuilder,
     private api: ApiService,
     private productService: ProductService,
-    private rout: ActivatedRoute
+    private rout: ActivatedRoute,
+    private http: HttpClient
   ) {
     this.urlImages = environment.urlImages;
     this.isShowPrice =
@@ -73,7 +75,7 @@ export class ProductsComponent implements OnInit {
         resp.data.unshift({
           id: "",
           code: "",
-          description: "Seleccione una marca",
+          description: "Seleccione una marca de producto - fabricante",
           dateCreation: new Date(),
           dateLastUpdate: new Date(),
           status: "active",
@@ -88,7 +90,8 @@ export class ProductsComponent implements OnInit {
         resp.data.unshift({
           id: "",
           code: "",
-          description: "Seleccione una aplicación",
+          description:
+            "Seleccione una aplicación - marca o modelo del vehículo",
           dateCreation: new Date(),
           dateLastUpdate: new Date(),
           status: "active",
@@ -103,7 +106,7 @@ export class ProductsComponent implements OnInit {
         resp.data.unshift({
           id: "",
           code: "",
-          description: "Seleccione un tipo de producto",
+          description: "Seleccione un producto",
           dateCreation: new Date(),
           dateLastUpdate: new Date(),
           status: "active",
@@ -204,15 +207,17 @@ export class ProductsComponent implements OnInit {
       pagesTotal: 0,
       data: [],
     };
-    console.log('paginate',paginate);
+    console.log("paginate", paginate);
     this.api.paginate("product", paginate).subscribe((resp: any) => {
       this.regs = resp.data.data;
+
+   
       console.log(this.regs);
       this.totalPage = resp.data.pagesTotal;
       this.isLoading = false;
     });
   }
-
+  
   keyupSearch(e: any) {
     if (e.keyCode === 13) {
       this.search();

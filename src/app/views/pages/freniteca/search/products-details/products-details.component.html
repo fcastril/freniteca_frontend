@@ -39,17 +39,25 @@
     </div>
     <div class="col-5">
       <div class="div-image">
+          <img
+          src="../../../../../../assets/images/no-disponible.png.webp"
+          alt=""
+          *ngIf="listImagenes.length ==0"
+        />
         <img
           src="{{ urlImages + imagenSeleccionada }}"
           alt=""
-          *ngIf="imagenSeleccionada.indexOf('pdf') == -1"
+          *ngIf="imagenSeleccionada.indexOf('pdf') == -1 and listImagenes.length > 0"
           class="file-div img"
         />
         <iframe
-          *ngIf="imagenSeleccionada.indexOf('pdf') !== -1"
+          *ngIf="imagenSeleccionada.indexOf('pdf') !== -1 and listImagenes.length > 0"
           [src]="transform(urlImages + imagenSeleccionada)"
           class="file-div-pdf"
         ></iframe>
+      </div>
+      <div class="row">
+        <small style="width:80%; color: darkgray; text-aling: center">Imagen ilustrativa: Esta imagen es una representación visual e ilustrativa, está sujeta a cambios sin previo aviso de su fabricante</small>
       </div>
     </div>
     <div class="col-6">
@@ -61,16 +69,16 @@
           </div>
           <div class="row">
             <h4 class="title col-lg-9 col-md-9 col-xl-9 col-sm-9">
-              Información
+              Información del producto
             </h4>
             <table class="table-informacion">
               <tbody>
                 <tr>
-                  <td class="subtitle">Marca</td>
+                  <td class="subtitle">Marca del producto</td>
                   <td class="dato">{{ reg.brandNavigation.description }}</td>
                 </tr>
                 <tr>
-                  <td class="subtitle">Tipo de Producto</td>
+                  <td class="subtitle">Producto</td>
                   <td class="dato">
                     {{ reg.typeProductNavigation.description }}
                   </td>
@@ -109,7 +117,7 @@
           <div class="col-md-12 col-sm-12 col-xl-12 col-lg-12">
             <div *ngIf="ProductAttribute.length > 0">
               <div class="row">
-                  <h4 class="title col-10">Atributos 
+                  <h4 class="title col-10">Dimensiones - Especifiaciones Técnicas 
                   <small class="col-12">Unidad de medida en milímetros (m.m)</small>
                 </h4>
 
