@@ -12,55 +12,71 @@
   </div>
 
   <div class="row">
-    <div class="col-1">
-      <div class="div-miniatura">
-        <div
-          class="thumbnail"
-          *ngFor="let img of listImagenes; let idx = index"
-        >
+   
+    <div class="col-sm-11 col-md-5 col-lg-5 col-xl-5 imgppal">
+      <div class="div-image">
+        <img class="file-div img"
+          src="../../../../../../assets/images/no-image.jpeg"
+          alt=""
+          *ngIf="listImagenes.length == 0"
+        />
+        
+        <div *ngIf="listImagenes.length > 0">
           <img
-            src="{{ urlImages + img }}"
-            class="img-thumbnail file-div-miniatura"
+            src="{{ urlImages + imagenSeleccionada }}"
             alt=""
-            *ngIf="img.indexOf('pdf') == -1"
-            (click)="seleccionarImagen(img)"
+            *ngIf="
+              imagenSeleccionada.indexOf('pdf') == -1
+            "
+            class="file-div img"
           />
-          <img
-            src="https://icons.veryicon.com/png/o/file-type/file-type-1/pdf-icon.png"
-            class="img-thumbnail file-div-miniatura"
-            alt=""
-            *ngIf="img.indexOf('pdf') !== -1"
-            (click)="seleccionarImagen(img)"
-          />
+          <iframe
+            *ngIf="
+              imagenSeleccionada.indexOf('pdf') !== -1
+            "
+            [src]="transform(urlImages + imagenSeleccionada)"
+            class="file-div-pdf"
+          ></iframe>
 
-          <!-- <iframe *ngIf="img.indexOf('pdf') !== -1" [src]="transform(urlImages+img)" (click)="seleccionarImagen(img)"></iframe> -->
+        </div>
+      </div>
+      <div class="row imgtext">
+        <small style="color: darkgray;"
+          >Imagen ilustrativa: Esta imagen es una representación visual e
+          ilustrativa, está sujeta a cambios sin previo aviso de su
+          fabricante</small
+        >
+      </div>
+      <div class="row">
+      <div class="miniatura"
+
+        *ngFor="let img of listImagenes; let idx = index"
+      >
+        <div>
+          <div >
+            <img
+              src="{{ urlImages + img }}"
+              class="img-thumbnail file-div-miniatura"
+              alt=""
+              *ngIf="img.indexOf('pdf') == -1"
+              (click)="seleccionarImagen(img)"
+            />
+            <img
+              src="https://icons.veryicon.com/png/o/file-type/file-type-1/pdf-icon.png"
+              class="img-thumbnail file-div-miniatura"
+              alt=""
+              *ngIf="img.indexOf('pdf') !== -1"
+              (click)="seleccionarImagen(img)"
+            />
+
+            <!-- <iframe *ngIf="img.indexOf('pdf') !== -1" [src]="transform(urlImages+img)" (click)="seleccionarImagen(img)"></iframe> -->
+          </div>
         </div>
       </div>
     </div>
-    <div class="col-5">
-      <div class="div-image">
-          <img
-          src="../../../../../../assets/images/no-disponible.png.webp"
-          alt=""
-          *ngIf="listImagenes.length ==0"
-        />
-        <img
-          src="{{ urlImages + imagenSeleccionada }}"
-          alt=""
-          *ngIf="imagenSeleccionada.indexOf('pdf') == -1 and listImagenes.length > 0"
-          class="file-div img"
-        />
-        <iframe
-          *ngIf="imagenSeleccionada.indexOf('pdf') !== -1 and listImagenes.length > 0"
-          [src]="transform(urlImages + imagenSeleccionada)"
-          class="file-div-pdf"
-        ></iframe>
-      </div>
-      <div class="row">
-        <small style="width:80%; color: darkgray; text-aling: center">Imagen ilustrativa: Esta imagen es una representación visual e ilustrativa, está sujeta a cambios sin previo aviso de su fabricante</small>
-      </div>
     </div>
-    <div class="col-6">
+     
+    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
       <div class="informacion">
         <div class="col-md-12 col-sm-12 col-xl-12 col-lg-12">
           <div class="row">
@@ -75,12 +91,12 @@
               <tbody>
                 <tr>
                   <td class="subtitle">Marca del producto</td>
-                  <td class="dato">{{ reg.brandNavigation.description }}</td>
+                  <td class="dato">{{ reg.brandNavigation!.description }}</td>
                 </tr>
                 <tr>
                   <td class="subtitle">Producto</td>
                   <td class="dato">
-                    {{ reg.typeProductNavigation.description }}
+                    {{ reg.typeProductNavigation!.description }}
                   </td>
                 </tr>
               </tbody>
@@ -115,12 +131,22 @@
             <hr class="divider" />
           </div>
           <div class="col-md-12 col-sm-12 col-xl-12 col-lg-12">
-            <div *ngIf="ProductAttribute.length > 0">
+            <div *ngIf="ProductAttributes.length > 0">
               <div class="row">
-                  <h4 class="title col-10">Dimensiones - Especifiaciones Técnicas 
-                  <small class="col-12">Unidad de medida en milímetros (m.m)</small>
-                </h4>
+                <div class="row">
+                  <h4 class="title col-10">
+                    Dimensiones - Especificaciones Técnicas
+                  </h4>
+                </div>
 
+                <div class="row">
+                  <h4>
+                    <small class="col-12"
+                      >Unidad de medida en milímetros (m.m)</small
+                    >
+                  </h4>
+                </div>
+                <hr>
                 <table class="table-informacion">
                   <tbody>
                     <tr *ngFor="let det of ProductAttributes; let idx = index">

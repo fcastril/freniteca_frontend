@@ -56,7 +56,7 @@
         </div>
       </div>
       <div class="row col-md-12 col-sm-12 col-xl-12 col-lg-12 mt-3">
-        <div class="form-group col-lg-9 col-md-9 col-xl-9 col-sm-12">
+        <div class="form-group col-lg-7 col-md-7 col-xl-7 col-sm-12">
           <label for="application"
             >Aplicación - Marca o modelo del vehículo</label
           >
@@ -73,14 +73,14 @@
         </div>
         <button
           type="submit"
-          class="btn btn-warning col-lg-1 col-md-1 col-xl-1 col-sm-12"
+          class="btn btn-warning col-lg-2 col-md-2 col-xl-2 col-sm-12 mt-3"
           style="color: black; margin-right: 5px"
         >
           <i class="feather icon-search"></i> Buscar ...
         </button>
         <button
           type="button"
-          class="btn btn-success col-lg-1 col-md-1 col-xl-1 col-sm-12"
+          class="btn btn-success col-lg-2 col-md-2 col-xl-2 col-sm-12 mt-3"
           style="color: white"
           (click)="limpiarBusqueda()"
         >
@@ -90,12 +90,12 @@
     </form>
   </div>
   <br />
-  <div *ngIf="isLoading" class="spinner-wrapper">
+  <div *ngIf="isLoading" class="row spinner-wrapper">
     <div class="spinner">Loading...</div>
   </div>
 
   <div class="row" *ngIf="!isLoading && regs.length == 0">
-    <div class="col-12">
+    <div class="col-lg-12 col-md-12 col-xl-12 col-sm-12">
       <div class="alert alert-danger" role="alert">
         No se encontraron registros
       </div>
@@ -103,8 +103,7 @@
   </div>
   <div class="row" *ngIf="!isLoading && regs.length > 0">
     <div
-      class="card col-6 card-product"
-      style="width: 18rem"
+      class="card col-lg-3 col-md-3 col-xl-3 col-sm-12 card-product"
       *ngFor="let reg of regs; let idx = index"
     >
       <center>
@@ -120,7 +119,7 @@
         <ng-template #noImage>
           <img
             class="card-img-top"
-            src="../../../../../../assets/images/no-disponible.png.webp"
+            src="../../../../../../assets/images/no-image.jpeg"
             alt=""
             (click)="viewRegister(reg.id)"
           />
@@ -167,7 +166,7 @@
         Anterior
       </button>
     </div>
-    <div class="col-8"></div>
+    <div class="col-7"></div>
     <div class="col-2">
       <button
         class="btn btn-success float-right"

@@ -81,7 +81,11 @@ export class ProductsDetailsComponent implements OnInit {
     this.subtitle = "CONSULTANDO";
 
     await this.api.getId("product", this.id).subscribe(async (resp: any) => {
+
+
       this.reg = resp.data;
+
+      
       await this.setFields();
       await this.productService
         .getFiles(this.reg.code)
@@ -113,6 +117,7 @@ export class ProductsDetailsComponent implements OnInit {
             .subscribe((resp: any) => {
               this.ProductAttribute.clear();
               if (resp.status) {
+                console.log(resp.data);
                 this.ProductAttributes = resp.data;
                 this.typeProductsAttributes.forEach(
                   (element: TypeProductAttributeModel) => {
@@ -124,8 +129,6 @@ export class ProductsDetailsComponent implements OnInit {
                     }
                   }
                 );
-
-                this.loadProductAttributes();
               }
             });
         });
@@ -398,16 +401,7 @@ export class ProductsDetailsComponent implements OnInit {
     });
     this.ProductAttribute.push(frmDetail);
   }
-  loadProductAttributes() {
-    this.typeProductsAttributes.forEach((element: any) => {
-      this.addTypeProductAttribute(
-        element.typeProductId,
-        element.name,
-        element.value,
-        element.id
-      );
-    });
-  }
+
 
   get ProductApplication() {
     return this.frm.controls["productApplications"] as FormArray;
@@ -471,7 +465,6 @@ export class ProductsDetailsComponent implements OnInit {
       )
       .subscribe((resp: any) => {
         this.typeProductsAttributes = resp.data;
-        this.loadProductAttributes();
       });
   }
 

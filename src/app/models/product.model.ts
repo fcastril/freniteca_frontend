@@ -5,9 +5,9 @@ import { TypeProductModel } from "./typeProduct.model";
 export class ProductModel extends BaseModel{
     code: string;
     typeProductId: string;
-    typeProductNavigation: TypeProductModel;
+    typeProductNavigation: TypeProductModel = new  TypeProductModel();
     brandId: string;
-    brandNavigation: BrandModel;
+    brandNavigation: BrandModel = new BrandModel();
     principalImage: string;
     price1: number;
     price2: number;

@@ -11,31 +11,42 @@
 .print {
   margin-right: 5px;
 }
+.imgppal {
 
-.div-image {
-  // padding: 10px;
-  // margin: 10px;
+    .div-image {
+      margin: 0 auto;
+
+    // padding: 10px;
+    // margin: 10px;
     border-radius: 20px;
 
-
-  width: 100%;
-  max-width: 100%;
-  align-items: center;
-
-  .file-div {
+    width: 100%;
+    max-width: 100%;
     align-items: center;
+
+    .file-div {
+align-items: center;
     justify-content: center;
     max-width: 400px;
-  }
+    margin: 0 auto;
+    display: flex;
+    }
 
-  .file-div:hover {
-    margin-top: 110px;
-    margin-left: 200px;
-    transform: scale(1.8);
-    border-radius: 20px;
-    border: 1px solid lightgray;
-    box-shadow: 10px 5px 5px lightgray;
-    z-index: 99; /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+    .file-div:hover {
+      margin-top: 110px;
+      margin-left: 200px;
+      transform: scale(1.8);
+      border-radius: 20px;
+      border: 1px solid lightgray;
+      box-shadow: 10px 5px 5px lightgray;
+      z-index: 99; /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+    }
+  }
+  .imgtext{
+    text-align: center;
+      margin: 0 auto;
+      width: auto;
+
   }
 }
 
@@ -52,16 +63,23 @@
 .file-div-miniatura {
   background-color: transparent;
   border: 1px solid black;
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   margin: 2px;
 }
 
+.miniatura {
+  flex: 0 0 auto;
+  display: contents;
+  margin: 0 auto;
+  
+}
+
 .informacion {
-  .code{
+  .code {
     font-size: 5em;
     font-weight: bold;
-    color: #E7353A;
+    color: #e7353a;
     font-style: italic;
   }
   .subtitle {
@@ -76,29 +94,28 @@
     word-wrap: break-word;
   }
   .dato {
-    font-size: 1.5em;  
+    font-size: 1.5em;
   }
   .appDato {
-    font-size: 1.3em;  
+    font-size: 1.3em;
     word-wrap: break-word;
   }
   .appValue {
-    font-size: 1.3em;  
+    font-size: 1.3em;
     word-wrap: break-word;
   }
-  hr  {
+  hr {
     max-width: 500px;
     z-index: auto;
   }
   .title {
     text-transform: uppercase;
-    display: flex; 
-    align-items: center; 
+    display: flex;
+    align-items: center;
     margin-bottom: 5px;
     font-size: 1.5em;
-    color: #35398E;
+    color: #35398e;
     font-weight: bold;
-
   }
   small {
     font-size: 0.8em;
@@ -108,7 +125,7 @@
     display: inline;
   }
   .texto-informativo {
-        font-size: 0.8em;
+    font-size: 0.8em;
     color: darkgray;
     text-transform: none;
     display: inline;
