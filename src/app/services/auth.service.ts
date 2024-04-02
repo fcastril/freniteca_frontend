@@ -55,8 +55,10 @@ export class AuthService {
 
   isLoggedin(){
     let resp = false;
-    let localStorageData = atob(localStorage.getItem(environment.isLoggin)??'')
-    if (localStorageData === 'true')
+
+    let token = localStorage.getItem(environment.token);
+    let expires = new Date(atob(localStorage.getItem(environment.expires)));
+    if (token && expires > new Date())
     {
       resp = true;
     }

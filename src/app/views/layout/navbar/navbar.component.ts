@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { LoginModel } from 'src/app/models/login.model';
 import { UserModel } from 'src/app/models/user.model';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -17,7 +18,8 @@ export class NavbarComponent implements OnInit {
   constructor(
     @Inject(DOCUMENT) private document: Document, 
     private renderer: Renderer2,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {
 
     var user = localStorage.getItem(environment.user);
@@ -44,7 +46,7 @@ export class NavbarComponent implements OnInit {
    */
   onLogout(e: Event) {
     e.preventDefault();
-    localStorage.removeItem('isLoggedin');
+    this.authService.loggout();
 
     if (!localStorage.getItem('isLoggedin')) {
       this.router.navigate(['/auth/login']);
