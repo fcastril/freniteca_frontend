@@ -159,6 +159,8 @@ export class ProductsComponent implements OnInit {
       brandId: this.frm.controls['brandId'].value??'',
       typeProductId: this.frm.controls['typeProductId'].value??'',
       application: this.frm.controls['application'].value??'',
+      pageNo: 1,
+      count: 10
 
     }
 
@@ -179,28 +181,20 @@ export class ProductsComponent implements OnInit {
   search(){
     
     //TODO: armar objeto para paginar
-
-    var paginate: PaginateModel = {
-      count: this.pageCount,
-      page: this.currentPage,
-      filters: [
-        { property: 'code', value: this.searchText, operator: Operations.Contains, conditional: LogicalOperators.Or },
-        { property: 'reference', value: this.searchText, operator: Operations.Contains, conditional: LogicalOperators.Or },
-        { property: 'referenceProvider', value: this.searchText, operator: Operations.Contains, conditional: LogicalOperators.Or },
-        { property: 'description', value: this.searchText, operator: Operations.Contains, conditional: LogicalOperators.Or },
-      ],
-      orders: [],
-      rowsTotal:0,
-      pagesTotal:0,
-      data:[]
+    let search: SearchModel = {
+      code: this.frm.controls["code"].value ?? "",
+      description: this.frm.controls["description"].value ?? "",
+      brandId: this.frm.controls["brandId"].value ?? "",
+      typeProductId: this.frm.controls["typeProductId"].value ?? "",
+      application: this.frm.controls["application"].value ?? "",
+      pageNo: 1,
+      count: 10,
     };
 
-    this.api.paginate('product', paginate).subscribe(
-      (resp: any)=>{
-        this.regs = resp.data.data;
-        this.totalPage = resp.data.pagesTotal;
-      }
-    );
+    this.productService.postSearch(search).subscribe((resp: any) => {
+      this.regs = resp.data;
+      this.totalPage = 1;
+    });
   }
 
   keyupSearch(e: any)

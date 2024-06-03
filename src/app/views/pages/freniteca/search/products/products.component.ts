@@ -66,6 +66,7 @@ export class ProductsComponent implements OnInit {
     await this.getTypeProducts();
     await this.getBrands();
     await this.getApplications();
+    this.currentPage = 1;
     this.search();
   }
 
@@ -116,54 +117,21 @@ export class ProductsComponent implements OnInit {
     });
   }
 
-  async selectedTypeProduct(id: string) {
-    // this.typeProductsAttributes = [];
-    // this.ProductAttribute.clear();
-    // await this.api.getCustom('typeProductAttribute','ListByTypeProductId','TypeProductId',id).subscribe(
-    //   (resp: any) => {
-    //       this.typeProductsAttributes = resp.data;
-    //       this.loadProductAttributes();
-    //  }
-    // );
-  }
+  async selectedTypeProduct(id: string) {}
 
-  // get ProductAttribute(){
-  //   return this.frm.controls['productAttributes'] as FormArray;
-  // }
-  // addTypeProductAttribute(typeProductId:string = '', descriptionTypeProduct: string = '', value: string = '', id: string = ''){
-  //  const  frmDetail = this.fb.group({
-  //     typeProductId: [typeProductId],
-  //     descriptionTypeProduct: [descriptionTypeProduct],
-  //     value: [value, Validators.required],
-  //     id: [id],
-  //   });
-  //   this.ProductAttribute.push(frmDetail);
-  // }
-  // loadProductAttributes(){
-  //   this.typeProductsAttributes.forEach((element:any)=>{
-  //     this.addTypeProductAttribute(element.typeProductId, element.name, element.value, element.id);
-  //   });
-  // }
   limpiarBusqueda() {
+    this.currentPage = 1;
+    this.frm.controls["code"].setValue("");
+    this.frm.controls["description"].setValue("");
+    this.frm.controls["brandId"].setValue("");
+    this.frm.controls["typeProductId"].setValue("");
+    this.frm.controls["application"].setValue("");
+    
     this.search();
   }
   Submit() {
-    this.isLoading = true;
-    let search: SearchModel = {
-      code: this.frm.controls["code"].value ?? "",
-      description: this.frm.controls["description"].value ?? "",
-      brandId: this.frm.controls["brandId"].value ?? "",
-      typeProductId: this.frm.controls["typeProductId"].value ?? "",
-      application: this.frm.controls["application"].value ?? "",
-    };
-    console.log("search", search);
-
-    this.productService.postSearch(search).subscribe((resp: any) => {
-      this.regs = resp.data;
-      console.log("buscar", resp);
-      this.totalPage = 1;
-      this.isLoading = false;
-    });
+    this.currentPage = 1;
+    this.search();
   }
 
   viewRegister(id: string) {
@@ -173,53 +141,29 @@ export class ProductsComponent implements OnInit {
   search() {
     //TODO: armar objeto para paginar
     this.isLoading = true;
-    var paginate: PaginateModel = {
-      count: this.pageCount,
-      page: this.currentPage,
-      filters: [
-        {
-          property: "code",
-          value: this.searchText,
-          operator: Operations.Contains,
-          conditional: LogicalOperators.Or,
-        },
-        {
-          property: "reference",
-          value: this.searchText,
-          operator: Operations.Contains,
-          conditional: LogicalOperators.Or,
-        },
-        {
-          property: "referenceProvider",
-          value: this.searchText,
-          operator: Operations.Contains,
-          conditional: LogicalOperators.Or,
-        },
-        {
-          property: "description",
-          value: this.searchText,
-          operator: Operations.Contains,
-          conditional: LogicalOperators.Or,
-        },
-      ],
-      orders: [],
-      rowsTotal: 0,
-      pagesTotal: 0,
-      data: [],
-    };
-    console.log("paginate", paginate);
-    this.api.paginate("product", paginate).subscribe((resp: any) => {
-      this.regs = resp.data.data;
 
-   
-      console.log(this.regs);
+    let search: SearchModel = {
+      code: this.frm.controls["code"].value ?? "",
+      description: this.frm.controls["description"].value ?? "",
+      brandId: this.frm.controls["brandId"].value ?? "",
+      typeProductId: this.frm.controls["typeProductId"].value ?? "",
+      application: this.frm.controls["application"].value ?? "",
+      pageNo: this.currentPage,
+      count: this.pageCount,
+    };
+    console.log("search", search);
+
+    this.productService.postSearch(search).subscribe((resp: any) => {
+      this.regs = resp.data.data;
+      console.log("buscar", resp);
       this.totalPage = resp.data.pagesTotal;
       this.isLoading = false;
     });
   }
-  
+
   keyupSearch(e: any) {
     if (e.keyCode === 13) {
+      this.currentPage = 1;
       this.search();
     }
   }
@@ -256,6 +200,8 @@ export class ProductsComponent implements OnInit {
   }
   next() {
     this.currentPage++;
+    console.log("next", this.currentPage, this.totalPage);
+    console.log(" ------------------------ ");
     this.search();
   }
 }

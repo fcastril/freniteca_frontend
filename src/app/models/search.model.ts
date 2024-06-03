@@ -3,5 +3,7 @@ export class SearchModel{
     description: string;
     brandId: string | null;
     typeProductId: string | null;
-    application: string
+    application: string;
+    pageNo: number;
+    count: number;
 }
