@@ -17,7 +17,7 @@
       <!-- <input type="text" class="form-control" id="searchText" placeholder="Buscar aquí..." (keyup)='keyupSearch($event)' [(ngModel)]="searchText" autocomplete="off" name="searchText"> -->
     </div>
     <form [formGroup]="frm" (ngSubmit)="Submit()" #f="ngForm">
-      <div class="row col-md-12 col-sm-12 col-xl-12 col-lg-12 mt-3">
+      <div class="row col-md-12 col-sm-12 col-xl-12 col-lg-12 mt-2">
         <div class="form-group col-lg-4 col-md-4 col-xl-4 col-sm-12">
           <label for="code">Código de producto</label>
           <input
@@ -55,7 +55,7 @@
           </ng-select>
         </div>
       </div>
-      <div class="row col-md-12 col-sm-12 col-xl-12 col-lg-12 mt-3">
+      <div class="row col-md-12 col-sm-12 col-xl-12 col-lg-12 mt-2">
         <div class="form-group col-lg-7 col-md-7 col-xl-7 col-sm-12">
           <label for="application"
             >Aplicación - Marca o modelo del vehículo</label
@@ -73,14 +73,14 @@
         </div>
         <button
           type="submit"
-          class="btn btn-warning col-lg-2 col-md-2 col-xl-2 col-sm-12 mt-3"
-          style="color: black; margin-right: 5px"
+          class="btn btn-warning col-lg-2 col-md-2 col-xl-2 col-sm-12 mt-2 primary-button"
+          style="margin-right: 5px"
         >
           <i class="feather icon-search"></i> Buscar ...
         </button>
         <button
           type="button"
-          class="btn btn-success col-lg-2 col-md-2 col-xl-2 col-sm-12 mt-3"
+          class="btn btn-success col-lg-2 col-md-2 col-xl-2 col-sm-12 mt-2 secundary-button"
           style="color: white"
           (click)="limpiarBusqueda()"
         >
@@ -103,7 +103,7 @@
   </div>
   <div class="row" *ngIf="!isLoading && regs.length > 0">
     <div
-      class="card col-lg-3 col-md-3 col-xl-3 col-sm-12 card-product"
+      class="card col-lg-2 col-md-2 col-xl-2 col-sm-12 card-product"
       *ngFor="let reg of regs; let idx = index"
     >
       <center>
