@@ -6,14 +6,17 @@
   </div>
   <div class="search-form mt-1">
     <div class="input-group">
-      <div class="input-group-prepend">
+      <!-- <div class="input-group-prepend">
         <div class="btn-icon-prepend">
           <button class="btn">
-            <i class="feather icon-search" (click)="search()"></i>
+            <h5>
+
+              <i class="feather icon-search" (click)="search()"></i>
+            </h5>
           </button>
         </div>
-      </div>
-      <h3 class="text-warning">FILTROS A BUSCAR</h3>
+      </div> -->
+      <!-- <h3 class="text-warning"><i class="feather icon-search"></i>FILTROS A BUSCAR</h3> -->
       <!-- <input type="text" class="form-control" id="searchText" placeholder="Buscar aquí..." (keyup)='keyupSearch($event)' [(ngModel)]="searchText" autocomplete="off" name="searchText"> -->
     </div>
     <form [formGroup]="frm" (ngSubmit)="Submit()" #f="ngForm">
@@ -76,7 +79,7 @@
           class="btn btn-warning col-lg-2 col-md-2 col-xl-2 col-sm-12 mt-2 primary-button"
           style="margin-right: 5px"
         >
-          <i class="feather icon-search"></i> Buscar ...
+          <h4><i class="feather icon-search"></i> Buscar ...</h4>
         </button>
         <button
           type="button"
@@ -84,7 +87,7 @@
           style="color: white"
           (click)="limpiarBusqueda()"
         >
-          <i class="feather refresh-ccw"></i> Limpiar
+          <h4><i class="fa fa-brush"></i> Limpiar</h4>
         </button>
       </div>
     </form>
@@ -103,7 +106,7 @@
   </div>
   <div class="row" *ngIf="!isLoading && regs.length > 0">
     <div
-      class="card col-lg-2 col-md-2 col-xl-2 col-sm-12 card-product"
+      class="card col-6 col-sm-12  col-md-5 col-lg-4 col-xl-3  card-product"
       *ngFor="let reg of regs; let idx = index"
     >
       <center>
@@ -126,10 +129,18 @@
         </ng-template>
       </center>
       <div class="card-body">
-        <h5 class="card-title">
-          <b>Marca: </b> {{ reg.brandNavigation.description }}
-        </h5>
-        <h5 class="card-subtitle"><b>Código: </b> {{ reg.code }}</h5>
+        <label class="code"> {{ reg.code }}</label>
+        <h3 class="card-title">
+          <b class="subtitle">Marca: </b
+          ><spam class="dato">{{ reg.brandNavigation.description }}</spam>
+          
+        </h3>
+        <h3 class="card-title">
+          <label class="subtitle"><b>Producto:</b> </label
+          ><label class="dato">{{
+            reg.typeProductNavigation.description
+          }}</label>
+        </h3>
         <br />
         <ul>
           <li *ngFor="let app of reg.productApplications">
@@ -137,9 +148,7 @@
             <small *ngIf="app.value != ''">{{ app.value }}</small>
           </li>
         </ul>
-        <p class="card-text">
-          <b>Producto: </b>{{ reg.typeProductNavigation.description }}
-        </p>
+
         <br />
         <div *ngIf="isShowPrice" class="price">
           <b>Precio de Lista:</b> {{ reg.price1 | currency }}
@@ -149,34 +158,29 @@
           (click)="viewRegister(reg.id)"
           title="Ver Registro"
         >
-          Ver mas...
+          <h5><i class="fa fa-eye"></i> Ver mas...</h5>
         </button>
       </div>
       <br />
     </div>
   </div>
 
-  <div class="row" *ngIf="regs.length > 0" style="margin-top: 5px">
-    <div class="col-2">
-      <button
-        type="button"
-        class="btn btn-success float-left"
-        (click)="back()"
-        *ngIf="currentPage > 1"
-      >
-        Anterior
-      </button>
-    </div>
-    <div class="col-7"></div>
-    <div class="col-2">
-      <button
-        type="button"
-        class="btn btn-success float-right"
-        (click)="next()"
-        *ngIf="currentPage < totalPage"
-      >
-        Siguiente
-      </button>
-    </div>
+  <div class="botones-position" *ngIf="regs.length > 0 && !isLoading">
+    <button
+      type="button"
+      class="btn btn-success btn-back"
+      (click)="back()"
+      *ngIf="currentPage > 1"
+    >
+      <h4><i class="fa fa-arrow-left"></i> Anterior</h4>
+    </button>
+    <button
+      type="button"
+      class="btn btn-success btn-next"
+      (click)="next()"
+      *ngIf="currentPage < totalPage"
+    >
+      <h4>Siguiente <i class="fa fa-arrow-right"></i></h4>
+    </button>
   </div>
 </form>

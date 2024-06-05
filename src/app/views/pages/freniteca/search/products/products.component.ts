@@ -35,7 +35,7 @@ export class ProductsComponent implements OnInit {
   searchText: "";
   title = "Productos";
   currentPage: number = 1;
-  pageCount: number = 10;
+  pageCount: number = 12;
   totalPage: number = 0;
   urlImages: string = "";
   typeProducts: TypeProductModel[] = [];
