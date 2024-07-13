@@ -1,0 +1,54 @@
+<form (ngSubmit)="Submit(f)" #f="ngForm">
+    <div class="row">
+        <div class="col-10">
+            <h3><i class="fa fa-car"></i> {{ title | uppercase }} </h3>
+        </div>
+        <div class="col-2"><button type="button" class="btn btn-primary float-right rounded" (click)="register('')" title="Agregar registros"><i class="fa fa-plus-circle" area-hidden="true"></i></button></div>
+        <br>
+    </div>
+    <div class="search-form mt-1">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="btn-icon-prepend">
+                    <button class="btn">
+                        <i class="feather icon-search" (click)="search()"></i>
+                    </button>
+                </div>
+            </div>
+            <input type="text" class="form-control" id="searchText" placeholder="Buscar aqui..." (keyup)='keyupSearch($event)' [(ngModel)]="searchText" autocomplete="off" name="searchText">
+        </div>
+    </div>
+    <br>
+    <table class="table" *ngIf="regs.length > 0">
+        <thead>
+            <tr>
+                <th width="5%">Acciones</th>
+                <th width="10%">Código</th>
+                <th width="85%">Descripción</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let reg of regs; let idx = index">
+                <td>
+                    <button class="btn btn-success rounded"  style="margin-right:5px" [routerLink]="['/masters/assemblers', reg.id]" title="Actualizar Registro"><i class="fas fa-pencil-alt"></i></button>
+                    <button class="btn btn-danger  rounded" (click)=delete(reg.id,idx) title="Eliminar Registro"><i class="fas fa-trash"></i></button>
+                </td>
+                <td>{{reg.code}}</td>
+                <td>{{reg.description}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="row" *ngIf="regs.length>0" style="margin-top: 5px">
+        <div class="col-2">
+
+            <button class="btn btn-success float-left" (click)="back()" *ngIf="currentPage > 1">Anterior</button>
+        </div>
+        <div class="col-8">
+
+        </div>
+        <div class="col-2">
+
+            <button class="btn btn-success float-right" (click)="next()" *ngIf="currentPage < totalPage">Siguiente</button>
+        </div>
+    </div>
+</form>

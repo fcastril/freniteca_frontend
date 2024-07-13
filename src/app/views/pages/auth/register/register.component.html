@@ -1,0 +1,38 @@
+<div class="row w-100 mx-0 auth-page">
+  <div class="col-md-8 col-xl-6 mx-auto">
+    <div class="card">
+      <div class="row">
+        <div class="col-md-12 ps-md-0">
+          <div class="auth-form-wrapper px-4 py-5">
+            <a routerLink="." class="freniteca-logo d-block mb-2"><img src="../../../../../assets/images/freniteca.png" width="30%"></a>
+            <h5 class="text-muted fw-normal mb-4">Crea una cuenta.</h5>
+            <form class="forms-sample">
+              <div class="mb-3">
+                <label for="username" class="form-label">Usuario</label>
+                <input type="text" class="form-control" id="username" autocomplete="Username" placeholder="Username">
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label">Correo electrónico</label>
+                <input type="email" class="form-control" id="email" placeholder="Email">
+              </div>
+              <div class="mb-3">
+                <label for="password" class="form-label">Contraseña</label>
+                <input type="password" class="form-control" id="password" autocomplete="current-password" placeholder="Password">
+              </div>
+              <div class="form-check mb-3">
+                <input type="checkbox" class="form-check-input" id="authCheck">
+                <label class="form-check-label" for="authCheck">
+                  Recuerdame
+                </label>
+              </div>
+              <div>
+                <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0" (click)="onRegister($event)">Inscribir</button>
+              </div>
+              <a routerLink="/auth/login" class="d-block mt-3 text-muted">¿Ya eres usuario? Iniciar sesión</a>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

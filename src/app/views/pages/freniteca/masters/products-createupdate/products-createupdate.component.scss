@@ -1,0 +1,40 @@
+.imagen {
+    width: 20%;
+    height: auto;
+}
+
+.btnEliminarAtributo {
+    width: 50px;
+    height: 50px;
+    
+}
+
+.div-principal {
+    background-color: lightgray;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 20px;
+    height: 500px;
+    width: 600px;
+}
+
+.file-div{
+    object-fit:contain;
+    height: 350px;
+    
+}
+.file-div-pdf{
+    object-fit:scale-down;
+    height: 350px;
+
+}
+    
+.file-div-miniatura{
+    background-color: transparent;
+    width: 80px;
+    height: 80px;
+    padding: 10px;
+    margin: 10px;
+    bottom: 0;
+
+}

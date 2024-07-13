@@ -1,0 +1,186 @@
+<form (ngSubmit)="Submit()" #f="ngForm">
+  <div class="row">
+    <div class="col-10">
+      <h3><i class="fab fa-bandcamp"></i>BUSCAR {{ title | uppercase }}</h3>
+    </div>
+  </div>
+  <div class="search-form mt-1">
+    <div class="input-group">
+      <!-- <div class="input-group-prepend">
+        <div class="btn-icon-prepend">
+          <button class="btn">
+            <h5>
+
+              <i class="feather icon-search" (click)="search()"></i>
+            </h5>
+          </button>
+        </div>
+      </div> -->
+      <!-- <h3 class="text-warning"><i class="feather icon-search"></i>FILTROS A BUSCAR</h3> -->
+      <!-- <input type="text" class="form-control" id="searchText" placeholder="Buscar aquí..." (keyup)='keyupSearch($event)' [(ngModel)]="searchText" autocomplete="off" name="searchText"> -->
+    </div>
+    <form [formGroup]="frm" (ngSubmit)="Submit()" #f="ngForm">
+      <div class="row col-md-12 col-sm-12 col-xl-12 col-lg-12 mt-2">
+        <div class="form-group col-lg-4 col-md-4 col-xl-4 col-sm-12">
+          <label for="code">Código de producto</label>
+          <input
+            type="text"
+            class="form-control"
+            id="code"
+            formControlName="code"
+            name="code"
+            autocomplete="off"
+            required
+            placeholder="Digite el código del producto"
+          />
+        </div>
+        <div class="form-group col-lg-4 col-md-4 col-xl-4 col-sm-12">
+          <label for="brandId">Marca de producto - Fabricante</label>
+          <ng-select
+            [items]="brands"
+            bindLabel="description"
+            bindValue="id"
+            placeholder="Marca de producto - Fabricante a Buscar..."
+            formControlName="brandId"
+          >
+          </ng-select>
+        </div>
+        <div class="form-group col-lg-4 col-md-4 col-xl-4 col-sm-12">
+          <label for="typeProductId">Producto</label>
+          <ng-select
+            [items]="typeProducts"
+            bindLabel="description"
+            bindValue="id"
+            placeholder="Producto a Buscar..."
+            formControlName="typeProductId"
+            (change)="selectedTypeProduct($event.id)"
+          >
+          </ng-select>
+        </div>
+      </div>
+      <div class="row col-md-12 col-sm-12 col-xl-12 col-lg-12 mt-2">
+        <div class="form-group col-lg-7 col-md-7 col-xl-7 col-sm-12">
+          <label for="application"
+            >Aplicación - Marca o modelo del vehículo</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="application"
+            formControlName="application"
+            name="application"
+            autocomplete="off"
+            required
+            placeholder="Digite la aplicación - Marca o modelo del vehículo"
+          />
+        </div>
+        <button
+          type="submit"
+          class="btn btn-warning col-lg-2 col-md-2 col-xl-2 col-sm-12 mt-2 primary-button"
+          style="margin-right: 5px"
+        >
+          <h4><i class="feather icon-search"></i> Buscar ...</h4>
+        </button>
+        <button
+          type="button"
+          class="btn btn-success col-lg-2 col-md-2 col-xl-2 col-sm-12 mt-2 secundary-button"
+          style="color: white"
+          (click)="limpiarBusqueda()"
+        >
+          <h4><i class="fa fa-brush"></i> Limpiar</h4>
+        </button>
+      </div>
+    </form>
+  </div>
+  <br />
+  <div *ngIf="isLoading" class="row spinner-wrapper">
+    <div class="spinner">Loading...</div>
+  </div>
+
+  <div class="row" *ngIf="!isLoading && regs.length == 0">
+    <div class="col-lg-12 col-md-12 col-xl-12 col-sm-12">
+      <div class="alert alert-danger" role="alert">
+        No se encontraron registros
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="!isLoading && regs.length > 0">
+    <div
+      class="card col-6 col-sm-12  col-md-5 col-lg-4 col-xl-3  card-product"
+      *ngFor="let reg of regs; let idx = index"
+    >
+      <center>
+        <div *ngIf="reg.principalImage != ''; else noImage">
+          <img
+            class="card-img-top"
+            src="{{ urlImages + reg.principalImage }}"
+            alt=""
+            (click)="viewRegister(reg.id)"
+          />
+        </div>
+
+        <ng-template #noImage>
+          <img
+            class="card-img-top"
+            src="../../../../../../assets/images/no-image.jpeg"
+            alt=""
+            (click)="viewRegister(reg.id)"
+          />
+        </ng-template>
+      </center>
+      <div class="card-body">
+        <label class="code"> {{ reg.code }}</label>
+        <h3 class="card-title">
+          <b class="subtitle">Marca: </b
+          ><spam class="dato">{{ reg.brandNavigation.description }}</spam>
+          
+        </h3>
+        <h3 class="card-title">
+          <label class="subtitle"><b>Producto:</b> </label
+          ><label class="dato">{{
+            reg.typeProductNavigation.description
+          }}</label>
+        </h3>
+        <br />
+        <ul>
+          <li *ngFor="let app of reg.productApplications">
+            {{ app.applicationNavigation.descriptionFull }}
+            <small *ngIf="app.value != ''">{{ app.value }}</small>
+          </li>
+        </ul>
+
+        <br />
+        <div *ngIf="isShowPrice" class="price">
+          <b>Precio de Lista:</b> {{ reg.price1 | currency }}
+        </div>
+        <button
+          class="btn btn-primary rounded"
+          (click)="viewRegister(reg.id)"
+          title="Ver Registro"
+        >
+          <h5><i class="fa fa-eye"></i> Ver mas...</h5>
+        </button>
+      </div>
+      <br />
+    </div>
+  </div>
+
+  <div class="botones-position" *ngIf="regs.length > 0 && !isLoading">
+    <button
+      type="button"
+      class="btn btn-success btn-back"
+      (click)="back()"
+      *ngIf="currentPage > 1"
+    >
+      <h4><i class="fa fa-arrow-left"></i> Anterior</h4>
+    </button>
+    <button
+      type="button"
+      class="btn btn-success btn-next"
+      (click)="next()"
+      *ngIf="currentPage < totalPage"
+    >
+      <h4>Siguiente <i class="fa fa-arrow-right"></i></h4>
+    </button>
+  </div>
+</form>

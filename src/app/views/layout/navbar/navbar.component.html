@@ -1,0 +1,42 @@
+<nav class="navbar">
+  <a href="" class="sidebar-toggler" (click)="toggleSidebar($event)">
+    <i class="feather icon-menu"></i>
+  </a>
+  <div class="navbar-content">
+    <form class="search-form">
+      <div class="input-group">
+        <div class="input-group-text">
+          <i class="feather icon-search"></i>
+        </div>
+        <input type="text" class="form-control" id="navbarForm" placeholder="Buscar aquí...">
+      </div>
+    </form>
+    <ul class="navbar-nav">
+    
+      <li class="nav-item nav-profile" ngbDropdown>
+        <a class="nav-link" ngbDropdownToggle id="profileDropdown">
+              <i class="fa fa-user"></i>
+        </a>
+        <div ngbDropdownMenu class="px-0" aria-labelledby="profileDropdown">
+          <div class="d-flex flex-column align-items-center border-bottom px-5 py-3">
+            <div class="mb-3">
+              <i class="fa fa-user"></i>
+            </div>
+            <div class="text-center">
+              <p class="tx-16 fw-bolder">{{user.name.value }}</p>
+              <p class="tx-12 text-muted">{{ user.email }}</p>
+            </div>
+          </div>
+          <ul class="list-unstyled p-1">
+            <li class="dropdown-item py-2">
+              <a href="" (click)="onLogout($event)" class="d-flex text-body ms-0">
+                <i class="feather icon-log-out me-2 icon-md"></i>
+                <span>Cerrar sesión</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
