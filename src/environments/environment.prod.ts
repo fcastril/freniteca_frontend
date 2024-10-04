@@ -10,4 +10,5 @@ export const environment = {
   roleId: "f35d9564-c373-49d7-a007-a8cdfb9fd593",
   user: "e2c0b13c-d5a0-47e7-bb76-c3c749226035",
   roleDefault: "1a21445b-7073-4953-bdb3-f02934d9ca40",
+  monthsNew: 3,
 };

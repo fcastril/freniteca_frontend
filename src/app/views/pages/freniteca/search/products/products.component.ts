@@ -43,8 +43,10 @@ export class ProductsComponent implements OnInit {
   brands: BrandModel[] = [];
   typeProductsAttributes: TypeProductAttributeModel[] = [];
   isLoading: boolean = false;
+  dateNew: Date = new Date();
 
   isShowPrice: boolean = false;
+  isShowDateCreation: boolean = false;
   roleId = atob(localStorage.getItem(environment.roleId));
 
   constructor(
@@ -60,6 +62,10 @@ export class ProductsComponent implements OnInit {
       this.roleId == Constants.roles.administrator ||
       this.roleId == Constants.roles.operator ||
       this.roleId == Constants.roles.distribuitor;
+
+    this.isShowDateCreation =
+      this.roleId == Constants.roles.administrator ||
+      this.roleId == Constants.roles.operator ;
   }
 
   async ngOnInit(): Promise<void> {
@@ -68,6 +74,8 @@ export class ProductsComponent implements OnInit {
     await this.getApplications();
     this.currentPage = 1;
     this.search();
+
+    this.dateNew.setMonth(this.dateNew.getMonth() - environment.monthsNew);
   }
 
   async getBrands() {
@@ -151,11 +159,9 @@ export class ProductsComponent implements OnInit {
       pageNo: this.currentPage,
       count: this.pageCount,
     };
-    console.log("search", search);
 
     this.productService.postSearch(search).subscribe((resp: any) => {
-      this.regs = resp.data.data;
-      console.log("buscar", resp);
+      this.regs = resp.data.data.sort((a: any, b: any) => a.dateCreation - b.dateCreation);
       this.totalPage = resp.data.pagesTotal;
       this.isLoading = false;
     });

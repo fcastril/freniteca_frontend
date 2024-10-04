@@ -106,35 +106,36 @@
   </div>
   <div class="row" *ngIf="!isLoading && regs.length > 0">
     <div
-      class="card col-6 col-sm-12  col-md-5 col-lg-4 col-xl-3  card-product"
+      class="card col-6 col-sm-12 col-md-5 col-lg-4 col-xl-3 card-product"
       *ngFor="let reg of regs; let idx = index"
     >
-      <center>
-        <div *ngIf="reg.principalImage != ''; else noImage">
-          <img
-            class="card-img-top"
-            src="{{ urlImages + reg.principalImage }}"
-            alt=""
-            (click)="viewRegister(reg.id)"
-          />
-          {{ urlImages + reg.principalImage }}
-        </div>
+        <div class="new-label" *ngIf="reg.dateCreation >= dateNew.toISOString()">Nuevo</div>
 
-        <ng-template #noImage>
-          <img
-            class="card-img-top"
-            src="../../../../../../assets/images/no-image.jpeg"
-            alt=""
-            (click)="viewRegister(reg.id)"
-          />
-        </ng-template>
-      </center>
-      <div class="card-body">
+    <center>
+      <div *ngIf="reg.principalImage != ''; else noImage">
+        <img
+        class="card-img-top"
+        src="{{ urlImages + reg.principalImage }}"
+        alt=""
+        (click)="viewRegister(reg.id)"
+        />
+      </div>
+      
+      <ng-template #noImage>
+        <img
+        class="card-img-top"
+        src="../../../../../../assets/images/no-image.jpeg"
+        alt=""
+        (click)="viewRegister(reg.id)"
+        />
+      </ng-template>
+    </center>
+    <div class="card-body">
+      
         <label class="code"> {{ reg.code }}</label>
         <h3 class="card-title">
           <b class="subtitle">Marca: </b
           ><spam class="dato">{{ reg.brandNavigation.description }}</spam>
-          
         </h3>
         <h3 class="card-title">
           <label class="subtitle"><b>Producto:</b> </label
@@ -161,11 +162,15 @@
         >
           <h5><i class="fa fa-eye"></i> Ver mas...</h5>
         </button>
+
+        <div *ngIf="isShowDateCreation" class="dateCreation">
+          {{ reg.dateCreation | date : "yyyy-MM-dd HH:mm:ss" }}
+        </div>
       </div>
       <br />
     </div>
   </div>
-
+  <br />
   <div class="botones-position" *ngIf="regs.length > 0 && !isLoading">
     <button
       type="button"
