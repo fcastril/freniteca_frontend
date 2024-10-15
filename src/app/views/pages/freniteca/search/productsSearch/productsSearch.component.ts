@@ -18,11 +18,11 @@ import { environment } from "src/environments/environment";
 import Swal from "sweetalert2";
 
 @Component({
-  selector: "app-products",
-  templateUrl: "./products.component.html",
-  styleUrls: ["./products.component.scss"],
+  selector: "app-products-search",
+  templateUrl: "./productsSearch.component.html",
+  styleUrls: ["./productsSearch.component.scss"],
 })
-export class ProductsComponent implements OnInit {
+export class ProductsSearchComponent implements OnInit {
   frm = this.fb.group({
     code: [""],
     description: [""],

@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { BaseComponent } from './views/layout/base/base.component';
 import { AuthGuard } from './core/guard/auth.guard';
 import { ErrorPageComponent } from './views/pages/error-page/error-page.component';
+import { ProductsSearchComponent } from './views/pages/freniteca/search/productsSearch/productsSearch.component';
 
 
 const routes: Routes = [
@@ -12,6 +13,10 @@ const routes: Routes = [
     component: BaseComponent,
     canActivate: [AuthGuard],
     children: [
+      {
+        path: 'products',
+        component: ProductsSearchComponent
+      },
       {
         path: 'search',
         loadChildren: () => import('./views/pages/freniteca/search/search.module').then(m => m.SearchModule)
@@ -24,7 +29,7 @@ const routes: Routes = [
         path: 'security',
         loadChildren: () => import('./views/pages/freniteca/security/security.module').then(m => m.SecurityModule)
       },
-      { path: '', redirectTo: 'search', pathMatch: 'full' }, 
+      { path: '', redirectTo: 'products', pathMatch: 'full' }, 
       // { path: '**', redirectTo: 'dashboard', pathMatch: 'full' }
     ]
   },
