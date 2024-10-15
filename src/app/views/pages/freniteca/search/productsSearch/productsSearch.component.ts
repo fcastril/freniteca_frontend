@@ -1,7 +1,8 @@
 import { HttpClient } from "@angular/common/http";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnChanges, OnInit, SimpleChanges } from "@angular/core";
 import { FormBuilder, NgForm } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
+import { debug } from "console";
 import { Constants } from "src/app/common/constants";
 import { LogicalOperators } from "src/app/enums/logicalOperators.enum";
 import { Operations } from "src/app/enums/operations.enum";
@@ -14,15 +15,16 @@ import { TypeProductModel } from "src/app/models/typeProduct.model";
 import { TypeProductAttributeModel } from "src/app/models/typeProductAttribute.model";
 import { ApiService } from "src/app/services/api.service";
 import { ProductService } from "src/app/services/product.service";
+import { SessionService } from "src/app/services/session.service";
 import { environment } from "src/environments/environment";
 import Swal from "sweetalert2";
 
 @Component({
-  selector: "app-products",
-  templateUrl: "./products.component.html",
-  styleUrls: ["./products.component.scss"],
+  selector: "app-products-search",
+  templateUrl: "./productsSearch.component.html",
+  styleUrls: ["./productsSearch.component.scss"],
 })
-export class ProductsComponent implements OnInit {
+export class ProductsSearchComponent implements OnInit {
   frm = this.fb.group({
     code: [""],
     description: [""],
@@ -30,7 +32,7 @@ export class ProductsComponent implements OnInit {
     typeProductId: [""],
     application: [""],
   });
-
+  type: string = "";
   regs: ProductModel[] = [];
   searchText: "";
   title = "Productos";
@@ -49,14 +51,22 @@ export class ProductsComponent implements OnInit {
   isShowDateCreation: boolean = false;
   roleId = atob(localStorage.getItem(environment.roleId));
 
+  sessionStarted: boolean = false;
+
   constructor(
     private route: Router,
     private fb: FormBuilder,
     private api: ApiService,
     private productService: ProductService,
     private rout: ActivatedRoute,
-    private http: HttpClient
+    private http: HttpClient,
+    private session: SessionService
   ) {
+    this.session.getStatusSession().subscribe((resp) => {
+      this.sessionStarted = resp;
+    });
+
+    this.type = this.rout.snapshot.params.type;
     this.urlImages = environment.urlImages;
     this.isShowPrice =
       this.roleId == Constants.roles.administrator ||
@@ -65,10 +75,11 @@ export class ProductsComponent implements OnInit {
 
     this.isShowDateCreation =
       this.roleId == Constants.roles.administrator ||
-      this.roleId == Constants.roles.operator ;
+      this.roleId == Constants.roles.operator;
   }
 
   async ngOnInit(): Promise<void> {
+    this.session.startSession();
     await this.getTypeProducts();
     await this.getBrands();
     await this.getApplications();
@@ -134,7 +145,7 @@ export class ProductsComponent implements OnInit {
     this.frm.controls["brandId"].setValue("");
     this.frm.controls["typeProductId"].setValue("");
     this.frm.controls["application"].setValue("");
-    
+
     this.search();
   }
   Submit() {
@@ -144,6 +155,14 @@ export class ProductsComponent implements OnInit {
 
   viewRegister(id: string) {
     this.route.navigateByUrl("/search/productsView/" + id);
+  }
+
+  editRegister(id: string) {
+    this.route.navigateByUrl("/masters/products/" + id);
+  }
+
+  newRegister() {
+    this.route.navigateByUrl("/masters/products/0");
   }
 
   search() {
@@ -161,7 +180,9 @@ export class ProductsComponent implements OnInit {
     };
 
     this.productService.postSearch(search).subscribe((resp: any) => {
-      this.regs = resp.data.data.sort((a: any, b: any) => a.dateCreation - b.dateCreation);
+      this.regs = resp.data.data.sort(
+        (a: any, b: any) => a.dateCreation - b.dateCreation
+      );
       this.totalPage = resp.data.pagesTotal;
       this.isLoading = false;
     });

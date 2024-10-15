@@ -5,44 +5,37 @@ import { RouterModule, Routes } from '@angular/router';
 import { FeatherIconModule } from 'src/app/core/feather-icon/feather-icon.module';
 import { QuillModule } from 'ngx-quill';
 import { ArchwizardModule } from 'angular-archwizard';
-import { ProductsComponent } from './products/products.component';
 import { ProductsDetailsComponent } from './products-details/products-details.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { ProductsPdfComponent } from './products-pdf/products-pdf.component';
 
-
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     children: [
       {
-        path: '',
-        redirectTo: 'products',
-        pathMatch: 'full'
+        path: "",
+        redirectTo: "products",
+        pathMatch: "full",
       },
       {
-        path: 'products',
-        component: ProductsComponent,
-      },
-      {
-        path: 'productsView/:id',
+        path: "productsView/:id",
         component: ProductsDetailsComponent,
       },
-            {
-        path: 'productsPDF',
+      {
+        path: "productsPDF",
         component: ProductsPdfComponent,
-      }           
-    ]
-  }
-]
+      },
+    ],
+  },
+];
 
 
 @NgModule({
   declarations: [
-    ProductsComponent,
     ProductsDetailsComponent,
-    ProductsPdfComponent
+    ProductsPdfComponent,
   ],
   imports: [
     CommonModule,
@@ -53,7 +46,7 @@ const routes: Routes = [
     QuillModule.forRoot(), // ngx-quill
     ArchwizardModule, // angular-archwizard
     NgSelectModule,
-    PdfViewerModule
-  ]
+    PdfViewerModule,
+  ],
 })
-export class SearchModule { }
+export class SearchModule {}
