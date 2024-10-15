@@ -13,11 +13,14 @@ import { ErrorPageComponent } from './views/pages/error-page/error-page.componen
 
 import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
+import { ProductsSearchComponent } from "./views/pages/freniteca/search/productsSearch/productsSearch.component";
+import { NgSelectModule } from "@ng-select/ng-select";
 
 @NgModule({
   declarations: [
     AppComponent,
     ErrorPageComponent,
+    ProductsSearchComponent
   ],
   imports: [
     BrowserModule,
@@ -26,9 +29,11 @@ import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
     LayoutModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    NgSelectModule
 
   ],
+  exports: [ProductsSearchComponent],
   providers: [
     AuthGuard,
     {
