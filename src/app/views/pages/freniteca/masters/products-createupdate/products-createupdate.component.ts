@@ -488,7 +488,7 @@ export class ProductsCreateupdateComponent implements OnInit {
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
   back(){
-      this.router.navigateByUrl('/masters/products');
+      this.router.navigateByUrl('/products/crud');
   }
   seleccionarImagen(img: string){
     this.imagenSeleccionada = img;

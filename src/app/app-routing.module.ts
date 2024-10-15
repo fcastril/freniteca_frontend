@@ -14,7 +14,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       {
-        path: 'products',
+        path: 'products/:type',
         component: ProductsSearchComponent
       },
       {

@@ -46,23 +46,23 @@
             <li class="nav-item" *ngFor="let subitem of item.subItems" [ngClass]="{'side-nav-item': hasItems(subitem)}">
               <a class="nav-link side-nav-link-a-ref" *ngIf="hasItems(subitem)" href="javascript:void(0);">
                 <i class="link-icon" [attr.data-feather]="subitem.icon" appFeatherIcon *ngIf="subitem.icon"></i>
-                <span class="link-title"> {{ subitem.label }}</span>
+                <span class="link-title"> {{ subitem.label }} 3</span>
                 <span class="link-arrow" data-feather="chevron-down" appFeatherIcon></span>
               </a>
     
-              <a class="nav-link nav-link-ref" [routerLink]="subitem.link" *ngIf="!hasItems(subitem)"
+                <a class="nav-link nav-link-ref" [routerLink]="subitem.link" [routerLinkActive]="['active']" *ngIf="!hasItems(subitem)"
                 [attr.data-parent]="subitem.parentId">
                 <i class="link-icon" [attr.data-feather]="subitem.icon" appFeatherIcon *ngIf="subitem.icon"></i>
                 {{ subitem.label }}
-              </a>
+                </a>
     
               <ul class="sidebar-nav sub-menu nav-third-level" *ngIf="hasItems(subitem)" aria-expanded="false">
                 <li class="nav-item" *ngFor="let subSubitem of subitem.subItems">
-                  <a class="nav-link nav-link-ref" [routerLink]="subSubitem.link" [routerLinkActive]="['active']"
+                    <a class="nav-link nav-link-ref" [routerLink]="[subSubitem.link]" [routerLinkActive]="['active']"
                     [attr.data-parent]="subSubitem.parentId">
-                    <i class="link-icon" [attr.data-feather]="subitem.icon" appFeatherIcon *ngIf="subitem.icon"></i>
-                    {{ subSubitem.label }}
-                  </a>
+                      <i class="link-icon" [attr.data-feather]="subitem.icon" appFeatherIcon *ngIf="subitem.icon"></i>
+                      {{ subSubitem.label }}
+                    </a>
                 </li>
               </ul>
             </li>

@@ -25,7 +25,7 @@ export const MENU: MenuItem[] = [
   {
     label: "Productos",
     icon: "codesandbox",
-    link: "/products",
+    link: "/products/search",
     roles: [
       Constants.roles.administrator,
       Constants.roles.operator,
@@ -45,7 +45,7 @@ export const MENU: MenuItem[] = [
     subItems: [
       {
         label: "Productos",
-        link: "/products",
+        link: "/products/crud",
         roles: [Constants.roles.administrator, Constants.roles.operator],
       },
       {
