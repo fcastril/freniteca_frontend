@@ -183,6 +183,7 @@ export class ProductsSearchComponent implements OnInit {
       this.regs = resp.data.data.sort(
         (a: any, b: any) => a.dateCreation - b.dateCreation
       );
+      console.log('regs', this.regs);
       this.totalPage = resp.data.pagesTotal;
       this.isLoading = false;
     });
