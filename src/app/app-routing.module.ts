@@ -29,8 +29,8 @@ const routes: Routes = [
         path: 'security',
         loadChildren: () => import('./views/pages/freniteca/security/security.module').then(m => m.SecurityModule)
       },
-      { path: '', redirectTo: 'products', pathMatch: 'full' }, 
-      // { path: '**', redirectTo: 'dashboard', pathMatch: 'full' }
+      { path: '', redirectTo:'products/search', pathMatch: 'full' }, 
+      { path: '**', redirectTo: 'products/search', pathMatch: 'full' }
     ]
   },
   { 

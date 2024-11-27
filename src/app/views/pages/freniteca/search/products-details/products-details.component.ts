@@ -507,7 +507,7 @@ export class ProductsDetailsComponent implements OnInit {
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
   back() {
-    this.router.navigateByUrl("/search/products");
+    this.router.navigateByUrl("/products/search");
   }
   seleccionarImagen(img: string) {
     this.imagenSeleccionada = img;
