@@ -48,6 +48,10 @@ export class ApiService {
       return this.http.get(`${ environment.urlApi }${ controller }/${action}?${parameter}=${value}`, {headers: this.auth.getHeaders()});
 
     }
+
+    postCustom(controller: string, action: string, data: any){
+      return this.http.post(`${ environment.urlApi }${ controller }/${action}`, data, {headers: this.auth.getHeaders()});
+    }
 }
 
 

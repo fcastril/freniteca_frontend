@@ -200,7 +200,7 @@ export class ProductsCreateupdateComponent implements OnInit {
           status: "active",
         });
         this.Applications = resp.data;
-        this.ApplicationsFull = resp.data;
+        this.ApplicationsFull = [...resp.data];
       }
     });
   }
@@ -225,157 +225,37 @@ export class ProductsCreateupdateComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.setValues();
+        console.clear();
         console.log('productViewModel', this.productViewModel);
-        this.reg.id = this.id;
-        this.reg.dateLastUpdate = new Date();
-        if (this.reg.id === "0") {
-          this.reg.id = uuidv4();
-          this.reg.dateCreation = new Date();
-          this.reg.status = "active";
+        this.productViewModel.id = this.id;
 
-            
+        if (this.productViewModel.id === "0") {
+          this.productViewModel.id = uuidv4();
 
-          // this.api.create("product", this.reg).subscribe((resp: any) => {
-          //   if (resp.error) {
-          //     Swal.fire(
-          //       "Error al crear el Registro",
-          //       "Se presentó un error al crear el registro",
-          //       "error"
-          //     );
-          //   } else {
-          //     var controls = this.ProductAttribute.controls;
-          //     controls.forEach((element: any) => {
-          //       let productAttributeModel: ProductAttributeModel = {
-          //         id: uuidv4(),
-          //         productId: this.reg.id,
-          //         typeProductAttributeId: element.value.id,
-          //         typeProductAttributeNavigation: null,
-          //         value: element.value.value,
-          //         dateCreation: new Date(),
-          //         status: "active",
-          //         dateLastUpdate: new Date(),
-          //       };
-          //       this.api
-          //         .create("ProductAttribute", productAttributeModel)
-          //         .subscribe();
-          //     });
-
-          //     //TODO: Guardar documentos
-          //     //TODO: Guardar Aplicaciones
-          //     var app = this.ProductApplication.controls;
-          //     app.forEach((element: any) => {
-          //       let productApplication: ProductApplicationModel = {
-          //         id: uuidv4(),
-          //         productId: this.reg.id,
-          //         productNavigation: null,
-          //         applicationId: element.value.applicationId,
-          //         applicationNavigation: null,
-          //         value: element.value.value,
-          //         dateCreation: new Date(),
-          //         status: "active",
-          //         dateLastUpdate: new Date(),
-          //       };
-          //       this.api
-          //         .create("ProductApplication", productApplication)
-          //         .subscribe();
-          //     });
-          //     this.router.navigateByUrl("/masters/products");
-          //   }
-          // });
-        } else {
-          // this.api.update("product", this.reg).subscribe((resp: any) => {
-          //   if (resp.error) {
-          //     Swal.fire(
-          //       "Error al actualizar el Registro",
-          //       "Se presentó un error al actualizar el registro",
-          //       "error"
-          //     );
-          //   } else {
-          //     var controls = this.ProductAttribute.controls;
-          //     controls.forEach((element: any) => {
-          //       this.productAttributeService
-          //         .getByProductIdAndTypeProductAttributeId(
-          //           this.id,
-          //           element.value.id
-          //         )
-          //         .subscribe((resp: any) => {
-          //           if (resp.status) {
-          //             let productAttributeModel: ProductAttributeModel = {
-          //               id: "",
-          //               productId: this.reg.id,
-          //               typeProductAttributeId: element.value.id,
-          //               typeProductAttributeNavigation: null,
-          //               value: element.value.value,
-          //               dateCreation: new Date(),
-          //               status: "active",
-          //               dateLastUpdate: new Date(),
-          //             };
-          //             if (resp.data == null) {
-          //               // crear registros
-          //               productAttributeModel.id = uuidv4();
-          //               this.api
-          //                 .create("productAttribute", productAttributeModel)
-          //                 .subscribe();
-          //             } else {
-          //               productAttributeModel.id = resp.data.id;
-          //               productAttributeModel.dateCreation =
-          //                 resp.data.dateCreation;
-          //               this.api
-          //                 .update("productAttribute", productAttributeModel)
-          //                 .subscribe();
-          //             }
-          //           }
-          //         });
-          //     });
-          //     //TODO: Guardar Aplicaciones
-          //     var app = this.ProductApplication.controls;
-          //     app.forEach((element: any) => {
-          //       this.productApplicationService
-          //         .getByProductIdAndApplicationId(
-          //           this.id,
-          //           element.value.applicationId
-          //         )
-          //         .subscribe((resp: any) => {
-          //           if (resp.status) {
-          //             let productApplication: ProductApplicationModel = {
-          //               id: "",
-          //               productId: this.reg.id,
-          //               productNavigation: null,
-          //               applicationId: element.value.applicationId,
-          //               applicationNavigation: null,
-          //               value: element.value.value,
-          //               dateCreation: new Date(),
-          //               status: "active",
-          //               dateLastUpdate: new Date(),
-          //             };
-          //             if (resp.data == null) {
-          //               // crear registro
-          //               productApplication.id = uuidv4();
-          //               this.api
-          //                 .create("productApplication", productApplication)
-          //                 .subscribe();
-          //             } else {
-          //               productApplication.id = resp.data.id;
-          //               productApplication.dateCreation =
-          //                 resp.data.dateCreation;
-          //               this.api
-          //                 .update("productApplication", productApplication)
-          //                 .subscribe();
-          //             }
-          //           }
-          //         });
-          //     });
-          //     //TODO: Guardar documentos
-          //     this.router.navigateByUrl("/masters/products");
-          //   }
-          // });
         }
+
+        this.api.postCustom("product", "createUpdateWithViewModel", this.productViewModel).subscribe((resp: any) => {
+          if (resp.status) {
+            Swal.fire({
+              title: "Guardado",
+              text: "El registro ha sido guardado",
+              icon: "success",
+            });
+            this.router.navigateByUrl("/products/crud");
+          } else {
+            Swal.fire({
+              title: "Error",
+              text: "Ha ocurrido un error al guardar el registro",
+              icon: "error",
+            });
+          }
+        });
+       
       }
     });
   }
 
   setValues() {
-
     this.productViewModel = new  ProductViewModel();
 
     this.productViewModel.id = this.id=='0'?'':this.id;
@@ -410,10 +290,10 @@ export class ProductsCreateupdateComponent implements OnInit {
     this.productViewModel.price3 = this.reg.price3;
     this.productViewModel.applications = [];
 
+    
     this.frm.controls["productApplications"].value.forEach((x: any) => {
-      debugger;
-      let application: ApplicationModel = this.ApplicationsFull.find(a => a.id == x.applicationId);
-      console.log('application', application);
+      let applicationIdx: number = this.ApplicationsFull.findIndex(a => a.id === x.applicationId);
+      let application: ApplicationModel = this.ApplicationsFull[applicationIdx];
       let app: ProductApplicationViewModel = {
         assembler: application.assemblerDescription,
         description: application.description,
@@ -428,19 +308,20 @@ export class ProductsCreateupdateComponent implements OnInit {
 
     this.frm.controls["productAttributes"]
     .value.forEach((x: any) => {
+      
       let attribute: ProductAttributeViewModel = {
-        name: x.typeProductAttributeNavigation.name,
+        name: x.descriptionTypeProduct,
         value: x.value
       };
       this.productViewModel.attributes.push(attribute);
     });
-   
-
   }
   async setFields() {
     this.frm.controls["code"].setValue(this.reg.code);
+    this.frm.controls["code"].disable();
     this.frm.controls["brandId"].setValue(this.reg.brandId);
     this.frm.controls["typeProductId"].setValue(this.reg.typeProductId);
+    this.frm.controls["typeProductId"].disable();
     if (this.id !== "0") {
       this.frm.controls["typeProductId"].disable();
     }
@@ -469,7 +350,6 @@ export class ProductsCreateupdateComponent implements OnInit {
     this.ProductAttribute.push(frmDetail);
   }
   loadProductAttributes() {
-    console.log('typeProductsAttributes', this.typeProductsAttributes);
     this.typeProductsAttributes.sort((a, b) => a.order - b.order)
     .forEach((element: any) => {
       this.addTypeProductAttribute(
@@ -512,15 +392,15 @@ export class ProductsCreateupdateComponent implements OnInit {
     this.ProductApplication.removeAt(idx);
   }
   selectedApplication(idx: number, id: string, application: ApplicationModel) {
+    
     var reg = this.ProductApplication.at(idx);
     this.ProductApplication.removeAt(idx);
-    reg.value.applicationId = id;
+    reg.value.applicationId = application.id;
     reg.value.id = this.id;
     var regEncontrar = this.Applications.findIndex((x) => x.id == id);
     reg.value.application = application;
     this.Applications.splice(regEncontrar, 1);
     this.ProductApplication.push(reg);
-    console.log(this.ProductApplication);
   }
   loadProductApplications() {
     this.ProductApplications.forEach((element: any) => {
