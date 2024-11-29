@@ -318,10 +318,11 @@ export class ProductsCreateupdateComponent implements OnInit {
   }
   async setFields() {
     this.frm.controls["code"].setValue(this.reg.code);
-    this.frm.controls["code"].disable();
+    if (this.id !== "0"){
+      this.frm.controls["code"].disable();
+    }
     this.frm.controls["brandId"].setValue(this.reg.brandId);
     this.frm.controls["typeProductId"].setValue(this.reg.typeProductId);
-    this.frm.controls["typeProductId"].disable();
     if (this.id !== "0") {
       this.frm.controls["typeProductId"].disable();
     }
