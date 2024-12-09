@@ -44,7 +44,7 @@ const routes: Routes = [
         component: AssemblersComponent,
       },
       {
-        path: "assembler/:id",
+        path: "assemblers/:id",
         component: AssemblersCreateupdateComponent,
       },
       {
