@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { LogicalOperators } from 'src/app/enums/logicalOperators.enum';
 import { Operations } from 'src/app/enums/operations.enum';
 import { AssemblerModel } from 'src/app/models/assembler.model';
+import { filterModel } from 'src/app/models/filter.model';
 import { PaginateModel } from 'src/app/models/paginate.model';
 import { ApiService } from 'src/app/services/api.service';
 import Swal from 'sweetalert2';
@@ -26,13 +27,16 @@ export class AssemblersComponent implements OnInit {
   constructor(private route: Router, private api: ApiService) { }
 
   ngOnInit(): void {
+    this.searchText = '';
     this.search();
   }
 
   Submit(Form: NgForm) { }
 
   register(id: string){
-    if(id=== '') {
+    console.log(id);
+    if(id=== '0') {
+      console.log('abrir master/assemblers-createupdate');
       this.route.navigateByUrl('/masters/assemblers/'+id);
     }
   }
@@ -40,21 +44,30 @@ export class AssemblersComponent implements OnInit {
   search(){
     
     //TODO: armar objeto para paginar
+console.log('searchText', this.searchText);
+
+
+    let filtersData: filterModel[]= [];
+    
+    if (this.searchText !== ''){
+      filtersData = [
+        { property: 'code', value: this.searchText, operator: Operations.Contains, conditional: LogicalOperators.Or },
+        { property: 'description', value: this.searchText, operator: Operations.Contains, conditional: LogicalOperators.Or },
+      ]
+    }
+
+
 
     var paginate: PaginateModel = {
       count: this.pageCount,
       page: this.currentPage,
-      filters: [
-        { property: 'code', value: this.searchText, operator: Operations.Contains, conditional: LogicalOperators.Or },
-        { property: 'description', value: this.searchText, operator: Operations.Contains, conditional: LogicalOperators.Or },
-      ],
+      filters: filtersData,
       orders: [],
       rowsTotal:0,
       pagesTotal:0,
       data:[]
     };
     
-
     this.api.paginate('assembler', paginate).subscribe(
       (resp: any)=>{
         this.regs = resp.data.data;
@@ -67,6 +80,7 @@ export class AssemblersComponent implements OnInit {
   {
     if (e.keyCode === 13)
     {
+      console.log('searchText', this.searchText);
       this.search();
     }
   }

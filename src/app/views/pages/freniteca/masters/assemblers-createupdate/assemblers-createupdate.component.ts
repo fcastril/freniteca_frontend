@@ -23,8 +23,8 @@ export class AssemblersCreateupdateComponent implements OnInit {
   constructor(private route: ActivatedRoute, private api: ApiService, private router: Router) { }
 
   ngOnInit(): void {
-    this.id = this.route.snapshot.paramMap.get('id')??'';
-    if (this.id === '') {
+    this.id = this.route.snapshot.paramMap.get('id')??'0';
+    if (this.id === '0') {
       this.subtitle = 'CREANDO';
       this.reg = new AssemblerModel();
     } else {
@@ -60,7 +60,7 @@ export class AssemblersCreateupdateComponent implements OnInit {
       if (result.isConfirmed) {
         this.reg.id = this.id;
         this.reg.dateLastUpdate = new Date();
-        if (this.reg.id === ''){
+        if (this.reg.id === '0'){
           this.reg.id = uuidv4();
           this.reg.dateCreation = new Date();
           this.reg.status = 'active';
