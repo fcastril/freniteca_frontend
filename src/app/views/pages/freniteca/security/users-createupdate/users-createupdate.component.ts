@@ -37,10 +37,8 @@ export class UsersCreateupdateComponent implements OnInit {
       this.reg = new UserModel();
     } else {
       this.subtitle = "EDITANDO";
-      console.log("id", this.id);
       this.api.getId("user", this.id).subscribe((resp: any) => {
         this.reg = resp.data;
-        console.log("reg", this.reg);
         this.selectedRole = this.reg.rolId;
       });
     }

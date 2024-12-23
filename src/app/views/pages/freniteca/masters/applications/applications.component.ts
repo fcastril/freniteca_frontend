@@ -41,32 +41,12 @@ export class ApplicationsComponent implements OnInit {
 
   search(){
     
-    //TODO: armar objeto para paginar
-
-    var paginate: PaginateModel = {
-      count: this.pageCount,
-      page: this.currentPage,
-      filters: [
-        { property: 'code', value: this.searchText, operator: Operations.Contains, conditional: LogicalOperators.Or },
-        { property: 'description', value: this.searchText, operator: Operations.Contains, conditional: LogicalOperators.Or },
-        { property: 'descriptionAssembler', value: this.searchText, operator: Operations.Contains, conditional: LogicalOperators.Or },
-
-
-      ],
-
-      orders: [],
-      rowsTotal:0,
-      pagesTotal:0,
-      data:[]
-    };
-    
-
-    this.api.paginate(this.controller, paginate).subscribe(
-      (resp: any)=>{
-        this.regs = resp.data.data;
-        this.totalPage = resp.data.pagesTotal;
-      }
-    );
+       this.api
+         .postSearchEspecial(this.controller, this.searchText)
+         .subscribe((resp: any) => {
+           this.regs = resp.data.data;
+           this.totalPage = resp.data.pagesTotal;
+         });
   }
 
   keyupSearch(e: any)

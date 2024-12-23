@@ -23,6 +23,7 @@ export class AssemblersComponent implements OnInit {
   currentPage: number = 1;
   pageCount: number = 10;
   totalPage: number = 0;
+  controller: string = 'assembler';
 
   constructor(private route: Router, private api: ApiService) { }
 
@@ -34,53 +35,25 @@ export class AssemblersComponent implements OnInit {
   Submit(Form: NgForm) { }
 
   register(id: string){
-    console.log(id);
     if(id=== '0') {
-      console.log('abrir master/assemblers-createupdate');
       this.route.navigateByUrl('/masters/assemblers/'+id);
     }
   }
 
   search(){
     
-    //TODO: armar objeto para paginar
-console.log('searchText', this.searchText);
-
-
-    let filtersData: filterModel[]= [];
-    
-    if (this.searchText !== ''){
-      filtersData = [
-        { property: 'code', value: this.searchText, operator: Operations.Contains, conditional: LogicalOperators.Or },
-        { property: 'description', value: this.searchText, operator: Operations.Contains, conditional: LogicalOperators.Or },
-      ]
-    }
-
-
-
-    var paginate: PaginateModel = {
-      count: this.pageCount,
-      page: this.currentPage,
-      filters: filtersData,
-      orders: [],
-      rowsTotal:0,
-      pagesTotal:0,
-      data:[]
-    };
-    
-    this.api.paginate('assembler', paginate).subscribe(
-      (resp: any)=>{
-        this.regs = resp.data.data;
-        this.totalPage = resp.data.pagesTotal;
-      }
-    );
+      this.api
+        .postSearchEspecial(this.controller, this.searchText)
+        .subscribe((resp: any) => {
+          this.regs = resp.data.data;
+          this.totalPage = resp.data.pagesTotal;
+        });
   }
 
   keyupSearch(e: any)
   {
     if (e.keyCode === 13)
     {
-      console.log('searchText', this.searchText);
       this.search();
     }
   }
