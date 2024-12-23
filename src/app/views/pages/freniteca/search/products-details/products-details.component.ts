@@ -117,7 +117,6 @@ export class ProductsDetailsComponent implements OnInit {
             .subscribe((resp: any) => {
               this.ProductAttribute.clear();
               if (resp.status) {
-                console.log(resp.data);
                 this.ProductAttributes = resp.data;
                 this.typeProductsAttributes.forEach(
                   (element: TypeProductAttributeModel) => {
