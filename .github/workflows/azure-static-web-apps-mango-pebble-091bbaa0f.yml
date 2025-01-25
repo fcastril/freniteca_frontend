@@ -15,7 +15,7 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: '16.10.1'  # Asegúrate de usar la versión apropiada de Node.js
+        node-version: '16'  # Asegúrate de usar la versión apropiada de Node.js
 
     - name: Install dependencies
       run: npm install --force
