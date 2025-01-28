@@ -36,6 +36,7 @@ jobs:
           variables: '[${{ toJSON(vars) }},${{ toJSON(secrets) }}]'
           transforms-prefix: '{{'
           transforms-suffix: '}}'
+          transforms: true
         env:
           API_URL: ${{ vars.API_URL }}
           URL_STORAGE: ${{ vars.URL_STORAGE }}
