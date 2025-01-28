@@ -33,7 +33,7 @@ jobs:
         uses: qetza/replacetokens-action@v1
         with:
           sources: 'src/environments/environment.ts'
-        #   variables: '[${{ toJSON(vars) }},${{ toJSON(secrets) }}]'
+          variables: '[${{ toJSON(vars) }},${{ toJSON(secrets) }}]'
         #   token-prefix: '{{'
         #   token-sufix: '}}'
         env:
