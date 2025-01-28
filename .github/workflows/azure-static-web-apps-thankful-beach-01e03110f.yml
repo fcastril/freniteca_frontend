@@ -4,11 +4,6 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    types: [opened, synchronize, reopened, closed]
-    branches:
-      - main
-
 jobs:
   build_and_deploy_job:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
@@ -38,9 +33,9 @@ jobs:
         uses: qetza/replacetokens-action@v1
         with:
           sources: 'src/environments/environment.ts'
-          variables: '[${{ toJSON(vars) }},${{ toJSON(secrets) }}]'
-          token-prefix: '{{'
-          token-sufix: '}}'
+        #   variables: '[${{ toJSON(vars) }},${{ toJSON(secrets) }}]'
+        #   token-prefix: '{{'
+        #   token-sufix: '}}'
         env:
           API_URL: ${{ vars.API_URL }}
           URL_STORAGE: ${{ vars.URL_STORAGE }}
