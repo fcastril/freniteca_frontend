@@ -40,7 +40,7 @@ jobs:
           API_URL: ${{ vars.API_URL }}
           URL_STORAGE: ${{ vars.URL_STORAGE }}
       - name: Print environment.ts
-        run: cat src/environments/environment.ts
+        run: cat src/environments/environment.prod.ts
       - name: Build
         run: npm run build --prod
       - name: Deploy
