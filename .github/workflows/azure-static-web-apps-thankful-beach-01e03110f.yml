@@ -34,6 +34,13 @@ jobs:
            result-encoding: string
       - name: Install Package
         run: npm install --force
+      - name: Replace tokens in environment.ts
+        uses: qetza/replacetokens-action@v1
+        with:
+          files: 'src/environments/environment.ts'
+        env:
+          API_URL: ${{ vars.API_URL }}
+          URL_STORAGE: ${{ vars.URL_STORAGE }}
       - name: Build
         run: npm run build --prod
       - name: Deploy
