@@ -32,7 +32,7 @@ jobs:
       - name: Replace tokens in environment.ts
         uses: qetza/replacetokens-action@v1
         with:
-          sources: 'src/environments/environment.ts'
+          sources: 'src/environments/environment.prod.ts'
           variables: '[${{ toJSON(vars) }},${{ toJSON(secrets) }}]'
         #   token-prefix: '{{'
         #   token-sufix: '}}'
