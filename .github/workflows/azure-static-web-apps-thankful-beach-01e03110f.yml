@@ -34,8 +34,8 @@ jobs:
         with:
           sources: 'src/environments/environment.prod.ts'
           variables: '[${{ toJSON(vars) }},${{ toJSON(secrets) }}]'
-        #   token-prefix: '{{'
-        #   token-sufix: '}}'
+          token-prefix: '{{'
+          token-sufix: '}}'
         env:
           API_URL: ${{ vars.API_URL }}
           URL_STORAGE: ${{ vars.URL_STORAGE }}
