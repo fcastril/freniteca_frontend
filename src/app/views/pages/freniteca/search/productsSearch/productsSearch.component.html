@@ -3,8 +3,10 @@
     <div class="col-10">
       <h3><i class="fab fa-bandcamp"></i>BUSCAR {{ title | uppercase }}</h3>
     </div>
-    <div class="col-2" *ngIf="type=='crud'">
-      <button class="btn btn-success btn-rounded" (click)="newRegister()"><i class="fa fa-plus"></i></button>
+    <div class="col-2" *ngIf="type == 'crud'">
+      <button class="btn btn-success btn-rounded" (click)="newRegister()">
+        <i class="fa fa-plus"></i>
+      </button>
     </div>
   </div>
   <div class="search-form mt-1">
@@ -112,29 +114,30 @@
       class="card col-6 col-sm-12 col-md-5 col-lg-4 col-xl-3 card-product"
       *ngFor="let reg of regs; let idx = index"
     >
-        <div class="new-label" *ngIf="reg.dateCreation >= dateNew.toISOString()">Nuevo</div>
-
-    <center>
-      <div *ngIf="reg.principalImage != ''; else noImage">
-        <img
-        class="card-img-top"
-        src="{{ urlImages + reg.principalImage }}"
-        alt=""
-        (click)="viewRegister(reg.id)"
-        />
+      <div class="new-label" *ngIf="reg.dateCreation >= dateNew.toISOString()">
+        Nuevo
       </div>
-      
-      <ng-template #noImage>
-        <img
-        class="card-img-top"
-        src="../../../../../../assets/images/no-image.jpeg"
-        alt=""
-        (click)="viewRegister(reg.id)"
-        />
-      </ng-template>
-    </center>
-    <div class="card-body">
-      
+
+      <center>
+        <div *ngIf="reg.principalImage != ''; else noImage">
+          <img
+            class="card-img-top"
+            src="{{ urlImages + reg.principalImage }}"
+            alt=""
+            (click)="viewRegister(reg.id)"
+          />
+        </div>
+
+        <ng-template #noImage>
+          <img
+            class="card-img-top"
+            src="../../../../../../assets/images/no-image.jpeg"
+            alt=""
+            (click)="viewRegister(reg.id)"
+          />
+        </ng-template>
+      </center>
+      <div class="card-body">
         <label class="code"> {{ reg.code }}</label>
         <h3 class="card-title">
           <b class="subtitle">Marca: </b
@@ -158,22 +161,33 @@
         <div *ngIf="isShowPrice" class="price">
           <b>Precio de Lista:</b> {{ reg.price1 | currency }}
         </div>
-        <button
-          class="btn btn-primary rounded"
-          (click)="viewRegister(reg.id)"
-          title="Ver Registro"
-          *ngIf="type=='search'"
-        >
-          <h5><i class="fa fa-eye"></i> Ver más ...</h5>
-        </button>
-        <button
-          class="btn btn-warning rounded"
-          (click)="editRegister(reg.id)"
-          title="Editar"
-          *ngIf="type=='crud'"
-        >
-          <h5><i class="fa fa-pencil"></i> Editar ...</h5>
-        </button>
+        <div class="buttons">
+          <button
+            class="btn btn-primary rounded"
+            (click)="viewRegister(reg.id)"
+            title="Ver Registro"
+            *ngIf="type == 'search'"
+          >
+            <h5><i class="fa fa-eye"></i> Ver más</h5>
+          </button>
+          <button
+            class="btn btn-warning rounded pull-right"
+            (click)="editRegister(reg.id)"
+            title="Editar"
+            *ngIf="type == 'crud'"
+          >
+            <h5><i class="fa fa-pencil"></i> Editar</h5>
+          </button>
+          <button
+            class="btn btn-danger rounded pull-left"
+            (click)="delete(reg.id, idx)"
+            title="Eliminar"
+            *ngIf="type == 'crud'"
+          >
+            <h5><i class="fa fa-trash"></i> Eliminar</h5>
+          </button>
+        </div>
+
         <div *ngIf="isShowDateCreation" class="dateCreation">
           {{ reg.dateCreation | date : "yyyy-MM-dd HH:mm:ss" }}
         </div>
