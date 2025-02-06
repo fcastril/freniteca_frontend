@@ -1,14 +1,11 @@
 import { HttpClient } from "@angular/common/http";
-import { Component, OnChanges, OnInit, SimpleChanges } from "@angular/core";
-import { FormBuilder, NgForm } from "@angular/forms";
+import { Component, OnInit } from "@angular/core";
+import { FormBuilder } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { debug } from "console";
 import { Constants } from "src/app/common/constants";
-import { LogicalOperators } from "src/app/enums/logicalOperators.enum";
-import { Operations } from "src/app/enums/operations.enum";
 import { ApplicationModel } from "src/app/models/application.model";
+import { AssemblerModel } from "src/app/models/assembler.model";
 import { BrandModel } from "src/app/models/brand.model";
-import { PaginateModel } from "src/app/models/paginate.model";
 import { ProductModel } from "src/app/models/product.model";
 import { SearchModel } from "src/app/models/search.model";
 import { TypeProductModel } from "src/app/models/typeProduct.model";
@@ -92,7 +89,10 @@ export class ProductsSearchComponent implements OnInit {
   async getBrands() {
     this.api.get("brand").subscribe((resp: any) => {
       if (resp.status) {
-        resp.data.unshift({
+        this.brands = resp.data.sort((a, b) => {
+          a.description - b.description;
+        });
+        this.brands.unshift({
           id: "",
           code: "",
           description: "Seleccione una marca de producto - fabricante",
@@ -100,14 +100,16 @@ export class ProductsSearchComponent implements OnInit {
           dateLastUpdate: new Date(),
           status: "active",
         });
-        this.brands = resp.data;
       }
     });
   }
   async getApplications() {
     this.api.get("application").subscribe((resp: any) => {
       if (resp.status) {
-        resp.data.unshift({
+        this.Applications = resp.data.sort((a, b) => {
+          a.description - b.description;
+        });
+        this.Applications.unshift({
           id: "",
           code: "",
           description:
@@ -115,15 +117,26 @@ export class ProductsSearchComponent implements OnInit {
           dateCreation: new Date(),
           dateLastUpdate: new Date(),
           status: "active",
+          assemblerId: "",
+          assemblerDescription: "",
+          assemblerNavigation: new AssemblerModel(),
+          descriptionFull:
+            "Seleccione una aplicación - marca o modelo del vehículo",
         });
-        this.Applications = resp.data;
       }
     });
   }
   async getTypeProducts() {
     this.api.get("typeProduct").subscribe((resp: any) => {
+      console.log("resp", resp);
       if (resp.status) {
-        resp.data.unshift({
+        console.table(this.typeProducts);
+
+        this.typeProducts = resp.data.sort((a, b) => {
+          a.description - b.description;
+        });
+
+        this.typeProducts.unshift({
           id: "",
           code: "",
           description: "Seleccione un producto",
@@ -131,8 +144,8 @@ export class ProductsSearchComponent implements OnInit {
           dateLastUpdate: new Date(),
           status: "active",
         });
-        this.typeProducts = resp.data;
       }
+      // console.table(this.typeProducts);
     });
   }
 
@@ -160,6 +173,7 @@ export class ProductsSearchComponent implements OnInit {
   editRegister(id: string) {
     this.route.navigateByUrl("/masters/products/" + id);
   }
+
 
   newRegister() {
     this.route.navigateByUrl("/masters/products/0");

@@ -8,7 +8,7 @@ export const environment = {
   expires: "280d2e3d-3a8d-4879-bfd8-8acd44529727",
   theme: "19b6ea51-5ef1-499e-b5c8-59017090d074",
   isLoggin: "58afcb0a-1360-4fde-a968-2cf239589f4c",
-  urlApi: "https://apicatalogofreniteca.azurewebsites.net/api/v1/", //"https://localhost:7009/api/v1/",
+  urlApi: "https://localhost:7009/api/v1/",
   isAdministrator: "f35d9564-c373-49d7-a007-a8cdfb9fd593",
   urlImages: "https://storagefreniteca.blob.core.windows.net/freniteca/",
   roleId: "f35d9564-c373-49d7-a007-a8cdfb9fd593",
