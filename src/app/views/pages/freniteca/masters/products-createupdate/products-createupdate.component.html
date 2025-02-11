@@ -1,4 +1,9 @@
-<form [formGroup]="frm" (ngSubmit)="Submit()" #f="ngForm">
+  <div *ngIf="isLoading" class="spinner-wrapper">
+    <div class="spinner">Loading...</div>
+  </div>
+<form [formGroup]="frm" (ngSubmit)="Submit()" #f="ngForm" *ngIf="!isLoading">
+
+  
   <div class="row">
     <div class="col-10">
       <h3>
@@ -13,7 +18,6 @@
 
   <div class="row">
     <div class="col-md-6 col-sm-12 col-xl-6 col-lg-6 div-principal">
-
       <div class="row">
         <div class="form-group col-lg-12 col-md-12 col-xl-12 col-sm-12">
           <label for="typeProductId">Tipo de Producto</label>
@@ -126,7 +130,10 @@
         </div>
       </div>
     </div>
-    <div class="col-md-6 col-sm-12 col-xl-6 col-lg-6 div-principal" *ngIf="listImagenes.length > 0">
+    <div
+      class="col-md-6 col-sm-12 col-xl-6 col-lg-6 div-principal"
+      *ngIf="listImagenes.length > 0"
+    >
       <div class="row">
         <img
           src="{{ urlImages + imagenSeleccionada }}"
@@ -167,49 +174,49 @@
   </div>
 
   <div class="row">
-
-     <div class="col-md-6 col-sm-12 col-xl-6 col-lg-6 div-principal" *ngIf="ProductAttribute.length > 0">
-        <div class="row">
-          <h4
-            class="col-lg-9 col-md-9 col-xl-9 col-sm-9"
-            style="display: flex; align-items: center"
-          >
-            Atributos
-          </h4>
-        </div>
-        <br />
-        <ng-container formArrayName="productAttributes">
-          <ng-container
-            *ngFor="let det of ProductAttribute.controls; let idx = index"
-          >
-            <div [formGroup]="det">
-              <div
-                class="row"
-                style="display: flex; align-items: center; margin-bottom: 5px"
-              >
-                <div class="col-lg-3 col-md-3 col-xl-3 col-sm-3">
-                  <label
-                    >{{ det.value.descriptionTypeProduct }}</label
-                  >
-                </div>
-                <div class="form-group col-lg-9 col-md-9 col-xl-9 col-sm-9">
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="value"
-                    formControlName="value"
-                    name="value"
-                    autocomplete="off"
-                    required
-                  />
-                </div>
+    <div
+      class="col-md-6 col-sm-12 col-xl-6 col-lg-6 div-principal"
+      *ngIf="ProductAttribute.length > 0"
+    >
+      <div class="row">
+        <h4
+          class="col-lg-9 col-md-9 col-xl-9 col-sm-9"
+          style="display: flex; align-items: center"
+        >
+          Atributos
+        </h4>
+      </div>
+      <br />
+      <ng-container formArrayName="productAttributes">
+        <ng-container
+          *ngFor="let det of ProductAttribute.controls; let idx = index"
+        >
+          <div [formGroup]="det">
+            <div
+              class="row"
+              style="display: flex; align-items: center; margin-bottom: 5px"
+            >
+              <div class="col-lg-3 col-md-3 col-xl-3 col-sm-3">
+                <label>{{ det.value.descriptionTypeProduct }}</label>
+              </div>
+              <div class="form-group col-lg-9 col-md-9 col-xl-9 col-sm-9">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="value"
+                  formControlName="value"
+                  name="value"
+                  autocomplete="off"
+                  required
+                />
               </div>
             </div>
-          </ng-container>
+          </div>
         </ng-container>
+      </ng-container>
     </div>
   </div>
-  
+
   <div class="row">
     <div class="col-md-6 col-sm-12 col-xl-6 col-lg-6 div-principal">
       <div class="row">
@@ -282,7 +289,6 @@
         </ng-container>
       </ng-container>
     </div>
-   
   </div>
 
   <div class="row botones">
