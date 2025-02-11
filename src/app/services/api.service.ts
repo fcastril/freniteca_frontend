@@ -42,6 +42,13 @@ export class ApiService {
     );
   }
 
+  deleteCustom(controller: string, id1: string, id2: string) {
+    return this.http.delete(
+      `${environment.urlApi}${controller}/delete/${id2}/${id1}`,
+      { headers: this.auth.getHeaders() }
+    );
+  }
+
   paginate(controller: string, paginate: PaginateModel) {
     return this.http.post(
       `${environment.urlApi}${controller}/paginator`,
@@ -87,12 +94,16 @@ export class ApiService {
     );
   }
 
-  postSearchEspecial(controller: string, value: string, pages: number=10, pageNo: number=1) {
-
+  postSearchEspecial(
+    controller: string,
+    value: string,
+    pages: number = 10,
+    pageNo: number = 1
+  ) {
     var data = {
       value: value,
       pages: pages,
-      pageNo: pageNo
+      pageNo: pageNo,
     };
     return this.http.post(
       `${environment.urlApi}${controller}/searchEspecial`,

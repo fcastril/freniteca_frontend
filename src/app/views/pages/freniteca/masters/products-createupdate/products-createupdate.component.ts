@@ -38,7 +38,7 @@ export class ProductsCreateupdateComponent implements OnInit {
     price2: [0],
     price3: [0]
   });
-
+  isLoading = false;
   imagenSeleccionada = "";
   id: string;
   title = "Productos";
@@ -151,6 +151,7 @@ export class ProductsCreateupdateComponent implements OnInit {
   }
 
   async getTypeProducts() {
+    this.isLoading = true;
     this.api.get("typeProduct").subscribe((resp: any) => {
       if (resp.status) {
         resp.data.unshift({
@@ -162,6 +163,7 @@ export class ProductsCreateupdateComponent implements OnInit {
           status: "active",
         });
         this.typeProducts = resp.data;
+        this.isLoading = false;
       }
     });
   }
@@ -174,6 +176,7 @@ export class ProductsCreateupdateComponent implements OnInit {
     this.frm.controls["price3"].disable();
   }
   async getBrands() {
+    this.isLoading = true;
     this.api.get("brand").subscribe((resp: any) => {
       if (resp.status) {
         resp.data.unshift({
@@ -185,10 +188,12 @@ export class ProductsCreateupdateComponent implements OnInit {
           status: "active",
         });
         this.brands = resp.data;
+        this.isLoading = false;
       }
     });
   }
   async getApplications() {
+    this.isLoading = true;
     this.api.get("application").subscribe((resp: any) => {
       if (resp.status) {
         resp.data.unshift({
@@ -201,10 +206,12 @@ export class ProductsCreateupdateComponent implements OnInit {
         });
         this.Applications = resp.data;
         this.ApplicationsFull = [...resp.data];
+        this.isLoading = false;
       }
     });
   }
   Submit() {
+    this.isLoading = true;
     if (this.frm.invalid) {
       Object.values(this.frm.controls).forEach((ctrl) => {
         ctrl.markAsTouched();
@@ -236,6 +243,7 @@ export class ProductsCreateupdateComponent implements OnInit {
 
         this.api.postCustom("product", "createUpdateWithViewModel", this.productViewModel).subscribe((resp: any) => {
           if (resp.status) {
+            this.isLoading = false;
             Swal.fire({
               title: "Guardado",
               text: "El registro ha sido guardado",
@@ -380,10 +388,11 @@ export class ProductsCreateupdateComponent implements OnInit {
     this.ProductApplication.push(frmDetail);
   }
   deleteApplication(idx: number) {
+    debugger;
     var reg = this.ProductApplication.at(idx);
     if (reg.value.id != "") {
       this.api
-        .delete("ProductApplication", reg.value.id)
+        .deleteCustom("ProductApplication", reg.value.id, this.id)
         .subscribe((resp: any) => {
           if (resp.status) {
             this.Applications.push(reg.value["application"]);
