@@ -15,13 +15,16 @@ import { ProductService } from "src/app/services/product.service";
 import { SessionService } from "src/app/services/session.service";
 import { environment } from "src/environments/environment";
 import Swal from "sweetalert2";
-
+import { v4 as uuidv4 } from 'uuid'; // Importa la función para generar UUID
 @Component({
   selector: "app-products-search",
   templateUrl: "./productsSearch.component.html",
   styleUrls: ["./productsSearch.component.scss"],
 })
 export class ProductsSearchComponent implements OnInit {
+
+  idScreen: string = '';
+
   frm = this.fb.group({
     code: [""],
     description: [""],
@@ -76,14 +79,36 @@ export class ProductsSearchComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.session.startSession();
+    this.idScreen = uuidv4();
     await this.getTypeProducts();
     await this.getBrands();
     await this.getApplications();
     this.currentPage = 1;
+    this.getSession();
     this.search();
 
     this.dateNew.setMonth(this.dateNew.getMonth() - environment.monthsNew);
+  }
+
+  getSession() {
+    let searchStorage = sessionStorage.getItem("busqueda");
+    let search: SearchModel = JSON.parse(
+      searchStorage ?? "{}"
+    );
+    this.frm.controls["code"].setValue(search.code ?? "");
+    this.frm.controls["description"].setValue(
+      search.description ?? ""
+    );
+    this.frm.controls["brandId"].setValue(search.brandId ?? "");
+    this.frm.controls["typeProductId"].setValue(
+      search.typeProductId ?? ""
+    );
+    this.frm.controls["application"].setValue(
+      search.application ?? ""
+    );
+    this.currentPage = search.pageNo ?? 1;
+    this.pageCount = search.count ?? 12;
+
   }
 
   async getBrands() {
@@ -192,6 +217,7 @@ export class ProductsSearchComponent implements OnInit {
       pageNo: this.currentPage,
       count: this.pageCount,
     };
+    sessionStorage.setItem("busqueda", JSON.stringify(search));
 
     this.productService.postSearch(search).subscribe((resp: any) => {
       this.regs = resp.data.data.sort(
