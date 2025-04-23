@@ -118,22 +118,22 @@
         Destacado
       </div>
 
-      <center>
+      <center class="d-none d-sm-block">
         <div *ngIf="reg.principalImage != ''; else noImage">
           <img
-            class="card-img-top"
-            src="{{ urlImages + reg.principalImage }}"
-            alt=""
-            (click)="viewRegister(reg.id)"
+        class="card-img-top"
+        src="{{ urlImages + reg.principalImage }}"
+        alt=""
+        (click)="viewRegister(reg.id)"
           />
         </div>
 
         <ng-template #noImage>
           <img
-            class="card-img-top"
-            src="../../../../../../assets/images/no-image.jpeg"
-            alt=""
-            (click)="viewRegister(reg.id)"
+        class="card-img-top"
+        src="../../../../../../assets/images/no-image.jpeg"
+        alt=""
+        (click)="viewRegister(reg.id)"
           />
         </ng-template>
       </center>
