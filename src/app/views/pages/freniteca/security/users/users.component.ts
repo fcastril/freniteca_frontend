@@ -15,13 +15,14 @@ import Swal from 'sweetalert2';
   styleUrls: ["./users.component.scss"],
 })
 export class UsersComponent implements OnInit {
-  regs: UserModel[]=[];
+  regs: UserModel[] = [];
   searchText: "";
   title = "Usuarios";
   currentPage: number = 1;
   pageCount: number = 10;
   totalPage: number = 0;
   isLoading: boolean = false;
+  controller: string = "user";
 
   constructor(private route: Router, private api: ApiService) {}
 
@@ -30,35 +31,12 @@ export class UsersComponent implements OnInit {
   }
 
   search() {
-    this.isLoading = true;
-    var paginate: PaginateModel = {
-      count: this.pageCount,
-      page: this.currentPage,
-      filters: [
-        {
-          property: "userName",
-          value: this.searchText,
-          operator: Operations.Contains,
-          conditional: LogicalOperators.Or,
-        },
-        {
-          property: "name",
-          value: this.searchText,
-          operator: Operations.Contains,
-          conditional: LogicalOperators.Or,
-        },
-      ],
-      orders: [],
-      rowsTotal: 0,
-      pagesTotal: 0,
-      data: [],
-    };
-
-    this.api.paginate("user", paginate).subscribe((resp: any) => {
-      this.regs = resp.data.data;
-      this.totalPage = resp.data.pagesTotal;
-      this.isLoading = false;
-    });
+    this.api
+      .postSearchEspecial(this.controller, this.searchText)
+      .subscribe((resp: any) => {
+        this.regs = resp.data.data;
+        this.totalPage = resp.data.pagesTotal;
+      });
   }
 
   Submit(Form: NgForm) {}
